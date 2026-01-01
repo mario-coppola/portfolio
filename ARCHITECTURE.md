@@ -1,6 +1,7 @@
 # Architecture
 
 ## Purpose
+This portfolio is intentionally designed to showcase architectural thinking, clarity of reasoning, and product awareness — not just technical output.
 This repository is a developer portfolio that demonstrates:
 - Full-stack competence (frontend + light backend integration when needed)
 - Clear thinking and decision making (tradeoffs, constraints)
