@@ -1,0 +1,6 @@
+- Follow ARCHITECTURE.md, DECISIONS.md, AGENTS.md strictly.
+- Do not introduce new frameworks, databases, auth providers, or major libraries without explicit approval.
+- Keep business logic out of route handlers; handlers are thin adapters only.
+- Prefer small commits and incremental changes.
+- If a task is architectural or ambiguous, stop and ask for a decision (update DECISIONS.md if needed).
+- Prefer clarity over cleverness. Avoid magic abstractions.
