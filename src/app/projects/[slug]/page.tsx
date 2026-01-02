@@ -1,14 +1,41 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { projects } from "@/content/projects";
+import type { Metadata } from "next";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export async function generateMetadata({
+    params,
+  }: {
+    params: Promise<{ slug: string }>;
+  }): Promise<Metadata> {
+    const { slug } = await params;
+  
+    const project = projects.find((p) => p.slug === slug);
+    if (!project) {
+      return { title: "Project not found" };
+    }
+  
+    const title = project.title;
+    const description = project.summary;
+  
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        type: "article",
+      },
+    };
+  }
+
 export default async function ProjectPage({ params }: PageProps) {
     
-    const { slug } = await params;
+const { slug } = await params;
     
   const project = projects.find((p) => p.slug === slug);
   if (!project) return notFound();
