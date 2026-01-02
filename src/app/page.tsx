@@ -1,59 +1,60 @@
-import Link from "next/link";
 import { projects } from "@/content/projects";
+import { Container } from "@/components/ui/Container";
+import { ButtonLink } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { TextLink } from "@/components/ui/TextLink";
 
 export default function Home() {
   const featured = projects.slice(0, 3);
 
   return (
-    <div className="space-y-12">
+    <Container className="space-y-12 py-10">
       <section className="space-y-4">
         <p className="text-sm text-neutral-600">Full-Stack Web Developer</p>
 
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          I build lean, maintainable product-oriented web apps.
+          I build lean, maintainable, product-oriented web applications.
         </h1>
 
         <p className="max-w-2xl text-neutral-700">
-        This portfolio is intentionally designed to showcase architectural thinking, clarity of reasoning, and product awareness — not just technical output.
+          This portfolio is intentionally designed to showcase architectural thinking,
+          clarity of reasoning, and product awareness — not just technical output.
         </p>
 
         <div className="flex flex-wrap gap-3 pt-2">
-          <Link
-            href="/projects"
-            className="rounded-xl border px-4 py-2 text-sm font-medium hover:bg-neutral-50"
-          >
+          <ButtonLink href="/projects" variant="secondary">
             View projects
-          </Link>
-
-          <Link
-            href="/contact"
-            className="rounded-xl bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800"
-          >
+          </ButtonLink>
+          <ButtonLink href="/contact" variant="primary">
             Get in touch
-          </Link>
+          </ButtonLink>
         </div>
       </section>
 
       <section className="space-y-4">
         <div className="flex items-baseline justify-between">
           <h2 className="text-lg font-semibold">Featured projects</h2>
-          <Link href="/projects" className="text-sm text-neutral-600 hover:underline">
-            All projects
-          </Link>
+          <TextLink href="/projects">All projects</TextLink>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          {featured.map((p) => (
-            <article key={p.slug} className="rounded-2xl border p-4">
-              <h3 className="font-semibold">{p.title}</h3>
-              <p className="mt-1 text-sm text-neutral-700">{p.summary}</p>
-              <p className="mt-3 text-xs text-neutral-600">
-                Stack: {p.stack.join(" • ")}
-              </p>
-            </article>
+          {featured.map((project) => (
+            <Card key={project.slug} className="space-y-3">
+              <div className="space-y-1">
+              <h3 className="font-semibold text-neutral-900">{project.title}</h3>
+                <p className="text-sm text-neutral-700">{project.summary}</p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {project.stack.slice(0, 4).map((t) => (
+                  <Badge key={t}>{t}</Badge>
+                ))}
+              </div>
+            </Card>
           ))}
         </div>
       </section>
-    </div>
+    </Container>
   );
 }

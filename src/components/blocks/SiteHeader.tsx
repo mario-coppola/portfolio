@@ -1,8 +1,7 @@
 import Link from "next/link";
+import { Container } from "@/components/ui/Container";
 
-type NavItem = { href: string; label: string };
-
-const nav: NavItem[] = [
+const nav = [
   { href: "/projects", label: "Projects" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -11,19 +10,25 @@ const nav: NavItem[] = [
 export function SiteHeader() {
   return (
     <header className="border-b">
-      <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
-        <Link href="/" className="font-semibold tracking-tight">
-          Mario Coppola
-        </Link>
+      <Container className="py-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <Link href="/" className="font-semibold tracking-tight">
+            Mario Coppola
+          </Link>
 
-        <nav className="flex items-center gap-4 text-sm">
-          {nav.map((item) => (
-            <Link key={item.href} href={item.href} className="hover:underline">
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
+          <nav className="flex flex-wrap items-center gap-4 text-sm">
+            {nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="hover hover:underline"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </Container>
     </header>
   );
 }

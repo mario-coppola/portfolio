@@ -1,9 +1,11 @@
+import { Container } from "@/components/ui/Container";
+
 export function SiteFooter() {
     return (
       <footer className="border-t">
-        <div className="mx-auto max-w-4xl px-4 py-8 text-sm text-neutral-600">
+        <Container className="space-y-12 py-10">
           <p>© {new Date().getFullYear()} Mario Coppola.</p>
-        </div>
+        </Container>
       </footer>
     );
   }
