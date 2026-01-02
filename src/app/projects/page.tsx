@@ -1,4 +1,5 @@
 import { projects } from "@/content/projects";
+import Link from "next/link";
 
 export default function ProjectsPage() {
   return (
@@ -16,8 +17,11 @@ export default function ProjectsPage() {
             key={project.slug}
             className="rounded-2xl border p-4"
           >
-            <h2 className="font-semibold">{project.title}</h2>
-
+            <h2 className="font-semibold">
+  <Link href={`/projects/${project.slug}`} className="hover:underline">
+    {project.title}
+  </Link>
+</h2>
             <p className="mt-1 text-sm text-neutral-700">
               {project.summary}
             </p>
