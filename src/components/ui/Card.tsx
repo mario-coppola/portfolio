@@ -8,13 +8,14 @@ type CardProps = React.PropsWithChildren<{
 export function Card({ className, interactive, children }: CardProps) {
   return (
     <div
-      className={cn(
-        "rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm",
-        "transition-shadow duration-200",
-        interactive &&
-          "hover:shadow-md motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:scale-[1.01]",
-        className
-      )}
+    className={cn(
+      "rounded-2xl border p-4 shadow-sm",
+      "border-[var(--border)] bg-[var(--card)]",
+      "transition-shadow duration-200",
+      interactive &&
+        "hover:shadow-md motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:scale-[1.01]",
+      className
+    )}
     >
       {children}
     </div>

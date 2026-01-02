@@ -7,14 +7,15 @@ type ButtonSize = "sm" | "md";
 const base =
   "inline-flex items-center justify-center rounded-2xl font-medium " +
   "transition-colors duration-200 motion-safe:transition-transform motion-safe:duration-200 " +
-  "motion-safe:hover:scale-[1.02] " +
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)] " +
   "disabled:pointer-events-none disabled:opacity-50";
 
   const variants: Record<ButtonVariant, string> = {
     primary: "bg-neutral-900 text-white hover:bg-neutral-800",
-    secondary: "border border-neutral-200 bg-white text-neutral-900 hover:bg-neutral-50",
-    ghost: "text-neutral-900 hover:bg-neutral-50",
+    secondary:
+      "border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:bg-[color-mix(in_srgb,var(--card),var(--foreground)_6%)]",
+    ghost:
+      "text-[var(--foreground)] hover:bg-[color-mix(in_srgb,var(--card),var(--foreground)_6%)]",
   };
 
 const sizes: Record<ButtonSize, string> = {

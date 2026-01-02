@@ -7,11 +7,12 @@ type BadgeProps = React.PropsWithChildren<{
 export function Badge({ className, children }: BadgeProps) {
   return (
     <span
-      className={cn(
-        "inline-flex items-center rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs text-neutral-700",
-        "transition-colors duration-200",
-        className
-      )}
+    className={cn(
+      "inline-flex items-center rounded-full border px-2.5 py-1 text-xs",
+      "border-[var(--border)] bg-[var(--card)] text-[var(--muted)]",
+      "transition-colors duration-200",
+      className
+    )}
     >
       {children}
     </span>

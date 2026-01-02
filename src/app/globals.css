@@ -2,7 +2,15 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0a0a0a;
+
+  --muted: #525252;            /* approx neutral-600 */
+  --muted-foreground: #737373; /* approx neutral-500 */
+
+  --border: #e5e5e5;           /* approx neutral-200 */
+  --card: #ffffff;
+
+  --ring: #0a0a0a;
 }
 
 @theme inline {
@@ -16,6 +24,14 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    --muted: #a3a3a3;
+    --muted-foreground: #bdbdbd;
+
+    --border: #262626;
+    --card: #0f0f0f;
+
+    --ring: #ededed;
   }
 }
 
