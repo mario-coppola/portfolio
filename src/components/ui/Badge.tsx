@@ -9,6 +9,7 @@ export function Badge({ className, children }: BadgeProps) {
     <span
       className={cn(
         "inline-flex items-center rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs text-neutral-700",
+        "transition-colors duration-200",
         className
       )}
     >
