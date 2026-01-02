@@ -40,7 +40,7 @@ function Section({
 }) {
   return (
     <section className="space-y-2">
-      <h2 className="text-lg font-semibold text-neutral-900">{title}</h2>
+      <h2 className="text-lg font-semibold text-[var(--foreground)]">{title}</h2>
       {children}
     </section>
   );
@@ -65,7 +65,7 @@ export default async function ProjectPage({
         </div>
 
         <h1 className="text-3xl font-semibold tracking-tight">{project.title}</h1>
-        <p className="max-w-2xl text-neutral-700">{project.summary}</p>
+        <p className="max-w-2xl text-[var(--muted)]">{project.summary}</p>
 
         <div className="flex flex-wrap gap-2">
           {project.stack.map((t) => (
@@ -88,7 +88,7 @@ export default async function ProjectPage({
         {project.context ? (
           <Card>
             <Section title="Context">
-              <p className="text-neutral-700">{project.context}</p>
+              <p className="text-[var(--muted)]">{project.context}</p>
             </Section>
           </Card>
         ) : null}
@@ -96,7 +96,7 @@ export default async function ProjectPage({
         {project.problem ? (
           <Card>
             <Section title="Problem">
-              <p className="text-neutral-700">{project.problem}</p>
+              <p className="text-[var(--muted)]">{project.problem}</p>
             </Section>
           </Card>
         ) : null}
@@ -104,7 +104,7 @@ export default async function ProjectPage({
         {project.decisions?.length ? (
           <Card>
             <Section title="Key decisions">
-              <ul className="list-disc space-y-1 pl-5 text-neutral-700">
+              <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
                 {project.decisions.map((d) => (
                   <li key={d}>{d}</li>
                 ))}
@@ -116,7 +116,7 @@ export default async function ProjectPage({
         {project.tradeoffs?.length ? (
           <Card>
             <Section title="Trade-offs">
-              <ul className="list-disc space-y-1 pl-5 text-neutral-700">
+              <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
                 {project.tradeoffs.map((t) => (
                   <li key={t}>{t}</li>
                 ))}
@@ -128,7 +128,7 @@ export default async function ProjectPage({
         {project.outcome?.length ? (
           <Card>
             <Section title="Outcome">
-              <ul className="list-disc space-y-1 pl-5 text-neutral-700">
+              <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
                 {project.outcome.map((o) => (
                   <li key={o}>{o}</li>
                 ))}

@@ -11,13 +11,13 @@ export default function Home() {
   return (
     <Container className="space-y-12 py-10">
       <section className="space-y-4">
-        <p className="text-sm text-neutral-600">Full-Stack Web Developer</p>
+        <p className="text-sm text-[var(--muted-foreground)]">Full-Stack Web Developer</p>
 
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
           I build lean, maintainable, product-oriented web applications.
         </h1>
 
-        <p className="max-w-2xl text-neutral-700">
+        <p className="max-w-2xl text-[var(--muted)]">
           This portfolio is intentionally designed to showcase architectural thinking,
           clarity of reasoning, and product awareness — not just technical output.
         </p>
@@ -42,8 +42,8 @@ export default function Home() {
           {featured.map((project) => (
             <Card key={project.slug} className="space-y-3">
               <div className="space-y-1">
-              <h3 className="font-semibold text-neutral-900">{project.title}</h3>
-                <p className="text-sm text-neutral-700">{project.summary}</p>
+              <h3 className="font-semibold text-[var(--foreground)]">{project.title}</h3>
+                <p className="text-sm text-[var(--muted)]">{project.summary}</p>
               </div>
 
               <div className="flex flex-wrap gap-2">
