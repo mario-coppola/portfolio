@@ -1,10 +1,12 @@
 # Architecture
 
 ## Purpose
-This portfolio is intentionally designed to showcase architectural thinking, clarity of reasoning, and product awareness — not just technical output.
-This repository is a developer portfolio that demonstrates:
+This portfolio is intentionally designed to showcase architectural thinking,
+clarity of reasoning, and product awareness — not just technical output.
+
+It demonstrates:
 - Full-stack competence (frontend + light backend integration when needed)
-- Clear thinking and decision making (tradeoffs, constraints)
+- Clear decision making (trade-offs, constraints)
 - Product mindset (performance, UX, SEO, maintainability)
 
 Primary goals:
@@ -12,52 +14,62 @@ Primary goals:
 - Easy to update (projects/case studies without friction)
 - Clean, understandable codebase that scales to future projects
 
-Non-goals (for v1):
-- No complex CMS integration
-- No heavy animations or “wow for wow”
-- No over-engineering (keep scope small and ship)
+Non-goals (v1):
+- No CMS
+- No heavy animations
+- No over-engineering
+
+---
 
 ## High-level stack
 - Framework: Next.js (App Router) + React + TypeScript
 - Styling: Tailwind CSS
-- Content: local content (MD/MDX or typed data modules) stored in repo
-- Deploy: Vercel (or equivalent) with preview deployments
+- Content: typed local modules in repo
+- Deploy: Vercel (or equivalent)
+
+---
 
 ## Architecture principles
+
 ### 1) Simplicity by default
-- Prefer the simplest solution that is easy to explain.
-- Avoid clever abstractions. If it needs a long explanation, it’s probably wrong.
+Prefer the simplest solution that is easy to explain.
+Avoid clever abstractions.
 
-### 2) Server-first, client-only when necessary
-- Prefer Server Components by default.
-- Use Client Components only for interactivity (state, event handlers, browser APIs).
-- Keep client boundaries small.
+### 2) Server-first
+- Server Components by default
+- Client Components only when interactivity is required
+- Keep client boundaries small
 
-### 3) Thin route handlers, explicit boundaries
-- Route handlers (API routes) are adapters: validate input, call services, return response.
-- Business logic lives in dedicated modules (services/use-cases), not in routes.
+### 3) Explicit boundaries
+- Route handlers are thin adapters
+- Business logic lives outside routes
 
-### 4) Predictable code organization
-- Use `src/` to keep app code separate from config.
-- Keep “feature” code close to where it is used, but centralize shared primitives.
-- Avoid deep nesting and “utils dumping ground”.
+### 4) Predictable organization
+- `src/app` → routes and layouts
+- `src/components/ui` → shared UI primitives
+- `src/components/blocks` → composed blocks
+- `src/content` → typed content
+- `src/lib` → small shared utilities
 
-### 5) Composition over inheritance (UI)
-- Prefer small, composable components.
-- Prefer data-down/actions-up.
+### 5) Composition over inheritance
+Prefer small composable components.
 
-## Project structure (target)
-- `src/app/` — routes, layouts, metadata files
-- `src/components/` — UI components (design-system-ish)
-- `src/features/` — feature modules (projects, contact, etc.)
-- `src/lib/` — shared utilities (small, pure, well-named)
-- `src/server/` — server-only logic (services, integrations) if needed
-- `content/` — MD/MDX or structured content (case studies, writing)
-- `public/` — static assets
+---
 
-## Quality bars (definition of “done”)
-- Readable code: consistent naming, small functions, few side effects
-- Consistent formatting (prettier) + lint rules
-- Basic tests only when they pay off (utility/service logic)
-- SEO baseline: metadata, OG, sitemap, robots, canonical where needed
-- Performance: no unnecessary client JS, optimized images, good Lighthouse basics
+## Quality bar
+- Readable code
+- Small functions
+- Minimal side effects
+- SEO baseline (metadata, sitemap, robots)
+- No unnecessary client JS
+
+---
+
+## Operational notes
+This document explains *why* the architecture is shaped this way.
+
+Operational constraints and rules live in:
+- `docs/PROJECT_RULES.md`
+
+AI operational usage is defined in:
+- `docs/AGENT_PLAYBOOK.md`

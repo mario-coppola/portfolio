@@ -1,0 +1,24 @@
+# Cursor Project Rules
+
+For any non-trivial task:
+
+1) Always reference operational rules:
+   - @docs/PROJECT_RULES.md
+   - @docs/AGENT_PLAYBOOK.md
+
+2) Add narrative context when relevant:
+   - @ARCHITECTURE.md
+   - @DECISIONS.md
+   - @AGENTS.md
+
+3) Do not introduce new dependencies unless explicitly requested.
+
+4) Do not make architectural decisions.
+   If a decision is required, stop and ask.
+
+5) Limit changes to files explicitly mentioned.
+
+6) Use existing UI primitives and CSS tokens.
+   Avoid hardcoded colors.
+
+7) Do not run shell commands unless explicitly allowed.
