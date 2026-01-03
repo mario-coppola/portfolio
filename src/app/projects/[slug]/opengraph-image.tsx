@@ -3,24 +3,23 @@ import { site } from "@/content/site";
 import { projects } from "@/content/projects";
 
 export const runtime = "edge";
-
-export const size = {
-  width: 1200,
-  height: 630,
-};
-
+export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 type Props = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }> | { slug: string };
 };
 
 export default async function OpenGraphImage({ params }: Props) {
-  const { slug } = await params;
+  const { slug } = await Promise.resolve(params);
+
   const project = projects.find((p) => p.slug === slug);
 
-  const title = project?.title ?? "Project";
-  const summary = project?.summary ?? site.description;
+  const title = String(project?.title ?? "Project");
+  const summary = String(project?.summary ?? site.description ?? "");
+  const domain = String(site.url ?? "").replace(/^https?:\/\//, "");
+
+  const footerLine = `${domain} / projects / ${slug}`;
 
   return new ImageResponse(
     (
@@ -30,48 +29,54 @@ export default async function OpenGraphImage({ params }: Props) {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "64px",
-          background: "#ffffff",
-          color: "#0a0a0a",
+          justifyContent: "space-between",
+          padding: 64,
+          backgroundColor: "#ffffff",
           fontFamily: "Arial, Helvetica, sans-serif",
         }}
       >
-        <div style={{ fontSize: 22, color: "#737373" }}>{site.name}</div>
-
-        <div
-          style={{
-            marginTop: 18,
-            fontSize: 64,
-            fontWeight: 700,
-            lineHeight: 1.1,
-            maxWidth: 980,
-          }}
-        >
-          {title}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ fontSize: 22, color: "#737373" }}>{String(site.name)}</div>
         </div>
 
         <div
           style={{
-            marginTop: 22,
-            fontSize: 28,
-            color: "#525252",
-            maxWidth: 980,
+            display: "flex",
+            flexDirection: "column",
+            gap: 22,
           }}
         >
-          {summary}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                fontSize: 64,
+                fontWeight: 700,
+                lineHeight: 1.1,
+                color: "#0a0a0a",
+                maxWidth: 980,
+                letterSpacing: -0.5,
+              }}
+            >
+              {title}
+            </div>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                fontSize: 28,
+                lineHeight: 1.3,
+                color: "#525252",
+                maxWidth: 980,
+              }}
+            >
+              {summary}
+            </div>
+          </div>
         </div>
 
-        <div
-          style={{
-            position: "absolute",
-            bottom: 48,
-            left: 64,
-            fontSize: 20,
-            color: "#737373",
-          }}
-        >
-          {site.url.replace(/^https?:\/\//, "")} / projects / {slug}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ fontSize: 20, color: "#737373" }}>{footerLine}</div>
         </div>
       </div>
     ),
