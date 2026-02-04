@@ -30,15 +30,18 @@ export type HomeContent = {
     primary: { label: string; href: string };
     secondary: { label: string; href: string };
   };
+  otherProjects: {
+    title: string;
+  };
 };
 
 export const homeContent: Record<Lang, HomeContent> = {
   en: {
     hero: {
-      eyebrow: "Full-Stack Web Developer",
-      title: "I build lean, maintainable, product-oriented web applications.",
+      eyebrow: "Backend Engineer — Event-driven systems",
+      title: "I build reliable backend systems for B2B products.",
       subtitle:
-        "This portfolio is intentionally designed to showcase architectural thinking, clarity of reasoning, and product awareness - not just technical output.",
+        "External events, webhooks, idempotency, and observable state—designed to stay correct under real conditions.",
       primaryCta: { label: "View projects", href: "/projects" },
       secondaryCta: { label: "Get in touch", href: "/contact" },
     },
@@ -75,13 +78,16 @@ export const homeContent: Record<Lang, HomeContent> = {
       primary: { label: "Start a project", href: "/contact" },
       secondary: { label: "See the work", href: "/projects" },
     },
+    otherProjects: {
+      title: "Other projects",
+    }
   },
   it: {
     hero: {
-      eyebrow: "Sviluppatore Web Full-Stack",
-      title: "Creo applicazioni web snelle, mantenibili e orientate al prodotto.",
+      eyebrow: "Backend Engineer — Sistemi event-driven",
+      title: "Costruisco backend affidabili per prodotti B2B.",
       subtitle:
-        "Questo portfolio e progettato per mostrare il ragionamento architetturale, la chiarezza delle scelte e la consapevolezza di prodotto - non solo il risultato tecnico.",
+        "Eventi esterni, webhook, idempotenza e stati osservabili—progettati per restarecorretti in condizioni reali.",
       primaryCta: { label: "Vedi progetti", href: "/projects" },
       secondaryCta: { label: "Contattami", href: "/contact" },
     },
@@ -117,6 +123,9 @@ export const homeContent: Record<Lang, HomeContent> = {
         "Se vuoi una web app affidabile che resta snella mentre cresce, parliamone.",
       primary: { label: "Inizia un progetto", href: "/contact" },
       secondary: { label: "Guarda i lavori", href: "/projects" },
+    },
+    otherProjects: {
+      title: "Altri progetti",
     },
   },
 };

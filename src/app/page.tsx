@@ -1,3 +1,5 @@
+import { homeContent } from "@/content/home";
+import { getLangFromSearchParams, t } from "@/content/i18n";
 import { getFlagshipProject, projects } from "@/content/projects";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
@@ -5,7 +7,13 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { TextLink } from "@/components/ui/TextLink";
 
-export default function Home() {
+type HomeProps = {
+  searchParams?: Record<string, string | string[] | undefined>;
+};
+
+export default function Home({ searchParams }: HomeProps) {
+  const lang = getLangFromSearchParams(searchParams);
+  const content = t(homeContent, lang);
   const flagship = getFlagshipProject();
   const otherProjects = projects.filter((project) => project.slug !== flagship?.slug);
 
@@ -13,49 +21,47 @@ export default function Home() {
     <Container className="space-y-12 py-10">
       <section className="space-y-4">
         <p className="text-sm text-[var(--muted-foreground)]">
-          Full-Stack Web Developer
+          {content.hero.eyebrow}
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          Backend-first builder who delivers reliable end-to-end systems.
+          {content.hero.title}
         </h1>
 
         <p className="max-w-2xl text-[var(--muted)]">
-          I focus on data integrity, predictable workflows, and resilient delivery
-          paths. The goal is systems that stay correct under real-world conditions.
+          {content.hero.subtitle}
         </p>
 
         <div className="flex flex-wrap gap-3 pt-2">
-          <ButtonLink href="/projects" variant="secondary">
-            View projects
+          <ButtonLink href={content.hero.primaryCta.href} variant="secondary">
+            {content.hero.primaryCta.label}
           </ButtonLink>
-          <ButtonLink href="/contact" variant="primary">
-            Get in touch
+          <ButtonLink href={content.hero.secondaryCta.href} variant="primary">
+            {content.hero.secondaryCta.label}
           </ButtonLink>
         </div>
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-lg font-semibold">Problem</h2>
-        <p className="max-w-2xl text-[var(--muted)]">
-          External events and webhooks are noisy: providers retry, messages can
-          arrive out of order, and duplicates are common. Without explicit
-          idempotency and state handling, systems drift into inconsistent state
-          and require manual correction.
-        </p>
+        <h2 className="text-lg font-semibold">{content.problem.title}</h2>
+        <p className="max-w-2xl text-[var(--muted)]">{content.problem.body}</p>
       </section>
 
       <section className="space-y-4">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold">Flagship project</h2>
-          <TextLink href="/projects">All projects</TextLink>
+        <div className="space-y-2">
+          <h2 className="text-lg font-semibold">{content.flagship.title}</h2>
+          <p className="max-w-2xl text-[var(--muted)]">
+            {content.flagship.body}
+          </p>
         </div>
 
         {flagship ? (
           <Card className="space-y-3">
             <div className="space-y-1">
               <h3 className="text-base font-semibold text-[var(--foreground)]">
-                {flagship.title}
+                <TextLink href={`/projects/${flagship.slug}`}>
+                  {flagship.title}
+                </TextLink>
               </h3>
               <p className="text-sm text-[var(--muted)]">{flagship.summary}</p>
             </div>
@@ -65,10 +71,6 @@ export default function Home() {
                 <Badge key={stackItem}>{stackItem}</Badge>
               ))}
             </div>
-
-            <div>
-              <TextLink href={`/projects/${flagship.slug}`}>View case study</TextLink>
-            </div>
           </Card>
         ) : null}
       </section>
@@ -76,19 +78,19 @@ export default function Home() {
       <section className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <Card className="space-y-3">
-            <h3 className="text-base font-semibold">Guarantees</h3>
+            <h3 className="text-base font-semibold">{content.guarantees.title}</h3>
             <ul className="space-y-2 text-sm text-[var(--muted)]">
-              <li>Explicit state modeling and idempotency.</li>
-              <li>Observability built in from day one.</li>
-              <li>Clear trade-offs documented as decisions.</li>
+              {content.guarantees.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </Card>
           <Card className="space-y-3">
-            <h3 className="text-base font-semibold">Non-scope</h3>
+            <h3 className="text-base font-semibold">{content.nonScope.title}</h3>
             <ul className="space-y-2 text-sm text-[var(--muted)]">
-              <li>No hype-driven architecture or tooling.</li>
-              <li>No hidden state or implicit side effects.</li>
-              <li>No shortcuts that break data integrity.</li>
+              {content.nonScope.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </Card>
         </div>
@@ -96,8 +98,7 @@ export default function Home() {
 
       <section className="space-y-4">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold">Other projects</h2>
-          <TextLink href="/projects">All projects</TextLink>
+          <h2 className="text-lg font-semibold">{content.otherProjects.title}</h2>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -105,7 +106,9 @@ export default function Home() {
             <Card key={project.slug} className="space-y-3">
               <div className="space-y-1">
                 <h3 className="font-semibold text-[var(--foreground)]">
-                  {project.title}
+                  <TextLink href={`/projects/${project.slug}`}>
+                    {project.title}
+                  </TextLink>
                 </h3>
                 <p className="text-sm text-[var(--muted)]">{project.summary}</p>
               </div>
