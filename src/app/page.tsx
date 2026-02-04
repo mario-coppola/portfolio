@@ -1,6 +1,6 @@
 import { homeContent } from "@/content/home";
 import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
-import { getFlagshipProject, projects } from "@/content/projects";
+import { getFlagshipProject } from "@/content/projects";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -12,7 +12,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
   const lang = getLangFromSearchParams(resolvedSearchParams);
   const content = t(homeContent, lang);
   const flagship = getFlagshipProject();
-  const otherProjects = projects.filter((project) => project.slug !== flagship?.slug);
+  const portfolioBuiltWith = content.portfolioBuiltWith;
 
   return (
     <Container className="space-y-12 py-10">
@@ -93,33 +93,21 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
         </div>
       </section>
 
-      <section className="space-y-4">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold">Other projects</h2>
-          <TextLink href="/projects">{content.hero.primaryCta.label}</TextLink>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          {otherProjects.map((project) => (
-            <Card key={project.slug} className="space-y-3">
-              <div className="space-y-1">
-                <h3 className="font-semibold text-[var(--foreground)]">
-                  <TextLink href={`/projects/${project.slug}`}>
-                    {project.title}
-                  </TextLink>
-                </h3>
-                <p className="text-sm text-[var(--muted)]">{project.summary}</p>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {project.stack.slice(0, 4).map((t) => (
-                  <Badge key={t}>{t}</Badge>
-                ))}
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
+      {portfolioBuiltWith ? (
+        <section className="space-y-4">
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold">{portfolioBuiltWith.title}</h2>
+            <p className="max-w-2xl text-[var(--muted)]">
+              {portfolioBuiltWith.body}
+            </p>
+          </div>
+          <div>
+            <TextLink href="/projects/portfolio">
+              {portfolioBuiltWith.linkLabel}
+            </TextLink>
+          </div>
+        </section>
+      ) : null}
     </Container>
   );
 }

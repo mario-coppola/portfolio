@@ -33,6 +33,11 @@ export type HomeContent = {
   otherProjects: {
     title: string;
   };
+  portfolioBuiltWith?: {
+    title: string;
+    body: string;
+    linkLabel: string
+  };
 };
 
 export const homeContent: Record<Lang, HomeContent> = {
@@ -80,7 +85,13 @@ export const homeContent: Record<Lang, HomeContent> = {
     },
     otherProjects: {
       title: "Other projects",
-    }
+    },
+    portfolioBuiltWith: {
+        title: "This portfolio is built with…",
+        body:
+          "A server-first, SEO-first Next.js app with versioned content and a predictable structure. It’s designed to stay fast, easy to update, and easy to maintain over time.",
+        linkLabel: "See how this site is built",
+      },
   },
   it: {
     hero: {
@@ -126,6 +137,12 @@ export const homeContent: Record<Lang, HomeContent> = {
     },
     otherProjects: {
       title: "Altri progetti",
+    },
+    portfolioBuiltWith: {
+      title: "Questo portfolio è costruito con…",
+      body:
+        "Un’app Next.js server-first e SEO-first, con contenuti versionati e una struttura prevedibile. È pensata per restare veloce, facile da aggiornare e semplice da mantenere nel tempo.",
+      linkLabel: "Vedi come è costruito questo sito",
     },
   },
 };
