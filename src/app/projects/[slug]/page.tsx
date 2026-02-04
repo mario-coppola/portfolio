@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { projects } from "@/content/projects";
+import { getProjectBySlug } from "@/content/projects";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -13,7 +13,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = getProjectBySlug(slug);
 
   if (!project) return { title: "Project not found" };
 
@@ -26,6 +26,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
+      url: `/projects/${slug}`,
       type: "article",
     },
   };
@@ -52,7 +53,7 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = getProjectBySlug(slug);
   if (!project) return notFound();
 
   return (
@@ -87,7 +88,7 @@ export default async function ProjectPage({
       <div className="grid gap-4">
         {project.context ? (
           <Card>
-            <Section title="Context">
+            <Section title="What it is">
               <p className="text-[var(--muted)]">{project.context}</p>
             </Section>
           </Card>
@@ -95,7 +96,7 @@ export default async function ProjectPage({
 
         {project.problem ? (
           <Card>
-            <Section title="Problem">
+            <Section title="Why this is hard">
               <p className="text-[var(--muted)]">{project.problem}</p>
             </Section>
           </Card>
@@ -103,7 +104,7 @@ export default async function ProjectPage({
 
         {project.decisions?.length ? (
           <Card>
-            <Section title="Key decisions">
+            <Section title="Safety design">
               <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
                 {project.decisions.map((d) => (
                   <li key={d}>{d}</li>
@@ -127,7 +128,7 @@ export default async function ProjectPage({
 
         {project.outcome?.length ? (
           <Card>
-            <Section title="Outcome">
+            <Section title="What you get">
               <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
                 {project.outcome.map((o) => (
                   <li key={o}>{o}</li>
@@ -137,6 +138,18 @@ export default async function ProjectPage({
           </Card>
         ) : null}
       </div>
+
+      <Card>
+        <Section title="Working with webhooks and external events?">
+          <p className="text-[var(--muted)]">
+            If you need webhook or external event processing that stays correct under
+            retries, duplicates, and out-of-order delivery, I can help.
+          </p>
+          <ButtonLink href={"/contact"} variant="primary">
+            Get in touch
+          </ButtonLink>
+        </Section>
+      </Card>
     </Container>
   );
 }
