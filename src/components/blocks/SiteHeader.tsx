@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { LanguageSwitch } from "@/components/blocks/LanguageSwitch";
 
 const nav = [
   { href: "/projects", label: "Projects" },
@@ -16,17 +17,21 @@ export function SiteHeader() {
             Mario Coppola
           </Link>
 
-          <nav className="flex flex-wrap items-center gap-4 text-sm">
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="hover hover:underline"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex flex-wrap items-center gap-4">
+            <nav className="flex flex-wrap items-center gap-4 text-sm">
+              {nav.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="hover:underline"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <span className="hidden h-4 w-px bg-[var(--border)] sm:inline-block" aria-hidden="true" />
+            <LanguageSwitch />
+          </div>
         </div>
       </Container>
     </header>

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { caseStudyContent } from "@/content/caseStudy";
+import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
 import { getProjectBySlug } from "@/content/projects";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
@@ -49,10 +51,15 @@ function Section({
 
 export default async function ProjectPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<SearchParams> | SearchParams;
 }) {
   const { slug } = await params;
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const lang = getLangFromSearchParams(resolvedSearchParams);
+  const ui = t(caseStudyContent, lang);
   const project = getProjectBySlug(slug);
   if (!project) return notFound();
 
@@ -60,7 +67,7 @@ export default async function ProjectPage({
     <Container className="space-y-8 py-10">
       <header className="space-y-3">
         <div className="flex flex-wrap items-center gap-3">
-          <TextLink href="/projects">← Back to projects</TextLink>
+          <TextLink href="/projects">{ui.backToProjects}</TextLink>
           {project.year ? <Badge>{project.year}</Badge> : null}
           <Badge>{project.role}</Badge>
         </div>
@@ -88,7 +95,7 @@ export default async function ProjectPage({
       <div className="grid gap-4">
         {project.context ? (
           <Card>
-            <Section title="What it is">
+            <Section title={ui.sectionTitles.whatItIs}>
               <p className="text-[var(--muted)]">{project.context}</p>
             </Section>
           </Card>
@@ -96,7 +103,7 @@ export default async function ProjectPage({
 
         {project.problem ? (
           <Card>
-            <Section title="Why this is hard">
+            <Section title={ui.sectionTitles.whyThisIsHard}>
               <p className="text-[var(--muted)]">{project.problem}</p>
             </Section>
           </Card>
@@ -104,7 +111,7 @@ export default async function ProjectPage({
 
         {project.decisions?.length ? (
           <Card>
-            <Section title="Safety design">
+            <Section title={ui.sectionTitles.safetyDesign}>
               <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
                 {project.decisions.map((d) => (
                   <li key={d}>{d}</li>
@@ -116,7 +123,7 @@ export default async function ProjectPage({
 
         {project.tradeoffs?.length ? (
           <Card>
-            <Section title="Trade-offs">
+            <Section title={ui.sectionTitles.tradeOffs}>
               <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
                 {project.tradeoffs.map((t) => (
                   <li key={t}>{t}</li>
@@ -128,7 +135,7 @@ export default async function ProjectPage({
 
         {project.outcome?.length ? (
           <Card>
-            <Section title="What you get">
+            <Section title={ui.sectionTitles.whatYouGet}>
               <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
                 {project.outcome.map((o) => (
                   <li key={o}>{o}</li>
@@ -140,13 +147,12 @@ export default async function ProjectPage({
       </div>
 
       <Card>
-        <Section title="Working with webhooks and external events?">
+        <Section title={ui.cta.title}>
           <p className="text-[var(--muted)]">
-            If you need webhook or external event processing that stays correct under
-            retries, duplicates, and out-of-order delivery, I can help.
+            {ui.cta.body}
           </p>
           <ButtonLink href={"/contact"} variant="primary">
-            Get in touch
+          {ui.cta.linkLabel}
           </ButtonLink>
         </Section>
       </Card>
