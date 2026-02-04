@@ -4,7 +4,7 @@ const SUPPORTED_LANGS = ["en", "it"] as const;
 
 export type Lang = (typeof SUPPORTED_LANGS)[number];
 
-type SearchParams =
+export type SearchParams =
   | URLSearchParams
   | Record<string, string | string[] | undefined>
   | undefined;

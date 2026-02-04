@@ -1,5 +1,5 @@
 import { homeContent } from "@/content/home";
-import { getLangFromSearchParams, t } from "@/content/i18n";
+import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
 import { getFlagshipProject, projects } from "@/content/projects";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
@@ -7,12 +7,9 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { TextLink } from "@/components/ui/TextLink";
 
-type HomeProps = {
-  searchParams?: Record<string, string | string[] | undefined>;
-};
-
-export default function Home({ searchParams }: HomeProps) {
-  const lang = getLangFromSearchParams(searchParams);
+export default async function Home({ searchParams }: { searchParams?: SearchParams }) {
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const lang = getLangFromSearchParams(resolvedSearchParams);
   const content = t(homeContent, lang);
   const flagship = getFlagshipProject();
   const otherProjects = projects.filter((project) => project.slug !== flagship?.slug);
@@ -98,7 +95,8 @@ export default function Home({ searchParams }: HomeProps) {
 
       <section className="space-y-4">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold">{content.otherProjects.title}</h2>
+          <h2 className="text-lg font-semibold">Other projects</h2>
+          <TextLink href="/projects">{content.hero.primaryCta.label}</TextLink>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
