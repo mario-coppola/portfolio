@@ -84,9 +84,41 @@ export default async function ProjectPage({
   const ui = t(caseStudyContent, lang);
   const project = getProjectBySlug(slug);
   if (!project) return notFound();
+  const siteUrl = getSiteUrl();
+  const personId = `${siteUrl}/#person`;
+  const websiteId = `${siteUrl}/#website`;
+  const inLanguage = lang === "it" ? "it-IT" : "en-US";
+  const canonicalUrl = `${siteUrl}/projects/${slug}`;
+  const sameAsLinks = project.links?.map((link) => link.href) ?? [];
+  const creativeWorkJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.summary,
+    url: canonicalUrl,
+    author: { "@id": personId },
+    keywords: project.stack,
+    sameAs: sameAsLinks,
+    ...(project.year ? { dateCreated: `${project.year}-01-01` } : {}),
+  };
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: project.title,
+    description: project.summary,
+    url: canonicalUrl,
+    isPartOf: { "@id": websiteId },
+    about: { "@id": personId },
+    inLanguage,
+  };
+  const pageJsonLd = [creativeWorkJsonLd, webPageJsonLd];
 
   return (
     <Container className="space-y-8 py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
+      />
       <header className="space-y-3">
         <div className="flex flex-wrap items-center gap-3">
           <TextLink href="/projects">{ui.backToProjects}</TextLink>

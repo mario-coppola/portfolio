@@ -7,6 +7,8 @@ import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
 const siteUrl = getSiteUrl();
 const globalOgImageUrl = absoluteUrl("/opengraph-image");
+const personId = `${siteUrl}/#person`;
+const websiteId = `${siteUrl}/#website`;
 
 export async function generateMetadata({
   searchParams,
@@ -38,9 +40,33 @@ export async function generateMetadata({
   };
 }
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams?: SearchParams;
+}) {
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const lang = getLangFromSearchParams(resolvedSearchParams);
+  const inLanguage = lang === "it" ? "it-IT" : "en-US";
+  const pageDescription =
+    "If you want to discuss a project, collaboration, or just exchange ideas, feel free to reach out.";
+  const pageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Contact",
+    description: pageDescription,
+    url: `${siteUrl}/contact`,
+    isPartOf: { "@id": websiteId },
+    about: { "@id": personId },
+    inLanguage,
+  };
+
   return (
     <Container className="space-y-6 py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
+      />
       <header className="space-y-2">
         <div>
           <TextLink href="/">Back to home</TextLink>

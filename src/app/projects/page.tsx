@@ -11,6 +11,8 @@ import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
 const siteUrl = getSiteUrl();
 const globalOgImageUrl = absoluteUrl("/opengraph-image");
+const personId = `${siteUrl}/#person`;
+const websiteId = `${siteUrl}/#website`;
 
 export async function generateMetadata({
   searchParams,
@@ -42,21 +44,41 @@ export async function generateMetadata({
   };
 }
 
-export default function ProjectsPage() {
+export default async function ProjectsPage({
+  searchParams,
+}: {
+  searchParams?: SearchParams;
+}) {
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const lang = getLangFromSearchParams(resolvedSearchParams);
   const flagship = getFlagshipProject();
   const otherProjects = projects.filter((project) => project.slug !== flagship?.slug);
+  const pageDescription =
+    "A selection of projects and case studies highlighting architectural decisions, trade-offs, and product-oriented thinking.";
+  const inLanguage = lang === "it" ? "it-IT" : "en-US";
+  const pageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Projects",
+    description: pageDescription,
+    url: `${siteUrl}/projects`,
+    isPartOf: { "@id": websiteId },
+    about: { "@id": personId },
+    inLanguage,
+  };
 
   return (
     <Container className="space-y-6 py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
+      />
       <header className="space-y-2">
         <div>
           <TextLink href="/">Back to home</TextLink>
         </div>
         <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
-        <p className="max-w-2xl text-[var(--muted)]">
-          A selection of projects and case studies highlighting architectural decisions,
-          trade-offs, and product-oriented thinking.
-        </p>
+        <p className="max-w-2xl text-[var(--muted)]">{pageDescription}</p>
 
       </header>
 

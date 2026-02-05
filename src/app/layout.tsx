@@ -8,6 +8,27 @@ import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
 const siteUrl = getSiteUrl();
 const globalOgImageUrl = absoluteUrl("/opengraph-image");
+const personId = `${siteUrl}/#person`;
+const websiteId = `${siteUrl}/#website`;
+const globalJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": personId,
+    name: "Mario Coppola",
+    jobTitle: "Backend Engineer / Backend-focused",
+    url: siteUrl,
+    sameAs: [],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": websiteId,
+    name: site.title,
+    url: siteUrl,
+    inLanguage: "en-US",
+  },
+];
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -40,6 +61,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={lang}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(globalJsonLd) }}
+        />
+      </head>
       <body className="min-h-dvh bg-white text-[var(--foreground)] antialiased flex flex-col">
         <SiteHeader />
         <main className="mx-auto w-full max-w-4xl px-4 py-10 flex-1">{children}</main>
