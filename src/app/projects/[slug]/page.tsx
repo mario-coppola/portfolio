@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { caseStudyContent } from "@/content/caseStudy";
 import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
@@ -14,6 +15,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const cookieLang = cookieStore.get("lang")?.value;
+  const lang = cookieLang === "it" || cookieLang === "en" ? cookieLang : "en";
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
@@ -30,6 +34,7 @@ export async function generateMetadata({
       description,
       url: `/projects/${slug}`,
       type: "article",
+      locale: lang === "it" ? "it_IT" : "en_US",
     },
   };
 }

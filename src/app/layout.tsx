@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { SiteHeader } from "@/components/blocks/SiteHeader";
 import { SiteFooter } from "@/components/blocks/SiteFooter";
@@ -30,9 +31,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const cookieLang = cookieStore.get("lang")?.value;
+  const lang = cookieLang === "it" || cookieLang === "en" ? cookieLang : "en";
+
   return (
-    <html lang={site.locale}>
+    <html lang={lang}>
       <body className="min-h-dvh bg-white text-[var(--foreground)] antialiased flex flex-col">
         <SiteHeader />
         <main className="mx-auto w-full max-w-4xl px-4 py-10 flex-1">{children}</main>
