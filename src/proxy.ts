@@ -16,28 +16,33 @@ const isValidLang = (value: string | undefined): value is "en" | "it" =>
 export function proxy(request: NextRequest) {
   const { nextUrl, headers } = request;
   const langParam = nextUrl.searchParams.get("lang") ?? undefined;
-  if (langParam) {
-    const response = NextResponse.next();
-    if (isValidLang(langParam)) {
-      response.cookies.set("lang", langParam, {
-        path: "/",
-        maxAge: 60 * 60 * 24 * 365,
-      });
-    }
-    return response;
-  }
 
   const cookieLang = request.cookies.get("lang")?.value;
   const acceptLanguage = headers.get("accept-language");
-  const lang = isValidLang(cookieLang)
+  const computedLang = isValidLang(cookieLang)
     ? cookieLang
     : isItalianPreferred(acceptLanguage)
       ? "it"
       : "en";
 
+  if (langParam) {
+    if (isValidLang(langParam)) {
+      const response = NextResponse.next();
+      response.cookies.set("lang", langParam, {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 365,
+      });
+      return response;
+    }
+
+    const url = nextUrl.clone();
+    url.searchParams.set("lang", computedLang);
+    return NextResponse.redirect(url, 307);
+  }
+
   const url = nextUrl.clone();
-  url.searchParams.set("lang", lang);
-  return NextResponse.redirect(url);
+  url.searchParams.set("lang", computedLang);
+  return NextResponse.redirect(url, 307);
 }
 
 export const config = {
