@@ -1,32 +1,24 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { caseStudyContent } from "@/content/caseStudy";
 import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
 import { getProjectBySlug } from "@/content/projects";
-import { site } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { TextLink } from "@/components/ui/TextLink";
-
-const rawSiteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || site.url || "http://localhost:3000";
-
-const siteUrl =
-  rawSiteUrl.startsWith("http://") || rawSiteUrl.startsWith("https://")
-    ? rawSiteUrl.replace(/\/$/, "")
-    : `https://${rawSiteUrl.replace(/\/$/, "")}`;
+import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<SearchParams> | SearchParams;
 }): Promise<Metadata> {
-  const cookieStore = await cookies();
-  const cookieLang = cookieStore.get("lang")?.value;
-  const lang = cookieLang === "it" || cookieLang === "en" ? cookieLang : "en";
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const lang = getLangFromSearchParams(resolvedSearchParams);
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
@@ -34,7 +26,8 @@ export async function generateMetadata({
 
   const title = project.title;
   const description = project.summary;
-  const canonicalUrl = `${siteUrl}/projects/${slug}`;
+  const canonicalUrl = `${getSiteUrl()}/projects/${slug}`;
+  const ogImageUrl = absoluteUrl(`/projects/${slug}/opengraph-image`);
 
   return {
     title,
@@ -49,9 +42,16 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `/projects/${slug}`,
+      url: absoluteUrl(`/projects/${slug}`),
       type: "article",
       locale: lang === "it" ? "it_IT" : "en_US",
+      images: [ogImageUrl],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
     },
   };
 }

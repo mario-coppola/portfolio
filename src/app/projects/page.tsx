@@ -1,29 +1,46 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getLangFromSearchParams, type SearchParams } from "@/content/i18n";
 import { getFlagshipProject, projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { TextLink } from "@/components/ui/TextLink";
+import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
-const rawSiteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || site.url || "http://localhost:3000";
+const siteUrl = getSiteUrl();
+const globalOgImageUrl = absoluteUrl("/opengraph-image");
 
-const siteUrl =
-  rawSiteUrl.startsWith("http://") || rawSiteUrl.startsWith("https://")
-    ? rawSiteUrl.replace(/\/$/, "")
-    : `https://${rawSiteUrl.replace(/\/$/, "")}`;
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: SearchParams;
+}): Promise<Metadata> {
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const lang = getLangFromSearchParams(resolvedSearchParams);
 
-export const metadata: Metadata = {
-  alternates: {
-    canonical: `${siteUrl}/projects`,
-    languages: {
-      "en-US": `${siteUrl}/projects?lang=en`,
-      "it-IT": `${siteUrl}/projects?lang=it`,
+  return {
+    alternates: {
+      canonical: `${siteUrl}/projects`,
+      languages: {
+        "en-US": `${siteUrl}/projects?lang=en`,
+        "it-IT": `${siteUrl}/projects?lang=it`,
+      },
     },
-  },
-};
+    openGraph: {
+      url: absoluteUrl("/projects"),
+      locale: lang === "it" ? "it_IT" : "en_US",
+      images: [globalOgImageUrl],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: site.title,
+      description: site.description,
+      images: [globalOgImageUrl],
+    },
+  };
+}
 
 export default function ProjectsPage() {
   const flagship = getFlagshipProject();

@@ -4,14 +4,10 @@ import "./globals.css";
 import { SiteHeader } from "@/components/blocks/SiteHeader";
 import { SiteFooter } from "@/components/blocks/SiteFooter";
 import { site } from "@/content/site";
+import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
-const rawSiteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || site.url || "http://localhost:3000";
-
-const siteUrl =
-  rawSiteUrl.startsWith("http://") || rawSiteUrl.startsWith("https://")
-    ? rawSiteUrl.replace(/\/$/, "")
-    : `https://${rawSiteUrl.replace(/\/$/, "")}`;
+const siteUrl = getSiteUrl();
+const globalOgImageUrl = absoluteUrl("/opengraph-image");
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -27,6 +23,12 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: site.name,
     locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.title,
+    description: site.description,
+    images: [globalOgImageUrl],
   },
   robots: { index: true, follow: true },
 };
