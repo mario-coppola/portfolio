@@ -10,14 +10,30 @@ const isItalianPreferred = (acceptLanguage: string | null): boolean => {
   return lower.startsWith("it") || lower.includes("it-");
 };
 
+const isValidLang = (value: string | undefined): value is "en" | "it" =>
+  value === "en" || value === "it";
+
 export function proxy(request: NextRequest) {
   const { nextUrl, headers } = request;
-  if (nextUrl.searchParams.has("lang")) {
-    return NextResponse.next();
+  const langParam = nextUrl.searchParams.get("lang") ?? undefined;
+  if (langParam) {
+    const response = NextResponse.next();
+    if (isValidLang(langParam)) {
+      response.cookies.set("lang", langParam, {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 365,
+      });
+    }
+    return response;
   }
 
+  const cookieLang = request.cookies.get("lang")?.value;
   const acceptLanguage = headers.get("accept-language");
-  const lang = isItalianPreferred(acceptLanguage) ? "it" : "en";
+  const lang = isValidLang(cookieLang)
+    ? cookieLang
+    : isItalianPreferred(acceptLanguage)
+      ? "it"
+      : "en";
 
   const url = nextUrl.clone();
   url.searchParams.set("lang", lang);
