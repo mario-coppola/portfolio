@@ -1,11 +1,31 @@
+import type { Metadata } from "next";
 import { homeContent } from "@/content/home";
 import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
 import { getFlagshipProject } from "@/content/projects";
+import { site } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { TextLink } from "@/components/ui/TextLink";
+
+const rawSiteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || site.url || "http://localhost:3000";
+
+const siteUrl =
+  rawSiteUrl.startsWith("http://") || rawSiteUrl.startsWith("https://")
+    ? rawSiteUrl.replace(/\/$/, "")
+    : `https://${rawSiteUrl.replace(/\/$/, "")}`;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: siteUrl,
+    languages: {
+      "en-US": `${siteUrl}/?lang=en`,
+      "it-IT": `${siteUrl}/?lang=it`,
+    },
+  },
+};
 
 export default async function Home({ searchParams }: { searchParams?: SearchParams }) {
   const resolvedSearchParams = await Promise.resolve(searchParams);

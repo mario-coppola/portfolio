@@ -1,9 +1,29 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getFlagshipProject, projects } from "@/content/projects";
+import { site } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { TextLink } from "@/components/ui/TextLink";
+
+const rawSiteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || site.url || "http://localhost:3000";
+
+const siteUrl =
+  rawSiteUrl.startsWith("http://") || rawSiteUrl.startsWith("https://")
+    ? rawSiteUrl.replace(/\/$/, "")
+    : `https://${rawSiteUrl.replace(/\/$/, "")}`;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `${siteUrl}/projects`,
+    languages: {
+      "en-US": `${siteUrl}/projects?lang=en`,
+      "it-IT": `${siteUrl}/projects?lang=it`,
+    },
+  },
+};
 
 export default function ProjectsPage() {
   const flagship = getFlagshipProject();

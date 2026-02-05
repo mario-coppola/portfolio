@@ -1,5 +1,25 @@
+import type { Metadata } from "next";
+import { site } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { TextLink } from "@/components/ui/TextLink";
+
+const rawSiteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || site.url || "http://localhost:3000";
+
+const siteUrl =
+  rawSiteUrl.startsWith("http://") || rawSiteUrl.startsWith("https://")
+    ? rawSiteUrl.replace(/\/$/, "")
+    : `https://${rawSiteUrl.replace(/\/$/, "")}`;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `${siteUrl}/contact`,
+    languages: {
+      "en-US": `${siteUrl}/contact?lang=en`,
+      "it-IT": `${siteUrl}/contact?lang=it`,
+    },
+  },
+};
 
 export default function ContactPage() {
   return (

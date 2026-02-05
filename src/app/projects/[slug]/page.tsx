@@ -4,11 +4,20 @@ import { notFound } from "next/navigation";
 import { caseStudyContent } from "@/content/caseStudy";
 import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
 import { getProjectBySlug } from "@/content/projects";
+import { site } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { TextLink } from "@/components/ui/TextLink";
+
+const rawSiteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || site.url || "http://localhost:3000";
+
+const siteUrl =
+  rawSiteUrl.startsWith("http://") || rawSiteUrl.startsWith("https://")
+    ? rawSiteUrl.replace(/\/$/, "")
+    : `https://${rawSiteUrl.replace(/\/$/, "")}`;
 
 export async function generateMetadata({
   params,
@@ -25,10 +34,18 @@ export async function generateMetadata({
 
   const title = project.title;
   const description = project.summary;
+  const canonicalUrl = `${siteUrl}/projects/${slug}`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        "en-US": `${canonicalUrl}?lang=en`,
+        "it-IT": `${canonicalUrl}?lang=it`,
+      },
+    },
     openGraph: {
       title,
       description,
