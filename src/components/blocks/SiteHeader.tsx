@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { Container } from "@/components/ui/Container";
 import { LanguageSwitch } from "@/components/blocks/LanguageSwitch";
 
@@ -30,7 +31,13 @@ export function SiteHeader() {
               ))}
             </nav>
             <span className="hidden h-4 w-px bg-[var(--border)] sm:inline-block" aria-hidden="true" />
-            <LanguageSwitch />
+            <Suspense
+              fallback={
+                <span className="text-sm text-[var(--muted-foreground)]">EN · IT</span>
+              }
+            >
+              <LanguageSwitch />
+            </Suspense>
           </div>
         </div>
       </Container>
