@@ -165,7 +165,7 @@ export default async function ProjectPage({
           </h2>
           <div className="space-y-6">
             <div className="space-y-3">
-              <div className="rounded-md border border-[var(--border)] bg-[var(--card)] p-4 text-center">
+              <div className="rounded-md border-2 border-[var(--border)] bg-[var(--card)] p-4 text-center">
                 <h3 className="text-sm font-semibold text-[var(--foreground)]">
                   {ui.sectionContent.eventFlow.ingest.title}
                 </h3>
@@ -174,7 +174,7 @@ export default async function ProjectPage({
                 </p>
               </div>
               <div className="text-center text-sm text-[var(--muted)]">↓</div>
-              <div className="rounded-md border border-[var(--border)] bg-[var(--card)] p-4 text-center">
+              <div className="rounded-md border-2 border-[var(--border)] bg-[var(--card)] p-4 text-center">
                 <h3 className="text-sm font-semibold text-[var(--foreground)]">
                   {ui.sectionContent.eventFlow.ledgerJob.title}
                 </h3>
@@ -183,7 +183,7 @@ export default async function ProjectPage({
                 </p>
               </div>
               <div className="text-center text-sm text-[var(--muted)]">↓</div>
-              <div className="rounded-md border border-[var(--border)] bg-[var(--card)] p-4 text-center">
+              <div className="rounded-md border-2 border-[var(--border)] bg-[var(--card)] p-4 text-center">
                 <h3 className="text-sm font-semibold text-[var(--foreground)]">
                   {ui.sectionContent.eventFlow.worker.title}
                 </h3>
@@ -192,7 +192,7 @@ export default async function ProjectPage({
                 </p>
               </div>
               <div className="text-center text-sm text-[var(--muted)]">↓</div>
-              <div className="rounded-md border border-[var(--border)] bg-[var(--card)] p-4 text-center">
+              <div className="rounded-md border-2 border-[var(--border)] bg-[var(--card)] p-4 text-center">
                 <h3 className="text-sm font-semibold text-[var(--foreground)]">
                   {ui.sectionContent.eventFlow.effect.title}
                 </h3>
@@ -258,99 +258,105 @@ export default async function ProjectPage({
           <h2 className="text-lg font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.failureStories}
           </h2>
-          <div className="space-y-8">
-            <CaseStudyScenario
-              title={ui.sectionContent.failureStories.scenario1.title}
-              scenario={ui.sectionContent.failureStories.scenario1.scenario}
-              systemBehavior={ui.sectionContent.failureStories.scenario1.systemBehavior}
-              outcome={ui.sectionContent.failureStories.scenario1.outcome}
-              labels={
-                ui.labels ?? {
-                  scenario: "Scenario",
-                  systemBehavior: "System behavior",
-                  outcome: "Outcome",
+          <div className="space-y-6">
+            <Card className="space-y-6">
+              <CaseStudyScenario
+                title={ui.sectionContent.failureStories.scenario1.title}
+                scenario={ui.sectionContent.failureStories.scenario1.scenario}
+                systemBehavior={ui.sectionContent.failureStories.scenario1.systemBehavior}
+                outcome={ui.sectionContent.failureStories.scenario1.outcome}
+                labels={
+                  ui.labels ?? {
+                    scenario: "Scenario",
+                    systemBehavior: "System behavior",
+                    outcome: "Outcome",
+                  }
                 }
-              }
-              scenarioImages={[
-                {
-                  src: "/case-studies/reliable-event-processing/s1-01-ingest-duplicate.png",
-                  alt: "Terminal output showing duplicate ingest requests returning accepted responses.",
-                },
-              ]}
-              systemBehaviorImages={[
-                {
-                  src: "/case-studies/reliable-event-processing/s1-02-two-jobs-same-event.png",
-                  alt: "Job list showing two jobs created for the same event id.",
-                },
-              ]}
-              outcomeImages={[
-                {
-                  src: "/case-studies/reliable-event-processing/s1-03-one-effect.png",
-                  alt: "Ledger view indicating a single effect applied after deduplication.",
-                },
-              ]}
-            />
-            <CaseStudyScenario
-              title={ui.sectionContent.failureStories.scenario2.title}
-              scenario={ui.sectionContent.failureStories.scenario2.scenario}
-              systemBehavior={ui.sectionContent.failureStories.scenario2.systemBehavior}
-              outcome={ui.sectionContent.failureStories.scenario2.outcome}
-              labels={
-                ui.labels ?? {
-                  scenario: "Scenario",
-                  systemBehavior: "System behavior",
-                  outcome: "Outcome",
+                scenarioImages={[
+                  {
+                    src: "/case-studies/reliable-event-processing/s1-01-ingest-duplicate.png",
+                    alt: "Terminal output showing duplicate ingest requests returning accepted responses.",
+                  },
+                ]}
+                systemBehaviorImages={[
+                  {
+                    src: "/case-studies/reliable-event-processing/s1-02-two-jobs-same-event.png",
+                    alt: "Job list showing two jobs created for the same event id.",
+                  },
+                ]}
+                outcomeImages={[
+                  {
+                    src: "/case-studies/reliable-event-processing/s1-03-one-effect.png",
+                    alt: "Ledger view indicating a single effect applied after deduplication.",
+                  },
+                ]}
+              />
+            </Card>
+            <Card className="space-y-6">
+              <CaseStudyScenario
+                title={ui.sectionContent.failureStories.scenario2.title}
+                scenario={ui.sectionContent.failureStories.scenario2.scenario}
+                systemBehavior={ui.sectionContent.failureStories.scenario2.systemBehavior}
+                outcome={ui.sectionContent.failureStories.scenario2.outcome}
+                labels={
+                  ui.labels ?? {
+                    scenario: "Scenario",
+                    systemBehavior: "System behavior",
+                    outcome: "Outcome",
+                  }
                 }
-              }
-              scenarioImages={[
-                {
-                  src: "/case-studies/reliable-event-processing/s2-01-event-malformed-job-queued.png",
-                  alt: "Malformed event payload queued with missing required fields.",
-                },
-              ]}
-              systemBehaviorImages={[
-                {
-                  src: "/case-studies/reliable-event-processing/s2-02-job-failed.png",
-                  alt: "Failed job entry with a recorded error reason.",
-                },
-              ]}
-              outcomeImages={[]}
-            />
-            <CaseStudyScenario
-              title={ui.sectionContent.failureStories.scenario3.title}
-              scenario={ui.sectionContent.failureStories.scenario3.scenario}
-              systemBehavior={ui.sectionContent.failureStories.scenario3.systemBehavior}
-              outcome={ui.sectionContent.failureStories.scenario3.outcome}
-              labels={
-                ui.labels ?? {
-                  scenario: "Scenario",
-                  systemBehavior: "System behavior",
-                  outcome: "Outcome",
+                scenarioImages={[
+                  {
+                    src: "/case-studies/reliable-event-processing/s2-01-event-malformed-job-queued.png",
+                    alt: "Malformed event payload queued with missing required fields.",
+                  },
+                ]}
+                systemBehaviorImages={[
+                  {
+                    src: "/case-studies/reliable-event-processing/s2-02-job-failed.png",
+                    alt: "Failed job entry with a recorded error reason.",
+                  },
+                ]}
+                outcomeImages={[]}
+              />
+            </Card>
+            <Card className="space-y-6">
+              <CaseStudyScenario
+                title={ui.sectionContent.failureStories.scenario3.title}
+                scenario={ui.sectionContent.failureStories.scenario3.scenario}
+                systemBehavior={ui.sectionContent.failureStories.scenario3.systemBehavior}
+                outcome={ui.sectionContent.failureStories.scenario3.outcome}
+                labels={
+                  ui.labels ?? {
+                    scenario: "Scenario",
+                    systemBehavior: "System behavior",
+                    outcome: "Outcome",
+                  }
                 }
-              }
-              scenarioImages={[
-                {
-                  src: "/case-studies/reliable-event-processing/s3-01-job-failed.png",
-                  alt: "Failed job awaiting operator review before requeue.",
-                },
-              ]}
-              systemBehaviorImages={[
-                {
-                  src: "/case-studies/reliable-event-processing/s3-02-manual-requeue.png",
-                  alt: "Operator action showing manual requeue of a failed job.",
-                },
-                {
-                  src: "/case-studies/reliable-event-processing/s3-03-intervention-audit.png",
-                  alt: "Audit record showing intervention actor and reason.",
-                },
-              ]}
-              outcomeImages={[
-                {
-                  src: "/case-studies/reliable-event-processing/s3-04-job-failed-again.png",
-                  alt: "Job failed again after manual requeue attempt.",
-                },
-              ]}
-            />
+                scenarioImages={[
+                  {
+                    src: "/case-studies/reliable-event-processing/s3-01-job-failed.png",
+                    alt: "Failed job awaiting operator review before requeue.",
+                  },
+                ]}
+                systemBehaviorImages={[
+                  {
+                    src: "/case-studies/reliable-event-processing/s3-02-manual-requeue.png",
+                    alt: "Operator action showing manual requeue of a failed job.",
+                  },
+                  {
+                    src: "/case-studies/reliable-event-processing/s3-03-intervention-audit.png",
+                    alt: "Audit record showing intervention actor and reason.",
+                  },
+                ]}
+                outcomeImages={[
+                  {
+                    src: "/case-studies/reliable-event-processing/s3-04-job-failed-again.png",
+                    alt: "Job failed again after manual requeue attempt.",
+                  },
+                ]}
+              />
+            </Card>
           </div>
         </section>
 
