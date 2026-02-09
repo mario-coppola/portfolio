@@ -1,5 +1,6 @@
 import { DefinitionList } from "@/components/ui/DefinitionList";
 import { Figure } from "@/components/ui/Figure";
+import { TextLink } from "@/components/ui/TextLink";
 
 type CaseStudyScenarioImage = {
   src: string;
@@ -16,6 +17,7 @@ type CaseStudyScenarioProps = {
     scenario: string;
     systemBehavior: string;
     outcome: string;
+    openFullSize: string;
   };
   images: CaseStudyScenarioImage[];
 };
@@ -29,25 +31,33 @@ export function CaseStudyScenario({
   images,
 }: CaseStudyScenarioProps) {
   return (
-    <section className="space-y-4">
-      <h3 className="text-lg font-semibold text-[var(--foreground)]">{title}</h3>
-      <DefinitionList
-        items={[
-          { term: labels.scenario, description: scenario },
-          { term: labels.systemBehavior, description: systemBehavior },
-          { term: labels.outcome, description: outcome },
-        ]}
-      />
-      <div className="grid gap-4 md:grid-cols-2">
-        {images.map((image) => (
-          <Figure
-            key={image.src}
-            src={image.src}
-            alt={image.alt}
-            caption={image.caption}
-          />
-        ))}
+    <details className="group rounded-md border border-[var(--border)] bg-[var(--card)] p-4">
+      <summary className="cursor-pointer list-none font-semibold text-[var(--foreground)]">
+        {title}
+      </summary>
+      <div className="mt-4 space-y-4">
+        <DefinitionList
+          items={[
+            { term: labels.scenario, description: scenario },
+            { term: labels.systemBehavior, description: systemBehavior },
+            { term: labels.outcome, description: outcome },
+          ]}
+        />
+        <div className="space-y-6">
+          {images.map((image) => (
+            <div key={image.src} className="space-y-2">
+              <Figure src={image.src} alt={image.alt} caption={image.caption} />
+              <TextLink
+                href={image.src}
+                external
+                className="text-xs"
+              >
+                {labels.openFullSize}
+              </TextLink>
+            </div>
+          ))}
+        </div>
       </div>
-    </section>
+    </details>
   );
 }

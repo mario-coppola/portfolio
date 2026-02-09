@@ -90,6 +90,7 @@ export type CaseStudyContent = {
     scenario: string;
     systemBehavior: string;
     outcome: string;
+    openFullSize: string;
   };
   cta: {
     title: string;
@@ -189,6 +190,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       scenario: "Scenario",
       systemBehavior: "System behavior",
       outcome: "Outcome",
+      openFullSize: "Open full size",
     },
     cta: {
       title: "Working with webhooks and external events?",
@@ -287,6 +289,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       scenario: "Scenario",
       systemBehavior: "Comportamento del sistema",
       outcome: "Risultato",
+      openFullSize: "Apri a dimensione piena",
     },
     cta: {
       title: "Webhook o eventi esterni in produzione?",
