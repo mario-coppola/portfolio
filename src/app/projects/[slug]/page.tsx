@@ -164,7 +164,13 @@ export default async function ProjectPage({
           <h2 className="text-lg font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.eventFlow}
           </h2>
-          <div className="grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+          <div className="space-y-6">
+            <Figure
+              src="/case-studies/reliable-event-processing/flow-diagram.svg"
+              alt="Flow diagram showing ingest, ledger and job creation, worker execution, and effect with admin loop."
+              caption="Event flow diagram."
+              priority
+            />
             <div className="space-y-5">
               <div className="space-y-1">
                 <h3 className="text-sm font-semibold text-[var(--foreground)]">
@@ -209,12 +215,6 @@ export default async function ProjectPage({
                 </ul>
               </div>
             </div>
-            <Figure
-              src="/case-studies/reliable-event-processing/flow-diagram.svg"
-              alt="Flow diagram showing ingest, ledger and job creation, worker execution, and effect with admin loop."
-              caption="Event flow diagram."
-              priority
-            />
           </div>
         </section>
 
@@ -222,39 +222,39 @@ export default async function ProjectPage({
           <h2 className="text-lg font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.jobStates}
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Card className="space-y-2">
-              <h3 className="text-sm font-semibold text-[var(--foreground)]">
+          <div className="space-y-3">
+            <div className="grid gap-2 md:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] md:gap-6">
+              <div className="text-sm font-semibold text-[var(--foreground)]">
                 {ui.sectionContent.jobStates.queued.title}
-              </h3>
-              <p className="text-sm text-[var(--muted)]">
+              </div>
+              <div className="text-sm text-[var(--muted)] md:border-l md:border-[var(--border)] md:pl-6">
                 {ui.sectionContent.jobStates.queued.description}
-              </p>
-            </Card>
-            <Card className="space-y-2">
-              <h3 className="text-sm font-semibold text-[var(--foreground)]">
+              </div>
+            </div>
+            <div className="grid gap-2 md:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] md:gap-6">
+              <div className="text-sm font-semibold text-[var(--foreground)]">
                 {ui.sectionContent.jobStates.inProgress.title}
-              </h3>
-              <p className="text-sm text-[var(--muted)]">
+              </div>
+              <div className="text-sm text-[var(--muted)] md:border-l md:border-[var(--border)] md:pl-6">
                 {ui.sectionContent.jobStates.inProgress.description}
-              </p>
-            </Card>
-            <Card className="space-y-2">
-              <h3 className="text-sm font-semibold text-[var(--foreground)]">
+              </div>
+            </div>
+            <div className="grid gap-2 md:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] md:gap-6">
+              <div className="text-sm font-semibold text-[var(--foreground)]">
                 {ui.sectionContent.jobStates.done.title}
-              </h3>
-              <p className="text-sm text-[var(--muted)]">
+              </div>
+              <div className="text-sm text-[var(--muted)] md:border-l md:border-[var(--border)] md:pl-6">
                 {ui.sectionContent.jobStates.done.description}
-              </p>
-            </Card>
-            <Card className="space-y-2">
-              <h3 className="text-sm font-semibold text-[var(--foreground)]">
+              </div>
+            </div>
+            <div className="grid gap-2 md:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] md:gap-6">
+              <div className="text-sm font-semibold text-[var(--foreground)]">
                 {ui.sectionContent.jobStates.failed.title}
-              </h3>
-              <p className="text-sm text-[var(--muted)]">
+              </div>
+              <div className="text-sm text-[var(--muted)] md:border-l md:border-[var(--border)] md:pl-6">
                 {ui.sectionContent.jobStates.failed.description}
-              </p>
-            </Card>
+              </div>
+            </div>
           </div>
         </section>
 

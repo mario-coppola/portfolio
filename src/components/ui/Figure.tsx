@@ -12,7 +12,7 @@ type FigureProps = {
 export function Figure({ src, alt, caption, className, priority }: FigureProps) {
   return (
     <figure className={cn("space-y-2", className)}>
-      <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)]">
+      <div className="overflow-hidden rounded-md border border-[var(--border)] bg-[var(--card)]">
         <Image
           src={src}
           alt={alt}
