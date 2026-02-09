@@ -10,7 +10,7 @@ export type SearchParams =
   | undefined;
 
 const isLang = (value: string | undefined | null): value is Lang =>
-  value === "en" || value === "it";
+  value != null && SUPPORTED_LANGS.includes(value as Lang);
 
 const DEFAULT_LANG: Lang = isLang(site.locale) ? site.locale : "en";
 
