@@ -8,7 +8,6 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { TextLink } from "@/components/ui/TextLink";
-import { Figure } from "@/components/ui/Figure";
 import { CaseStudyScenario } from "@/components/blocks/CaseStudyScenario";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
@@ -165,14 +164,8 @@ export default async function ProjectPage({
             {ui.sectionTitles.eventFlow}
           </h2>
           <div className="space-y-6">
-            <Figure
-              src="/case-studies/reliable-event-processing/flow-diagram.svg"
-              alt="Flow diagram showing ingest, ledger and job creation, worker execution, and effect with admin loop."
-              caption="Event flow diagram."
-              priority
-            />
-            <div className="space-y-5">
-              <div className="space-y-1">
+            <div className="space-y-3">
+              <div className="rounded-md border border-[var(--border)] bg-[var(--card)] p-4 text-center">
                 <h3 className="text-sm font-semibold text-[var(--foreground)]">
                   {ui.sectionContent.eventFlow.ingest.title}
                 </h3>
@@ -180,7 +173,8 @@ export default async function ProjectPage({
                   {ui.sectionContent.eventFlow.ingest.content}
                 </p>
               </div>
-              <div className="space-y-1">
+              <div className="text-center text-sm text-[var(--muted)]">↓</div>
+              <div className="rounded-md border border-[var(--border)] bg-[var(--card)] p-4 text-center">
                 <h3 className="text-sm font-semibold text-[var(--foreground)]">
                   {ui.sectionContent.eventFlow.ledgerJob.title}
                 </h3>
@@ -188,7 +182,8 @@ export default async function ProjectPage({
                   {ui.sectionContent.eventFlow.ledgerJob.content}
                 </p>
               </div>
-              <div className="space-y-1">
+              <div className="text-center text-sm text-[var(--muted)]">↓</div>
+              <div className="rounded-md border border-[var(--border)] bg-[var(--card)] p-4 text-center">
                 <h3 className="text-sm font-semibold text-[var(--foreground)]">
                   {ui.sectionContent.eventFlow.worker.title}
                 </h3>
@@ -196,7 +191,8 @@ export default async function ProjectPage({
                   {ui.sectionContent.eventFlow.worker.content}
                 </p>
               </div>
-              <div className="space-y-1">
+              <div className="text-center text-sm text-[var(--muted)]">↓</div>
+              <div className="rounded-md border border-[var(--border)] bg-[var(--card)] p-4 text-center">
                 <h3 className="text-sm font-semibold text-[var(--foreground)]">
                   {ui.sectionContent.eventFlow.effect.title}
                 </h3>
@@ -204,16 +200,16 @@ export default async function ProjectPage({
                   {ui.sectionContent.eventFlow.effect.content}
                 </p>
               </div>
-              <div className="space-y-2">
-                <h3 className="text-sm font-semibold text-[var(--foreground)]">
-                  {ui.sectionContent.eventFlow.mentalModel.title}
-                </h3>
-                <ul className="list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
-                  <li>{ui.sectionContent.eventFlow.mentalModel.line1}</li>
-                  <li>{ui.sectionContent.eventFlow.mentalModel.line2}</li>
-                  <li>{ui.sectionContent.eventFlow.mentalModel.line3}</li>
-                </ul>
-              </div>
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                {ui.sectionContent.eventFlow.mentalModel.title}
+              </h3>
+              <ul className="list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
+                <li>{ui.sectionContent.eventFlow.mentalModel.line1}</li>
+                <li>{ui.sectionContent.eventFlow.mentalModel.line2}</li>
+                <li>{ui.sectionContent.eventFlow.mentalModel.line3}</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -268,22 +264,29 @@ export default async function ProjectPage({
               scenario={ui.sectionContent.failureStories.scenario1.scenario}
               systemBehavior={ui.sectionContent.failureStories.scenario1.systemBehavior}
               outcome={ui.sectionContent.failureStories.scenario1.outcome}
-              labels={ui.labels}
-              images={[
+              labels={
+                ui.labels ?? {
+                  scenario: "Scenario",
+                  systemBehavior: "System behavior",
+                  outcome: "Outcome",
+                }
+              }
+              scenarioImages={[
                 {
                   src: "/case-studies/reliable-event-processing/s1-01-ingest-duplicate.png",
                   alt: "Terminal output showing duplicate ingest requests returning accepted responses.",
-                  caption: "Duplicate ingest.",
                 },
+              ]}
+              systemBehaviorImages={[
                 {
                   src: "/case-studies/reliable-event-processing/s1-02-two-jobs-same-event.png",
                   alt: "Job list showing two jobs created for the same event id.",
-                  caption: "Two jobs created.",
                 },
+              ]}
+              outcomeImages={[
                 {
                   src: "/case-studies/reliable-event-processing/s1-03-one-effect.png",
                   alt: "Ledger view indicating a single effect applied after deduplication.",
-                  caption: "Only one effect.",
                 },
               ]}
             />
@@ -292,46 +295,59 @@ export default async function ProjectPage({
               scenario={ui.sectionContent.failureStories.scenario2.scenario}
               systemBehavior={ui.sectionContent.failureStories.scenario2.systemBehavior}
               outcome={ui.sectionContent.failureStories.scenario2.outcome}
-              labels={ui.labels}
-              images={[
+              labels={
+                ui.labels ?? {
+                  scenario: "Scenario",
+                  systemBehavior: "System behavior",
+                  outcome: "Outcome",
+                }
+              }
+              scenarioImages={[
                 {
                   src: "/case-studies/reliable-event-processing/s2-01-event-malformed-job-queued.png",
                   alt: "Malformed event payload queued with missing required fields.",
-                  caption: "Malformed payload.",
                 },
+              ]}
+              systemBehaviorImages={[
                 {
                   src: "/case-studies/reliable-event-processing/s2-02-job-failed.png",
                   alt: "Failed job entry with a recorded error reason.",
-                  caption: "Job failed.",
                 },
               ]}
+              outcomeImages={[]}
             />
             <CaseStudyScenario
               title={ui.sectionContent.failureStories.scenario3.title}
               scenario={ui.sectionContent.failureStories.scenario3.scenario}
               systemBehavior={ui.sectionContent.failureStories.scenario3.systemBehavior}
               outcome={ui.sectionContent.failureStories.scenario3.outcome}
-              labels={ui.labels}
-              images={[
+              labels={
+                ui.labels ?? {
+                  scenario: "Scenario",
+                  systemBehavior: "System behavior",
+                  outcome: "Outcome",
+                }
+              }
+              scenarioImages={[
                 {
                   src: "/case-studies/reliable-event-processing/s3-01-job-failed.png",
                   alt: "Failed job awaiting operator review before requeue.",
-                  caption: "Job failed.",
                 },
+              ]}
+              systemBehaviorImages={[
                 {
                   src: "/case-studies/reliable-event-processing/s3-02-manual-requeue.png",
                   alt: "Operator action showing manual requeue of a failed job.",
-                  caption: "Manual requeue.",
                 },
                 {
                   src: "/case-studies/reliable-event-processing/s3-03-intervention-audit.png",
                   alt: "Audit record showing intervention actor and reason.",
-                  caption: "Intervention audit.",
                 },
+              ]}
+              outcomeImages={[
                 {
                   src: "/case-studies/reliable-event-processing/s3-04-job-failed-again.png",
                   alt: "Job failed again after manual requeue attempt.",
-                  caption: "Failed again.",
                 },
               ]}
             />

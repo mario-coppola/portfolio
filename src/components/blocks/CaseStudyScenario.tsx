@@ -1,6 +1,4 @@
-import { DefinitionList } from "@/components/ui/DefinitionList";
 import { Figure } from "@/components/ui/Figure";
-import { TextLink } from "@/components/ui/TextLink";
 
 type CaseStudyScenarioImage = {
   src: string;
@@ -13,13 +11,20 @@ type CaseStudyScenarioProps = {
   scenario: string;
   systemBehavior: string;
   outcome: string;
-  labels: {
+  labels?: {
     scenario: string;
     systemBehavior: string;
     outcome: string;
-    openFullSize: string;
   };
-  images: CaseStudyScenarioImage[];
+  scenarioImages: CaseStudyScenarioImage[];
+  systemBehaviorImages: CaseStudyScenarioImage[];
+  outcomeImages: CaseStudyScenarioImage[];
+};
+
+const defaultLabels = {
+  scenario: "Scenario",
+  systemBehavior: "System behavior",
+  outcome: "Outcome",
 };
 
 export function CaseStudyScenario({
@@ -27,37 +32,44 @@ export function CaseStudyScenario({
   scenario,
   systemBehavior,
   outcome,
-  labels,
-  images,
+  labels = defaultLabels,
+  scenarioImages,
+  systemBehaviorImages,
+  outcomeImages,
 }: CaseStudyScenarioProps) {
   return (
-    <details className="group rounded-md border border-[var(--border)] bg-[var(--card)] p-4">
-      <summary className="cursor-pointer list-none font-semibold text-[var(--foreground)]">
-        {title}
-      </summary>
-      <div className="mt-4 space-y-4">
-        <DefinitionList
-          items={[
-            { term: labels.scenario, description: scenario },
-            { term: labels.systemBehavior, description: systemBehavior },
-            { term: labels.outcome, description: outcome },
-          ]}
-        />
-        <div className="space-y-6">
-          {images.map((image) => (
-            <div key={image.src} className="space-y-2">
-              <Figure src={image.src} alt={image.alt} caption={image.caption} />
-              <TextLink
-                href={image.src}
-                external
-                className="text-xs"
-              >
-                {labels.openFullSize}
-              </TextLink>
-            </div>
+    <section className="space-y-4">
+      <h3 className="text-lg font-semibold text-[var(--foreground)]">{title}</h3>
+      <div className="space-y-2">
+        <p className="text-sm text-[var(--foreground)]">
+          <span className="font-semibold">{labels.scenario}:</span> {scenario}
+        </p>
+        <div className="space-y-4">
+          {scenarioImages.map((image) => (
+            <Figure key={image.src} src={image.src} alt={image.alt} />
           ))}
         </div>
       </div>
-    </details>
+      <div className="space-y-2">
+        <p className="text-sm text-[var(--foreground)]">
+          <span className="font-semibold">{labels.systemBehavior}:</span> {systemBehavior}
+        </p>
+        <div className="space-y-4">
+          {systemBehaviorImages.map((image) => (
+            <Figure key={image.src} src={image.src} alt={image.alt} />
+          ))}
+        </div>
+      </div>
+      <div className="space-y-2">
+        <p className="text-sm text-[var(--foreground)]">
+          <span className="font-semibold">{labels.outcome}:</span> {outcome}
+        </p>
+        <div className="space-y-4">
+          {outcomeImages.map((image) => (
+            <Figure key={image.src} src={image.src} alt={image.alt} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
