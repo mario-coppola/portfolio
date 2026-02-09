@@ -86,6 +86,11 @@ export type CaseStudyContent = {
     };
     whatYouGet: string;
   };
+  labels: {
+    scenario: string;
+    systemBehavior: string;
+    outcome: string;
+  };
   cta: {
     title: string;
     body: string;
@@ -115,12 +120,12 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
         line3: "Each event produces at most one effective side effect (idempotent processing).",
         line4: "Failed jobs can be retried only via explicit, audited human intervention.",
       },
-      tradeOffs: "The system is designed to bedeliberately small, understandable, and safe. More features can be added later when operational needs justify the complexity.",
+      tradeOffs: "The system is designed to be deliberately small, understandable, and safe. More features can be added later when operational needs justify the complexity.",
       whatYouGet: "Predictable behavior when things go wrong, with enough visibility for operators to understand and control the system.",
       eventFlow: {
         ingest: {
           title: "Ingest",
-          content: "External systems send events to the API. The API validates input and acknowledges receipt immediately.em accepts events asynchronously, without performing any side effects. Each event is persisted immutably before processing begins."
+          content: "External systems send events to the API. The API validates input and acknowledges receipt immediately."
         },
         ledgerJob: {
           title: "Ledger + Job",
@@ -179,6 +184,11 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
         outcome: "Job transitions back to queued - Audit trail visible via admin endpoints - Full traceability of manual action",
         },
       },
+    },
+    labels: {
+      scenario: "Scenario",
+      systemBehavior: "System behavior",
+      outcome: "Outcome",
     },
     cta: {
       title: "Working with webhooks and external events?",
@@ -272,6 +282,11 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
         outcome: "Job torna in queued - Audit visibile - Tracciabilità completa dell’intervento umano",
         },
       },
+    },
+    labels: {
+      scenario: "Scenario",
+      systemBehavior: "Comportamento del sistema",
+      outcome: "Risultato",
     },
     cta: {
       title: "Webhook o eventi esterni in produzione?",

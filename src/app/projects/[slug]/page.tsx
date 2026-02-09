@@ -8,6 +8,8 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { TextLink } from "@/components/ui/TextLink";
+import { Figure } from "@/components/ui/Figure";
+import { CaseStudyScenario } from "@/components/blocks/CaseStudyScenario";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
 export async function generateMetadata({
@@ -54,21 +56,6 @@ export async function generateMetadata({
       images: [ogImageUrl],
     },
   };
-}
-
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="space-y-2">
-      <h2 className="text-lg font-semibold text-[var(--foreground)]">{title}</h2>
-      {children}
-    </section>
-  );
 }
 
 export default async function ProjectPage({
@@ -146,69 +133,238 @@ export default async function ProjectPage({
         ) : null}
       </header>
 
-      <div className="grid gap-4">
-        {project.context ? (
-          <Card>
-            <Section title={ui.sectionTitles.whatItIs}>
-              <p className="text-[var(--muted)]">{project.context}</p>
-            </Section>
-          </Card>
-        ) : null}
+      <div className="space-y-10">
+        <section className="space-y-2">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            {ui.sectionTitles.whatItIs}
+          </h2>
+          <p className="text-[var(--muted)]">{ui.sectionContent.whatItIs}</p>
+        </section>
 
-        {project.problem ? (
-          <Card>
-            <Section title={ui.sectionTitles.whyThisIsHard}>
-              <p className="text-[var(--muted)]">{project.problem}</p>
-            </Section>
-          </Card>
-        ) : null}
+        <section className="space-y-2">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            {ui.sectionTitles.whyThisIsHard}
+          </h2>
+          <p className="text-[var(--muted)]">{ui.sectionContent.whyThisIsHard}</p>
+        </section>
 
-        {project.decisions?.length ? (
-          <Card>
-            <Section title={ui.sectionTitles.safetyDesign}>
-              <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
-                {project.decisions.map((d) => (
-                  <li key={d}>{d}</li>
-                ))}
-              </ul>
-            </Section>
-          </Card>
-        ) : null}
+        <section className="space-y-3">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            {ui.sectionTitles.safetyDesign}
+          </h2>
+          <ol className="list-decimal space-y-1 pl-5 text-[var(--muted)]">
+            <li>{ui.sectionContent.safetyDesign.line1}</li>
+            <li>{ui.sectionContent.safetyDesign.line2}</li>
+            <li>{ui.sectionContent.safetyDesign.line3}</li>
+            <li>{ui.sectionContent.safetyDesign.line4}</li>
+          </ol>
+        </section>
 
-        {project.tradeoffs?.length ? (
-          <Card>
-            <Section title={ui.sectionTitles.tradeOffs}>
-              <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
-                {project.tradeoffs.map((t) => (
-                  <li key={t}>{t}</li>
-                ))}
-              </ul>
-            </Section>
-          </Card>
-        ) : null}
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            {ui.sectionTitles.eventFlow}
+          </h2>
+          <div className="grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+            <div className="space-y-5">
+              <div className="space-y-1">
+                <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                  {ui.sectionContent.eventFlow.ingest.title}
+                </h3>
+                <p className="text-sm text-[var(--muted)]">
+                  {ui.sectionContent.eventFlow.ingest.content}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                  {ui.sectionContent.eventFlow.ledgerJob.title}
+                </h3>
+                <p className="text-sm text-[var(--muted)]">
+                  {ui.sectionContent.eventFlow.ledgerJob.content}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                  {ui.sectionContent.eventFlow.worker.title}
+                </h3>
+                <p className="text-sm text-[var(--muted)]">
+                  {ui.sectionContent.eventFlow.worker.content}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                  {ui.sectionContent.eventFlow.effect.title}
+                </h3>
+                <p className="text-sm text-[var(--muted)]">
+                  {ui.sectionContent.eventFlow.effect.content}
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                  {ui.sectionContent.eventFlow.mentalModel.title}
+                </h3>
+                <ul className="list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
+                  <li>{ui.sectionContent.eventFlow.mentalModel.line1}</li>
+                  <li>{ui.sectionContent.eventFlow.mentalModel.line2}</li>
+                  <li>{ui.sectionContent.eventFlow.mentalModel.line3}</li>
+                </ul>
+              </div>
+            </div>
+            <Figure
+              src="/case-studies/reliable-event-processing/flow-diagram.svg"
+              alt="Flow diagram showing ingest, ledger and job creation, worker execution, and effect with admin loop."
+              caption="Event flow diagram."
+              priority
+            />
+          </div>
+        </section>
 
-        {project.outcome?.length ? (
-          <Card>
-            <Section title={ui.sectionTitles.whatYouGet}>
-              <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
-                {project.outcome.map((o) => (
-                  <li key={o}>{o}</li>
-                ))}
-              </ul>
-            </Section>
-          </Card>
-        ) : null}
+        <section className="space-y-4">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            {ui.sectionTitles.jobStates}
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Card className="space-y-2">
+              <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                {ui.sectionContent.jobStates.queued.title}
+              </h3>
+              <p className="text-sm text-[var(--muted)]">
+                {ui.sectionContent.jobStates.queued.description}
+              </p>
+            </Card>
+            <Card className="space-y-2">
+              <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                {ui.sectionContent.jobStates.inProgress.title}
+              </h3>
+              <p className="text-sm text-[var(--muted)]">
+                {ui.sectionContent.jobStates.inProgress.description}
+              </p>
+            </Card>
+            <Card className="space-y-2">
+              <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                {ui.sectionContent.jobStates.done.title}
+              </h3>
+              <p className="text-sm text-[var(--muted)]">
+                {ui.sectionContent.jobStates.done.description}
+              </p>
+            </Card>
+            <Card className="space-y-2">
+              <h3 className="text-sm font-semibold text-[var(--foreground)]">
+                {ui.sectionContent.jobStates.failed.title}
+              </h3>
+              <p className="text-sm text-[var(--muted)]">
+                {ui.sectionContent.jobStates.failed.description}
+              </p>
+            </Card>
+          </div>
+        </section>
+
+        <section className="space-y-6">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            {ui.sectionTitles.failureStories}
+          </h2>
+          <div className="space-y-8">
+            <CaseStudyScenario
+              title={ui.sectionContent.failureStories.scenario1.title}
+              scenario={ui.sectionContent.failureStories.scenario1.scenario}
+              systemBehavior={ui.sectionContent.failureStories.scenario1.systemBehavior}
+              outcome={ui.sectionContent.failureStories.scenario1.outcome}
+              labels={ui.labels}
+              images={[
+                {
+                  src: "/case-studies/reliable-event-processing/s1-01-ingest-duplicate.png",
+                  alt: "Terminal output showing duplicate ingest requests returning accepted responses.",
+                  caption: "Duplicate ingest.",
+                },
+                {
+                  src: "/case-studies/reliable-event-processing/s1-02-two-jobs-same-event.png",
+                  alt: "Job list showing two jobs created for the same event id.",
+                  caption: "Two jobs created.",
+                },
+                {
+                  src: "/case-studies/reliable-event-processing/s1-03-one-effect.png",
+                  alt: "Ledger view indicating a single effect applied after deduplication.",
+                  caption: "Only one effect.",
+                },
+              ]}
+            />
+            <CaseStudyScenario
+              title={ui.sectionContent.failureStories.scenario2.title}
+              scenario={ui.sectionContent.failureStories.scenario2.scenario}
+              systemBehavior={ui.sectionContent.failureStories.scenario2.systemBehavior}
+              outcome={ui.sectionContent.failureStories.scenario2.outcome}
+              labels={ui.labels}
+              images={[
+                {
+                  src: "/case-studies/reliable-event-processing/s2-01-event-malformed-job-queued.png",
+                  alt: "Malformed event payload queued with missing required fields.",
+                  caption: "Malformed payload.",
+                },
+                {
+                  src: "/case-studies/reliable-event-processing/s2-02-job-failed.png",
+                  alt: "Failed job entry with a recorded error reason.",
+                  caption: "Job failed.",
+                },
+              ]}
+            />
+            <CaseStudyScenario
+              title={ui.sectionContent.failureStories.scenario3.title}
+              scenario={ui.sectionContent.failureStories.scenario3.scenario}
+              systemBehavior={ui.sectionContent.failureStories.scenario3.systemBehavior}
+              outcome={ui.sectionContent.failureStories.scenario3.outcome}
+              labels={ui.labels}
+              images={[
+                {
+                  src: "/case-studies/reliable-event-processing/s3-01-job-failed.png",
+                  alt: "Failed job awaiting operator review before requeue.",
+                  caption: "Job failed.",
+                },
+                {
+                  src: "/case-studies/reliable-event-processing/s3-02-manual-requeue.png",
+                  alt: "Operator action showing manual requeue of a failed job.",
+                  caption: "Manual requeue.",
+                },
+                {
+                  src: "/case-studies/reliable-event-processing/s3-03-intervention-audit.png",
+                  alt: "Audit record showing intervention actor and reason.",
+                  caption: "Intervention audit.",
+                },
+                {
+                  src: "/case-studies/reliable-event-processing/s3-04-job-failed-again.png",
+                  alt: "Job failed again after manual requeue attempt.",
+                  caption: "Failed again.",
+                },
+              ]}
+            />
+          </div>
+        </section>
+
+        <section className="space-y-2">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            {ui.sectionTitles.tradeOffs}
+          </h2>
+          <p className="text-[var(--muted)]">{ui.sectionContent.tradeOffs}</p>
+        </section>
+
+        <section className="space-y-2">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            {ui.sectionTitles.whatYouGet}
+          </h2>
+          <p className="text-[var(--muted)]">{ui.sectionContent.whatYouGet}</p>
+        </section>
       </div>
 
       <Card>
-        <Section title={ui.cta.title}>
+        <section className="space-y-2">
+          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+            {ui.cta.title}
+          </h2>
           <p className="text-[var(--muted)]">
             {ui.cta.body}
           </p>
           <ButtonLink href={"/contact"} variant="primary">
-          {ui.cta.linkLabel}
+            {ui.cta.linkLabel}
           </ButtonLink>
-        </Section>
+        </section>
       </Card>
     </Container>
   );
