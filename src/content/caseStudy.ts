@@ -8,6 +8,9 @@ export type CaseStudyContent = {
     safetyDesign: string;
     tradeOffs: string;
     whatYouGet: string;
+    jobStates: string;
+    eventFlow: string;
+    failureStories: string;
   };
   sectionContent: {
     whatItIs: string;
@@ -20,7 +23,6 @@ export type CaseStudyContent = {
     };
     tradeOffs: string;
     eventFlow: {
-      title: string;
       ingest: {
         title: string;
         content: string;
@@ -37,12 +39,50 @@ export type CaseStudyContent = {
         title: string;
         content: string;
       };
+      mentalModel: {
+        title: string;
+        line1: string;
+        line2: string;
+        line3: string;
+      };
     };
-    mentalModel: {
-      title: string;
-      line1: string;
-      line2: string;
-      line3: string;
+    jobStates: {
+      queued: {
+        title: string;
+        description: string;
+      };
+      inProgress: {
+        title: string;
+        description: string;
+      };
+      done: {
+        title: string;
+        description: string;
+      };
+      failed: {
+        title: string;
+        description: string;
+      };
+    };
+    failureStories: {
+      scenario1: {
+        title: string;
+        scenario: string;
+        systemBehavior: string;
+        outcome: string;
+      };
+      scenario2: {
+        title: string;
+        scenario: string;
+        systemBehavior: string;
+        outcome: string;
+      };
+      scenario3: {
+        title: string;
+        scenario: string;
+        systemBehavior: string;
+        outcome: string;
+      };
     };
     whatYouGet: string;
   };
@@ -62,6 +102,9 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       safetyDesign: "Safety design",
       tradeOffs: "Trade-offs",
       whatYouGet: "What you get",
+      eventFlow: "Event flow",
+      jobStates: "Job states",
+      failureStories: "Failure stories",
     },
     sectionContent: {
       whatItIs: "This project is a minimal event processing system designed for safe operation under failure. It treats incoming events as untrusted input, persists every event immutably before processing, executes work asynchronously, and makes all failures explicit and operable—including audited manual intervention.",
@@ -75,7 +118,6 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       tradeOffs: "The system is designed to bedeliberately small, understandable, and safe. More features can be added later when operational needs justify the complexity.",
       whatYouGet: "Predictable behavior when things go wrong, with enough visibility for operators to understand and control the system.",
       eventFlow: {
-        title: "Event flow",
         ingest: {
           title: "Ingest",
           content: "External systems send events to the API. The API validates input and acknowledges receipt immediately.em accepts events asynchronously, without performing any side effects. Each event is persisted immutably before processing begins."
@@ -92,13 +134,51 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
           title: "Effect + Admin Loop",
           content: "The effect is applied exactly once, or the job transitions to failed. Operators can inspect failures and manually requeue jobs with full audit visibility."
         },
-      },
         mentalModel: {
           title: "Mental model",
           line1: "Ingest never performs side effects.",
           line2: "Workers never accept untracked input.",
           line3: "Operators intervene only when something went wrong.",
         }
+      },
+      jobStates: {
+        queued: {
+          title: "queued",
+          description: "The job is persisted and waiting to be picked up by a worker.",
+        },
+        inProgress: {
+          title: "in_progress",
+          description: "A worker is currently executing the job.",
+        },
+        done: {
+          title: "done",
+          description: "The effect has been applied successfully and will not be repeated.",
+        },
+        failed: {
+          title: "failed",
+          description: "The job cannot proceed due to a permanent error and requires manual action.",
+        },
+      },
+      failureStories: {
+        scenario1: {
+        title: "Duplicate Event",
+        scenario: "An external provider retries the same event multiple times.",
+        systemBehavior: "The event ledger detects duplication via idempotency keys. Only one job produces an effect.",
+        outcome: "Single activation record - No duplicate side effects - Ledger shows only one effective processing",
+        },
+        scenario2: {
+        title: "Malformed Payload",
+        scenario: "An event is missing required fields.",
+        systemBehavior: "The job fails deterministically during processing. The failure reason is persisted.",
+        outcome: "Job in failed state - Error reason visible - No partial side effects",
+        },
+        scenario3: {
+        title: "Manual Requeue",
+        scenario: "An operator retries a failed job.",
+        systemBehavior: "The job is requeued manually. An audit record is created with actor and reason.",
+        outcome: "Job transitions back to queued - Audit trail visible via admin endpoints - Full traceability of manual action",
+        },
+      },
     },
     cta: {
       title: "Working with webhooks and external events?",
@@ -115,6 +195,9 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       safetyDesign: "Progettazione per l'affidabilità",
       tradeOffs: "Compromessi",
       whatYouGet: "Cosa ottieni",
+      jobStates: "Stati del job",
+      eventFlow: "Flusso eventi",
+      failureStories: "Failure stories",
     },
     sectionContent: {
       whatItIs: "Questo progetto è un sistema minimale di event processing progettato per operare in sicurezza in presenza di failure. Tratta ogni evento in ingresso come input non affidabile, persiste ogni evento in modo immutabile prima del processing, esegue il lavoro in modo asincrono, e rende tutti i fallimenti espliciti e operabili—incluso l’intervento umano auditato.",
@@ -128,7 +211,6 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       tradeOffs: "Il sistema è costruito per essere volutamente snello, comprensibile e sicuro. Altre funzionalità potranno essere introdotte in seguito, quando le esigenze operative reali giustificheranno l'aumento di complessità.",
       whatYouGet: "Comportamento prevedibile quando le cose vanno male, con visibilità sufficiente per permettere agli operatori di capire e controllare il sistema.",
       eventFlow: {
-        title: "Flusso eventi",
         ingest: {
           title: "Ingest",
           content: "I sistemi esterni inviano eventi all’API. L’API valida l’input e risponde immediatamente."
@@ -145,13 +227,51 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
           title: "Effect + Admin Loop",
           content: "L’effetto viene applicato una sola volta oppure il job fallisce. Gli operatori possono ispezionare i fallimenti e fare requeue manuale con audit completo."
         },
-      },
         mentalModel: {
           title: "Modello mentale",
           line1: "L’ingest non produce effetti.",
           line2: "I worker non processano input non tracciato.",
           line3: "Gli operatori intervengono solo quando qualcosa va storto.",
         }
+      },
+      jobStates: {
+        queued: {
+          title: "queued",
+          description: "Il job è persistito ed è in attesa di essere processato.",
+        },
+        inProgress: {
+          title: "in_progress",
+          description: "Un worker sta eseguendo il job.",
+        },
+        done: {
+          title: "done",
+          description: "L’effetto è stato applicato con successo e non verrà ripetuto.",
+        },
+        failed: {
+          title: "failed",
+          description: "Il job non può proseguire a causa di un errore permanente e richiede intervento manuale.",
+        },
+      },
+      failureStories: {
+        scenario1: {
+        title: "Evento duplicato",
+        scenario: "Un provider esterno invia lo stesso evento più volte.",
+        systemBehavior: "Il ledger rileva il duplicato tramite chiavi di idempotenza. Solo un job produce un effetto.",
+        outcome: "Una sola activation - Nessun effetto duplicato - Ledger coerente",
+        },
+        scenario2: {
+        title: "Payload malformato",
+        scenario: "Un evento arriva con payload incompleto o malformato.",
+        systemBehavior: "Il job fallisce in modo deterministico. Il motivo del fallimento viene salvato.",
+        outcome: "Job in stato failed - Errore visibile - Nessun effetto parziale",
+        },
+        scenario3: {
+        title: "Requeue Manuale",
+        scenario: "Un operatore ritenta un job fallito.",
+        systemBehavior: "Il job viene rimesso in coda manualmente. Viene creato un record di audit con actor e reason.",
+        outcome: "Job torna in queued - Audit visibile - Tracciabilità completa dell’intervento umano",
+        },
+      },
     },
     cta: {
       title: "Webhook o eventi esterni in produzione?",
