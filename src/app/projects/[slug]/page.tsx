@@ -9,7 +9,9 @@ import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { TextLink } from "@/components/ui/TextLink";
 import { CaseStudyScenario } from "@/components/blocks/CaseStudyScenario";
-import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
+import { getSiteUrl } from "@/lib/siteUrl";
+import { buildAlternates, buildSocialMeta } from "@/lib/seo";
+import { buildCaseStudyJsonLd } from "@/lib/jsonLd";
 
 export async function generateMetadata({
   params,
@@ -20,45 +22,26 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const lang = getLangFromSearchParams(resolvedSearchParams);
-  const ui = t(caseStudyContent, lang);
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
   if (!project) return { title: "Project not found" };
 
-  const projectMeta =
-    project.slug === "reliable-eventing-saas"
-      ? ui.projectMeta
-      : { title: project.title, summary: project.summary, role: project.role };
-  const title = projectMeta.title;
-  const description = projectMeta.summary;
+  const title = project.title;
+  const description = project.summary;
   const canonicalUrl = `${getSiteUrl()}/projects/${slug}`;
-  const ogImageUrl = absoluteUrl(`/projects/${slug}/opengraph-image`);
 
   return {
     title,
     description,
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        "en-US": `${canonicalUrl}?lang=en`,
-        "it-IT": `${canonicalUrl}?lang=it`,
-      },
-    },
-    openGraph: {
+    alternates: buildAlternates(canonicalUrl),
+    ...buildSocialMeta({
       title,
       description,
-      url: absoluteUrl(`/projects/${slug}`),
-      type: "article",
-      locale: lang === "it" ? "it_IT" : "en_US",
-      images: [ogImageUrl],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImageUrl],
-    },
+      canonicalPath: `/projects/${slug}`,
+      ogImagePath: `/projects/${slug}/opengraph-image`,
+      lang,
+    }),
   };
 }
 
@@ -80,33 +63,18 @@ export default async function ProjectPage({
       ? ui.projectMeta
       : { title: project.title, summary: project.summary, role: project.role };
   const siteUrl = getSiteUrl();
-  const personId = `${siteUrl}/#person`;
-  const websiteId = `${siteUrl}/#website`;
-  const inLanguage = lang === "it" ? "it-IT" : "en-US";
   const canonicalUrl = `${siteUrl}/projects/${slug}`;
   const sameAsLinks = project.links?.map((link) => link.href) ?? [];
-  const creativeWorkJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: projectMeta.title,
+  const pageJsonLd = buildCaseStudyJsonLd({
+    siteUrl,
+    lang,
+    canonicalUrl,
+    title: projectMeta.title,
     description: projectMeta.summary,
-    url: canonicalUrl,
-    author: { "@id": personId },
-    keywords: project.stack,
-    sameAs: sameAsLinks,
-    ...(project.year ? { dateCreated: `${project.year}-01-01` } : {}),
-  };
-  const webPageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: projectMeta.title,
-    description: projectMeta.summary,
-    url: canonicalUrl,
-    isPartOf: { "@id": websiteId },
-    about: { "@id": personId },
-    inLanguage,
-  };
-  const pageJsonLd = [creativeWorkJsonLd, webPageJsonLd];
+    stack: project.stack,
+    year: project.year,
+    links: sameAsLinks,
+  });
 
   return (
     <Container className="space-y-8 py-10">
