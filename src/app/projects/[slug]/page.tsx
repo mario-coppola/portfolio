@@ -20,13 +20,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const lang = getLangFromSearchParams(resolvedSearchParams);
+  const ui = t(caseStudyContent, lang);
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
   if (!project) return { title: "Project not found" };
 
-  const title = project.title;
-  const description = project.summary;
+  const projectMeta =
+    project.slug === "reliable-eventing-saas"
+      ? ui.projectMeta
+      : { title: project.title, summary: project.summary, role: project.role };
+  const title = projectMeta.title;
+  const description = projectMeta.summary;
   const canonicalUrl = `${getSiteUrl()}/projects/${slug}`;
   const ogImageUrl = absoluteUrl(`/projects/${slug}/opengraph-image`);
 
@@ -70,6 +75,10 @@ export default async function ProjectPage({
   const ui = t(caseStudyContent, lang);
   const project = getProjectBySlug(slug);
   if (!project) return notFound();
+  const projectMeta =
+    project.slug === "reliable-eventing-saas"
+      ? ui.projectMeta
+      : { title: project.title, summary: project.summary, role: project.role };
   const siteUrl = getSiteUrl();
   const personId = `${siteUrl}/#person`;
   const websiteId = `${siteUrl}/#website`;
@@ -79,8 +88,8 @@ export default async function ProjectPage({
   const creativeWorkJsonLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    name: project.title,
-    description: project.summary,
+    name: projectMeta.title,
+    description: projectMeta.summary,
     url: canonicalUrl,
     author: { "@id": personId },
     keywords: project.stack,
@@ -90,8 +99,8 @@ export default async function ProjectPage({
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: project.title,
-    description: project.summary,
+    name: projectMeta.title,
+    description: projectMeta.summary,
     url: canonicalUrl,
     isPartOf: { "@id": websiteId },
     about: { "@id": personId },
@@ -109,11 +118,11 @@ export default async function ProjectPage({
         <div className="flex flex-wrap items-center gap-3">
           <TextLink href="/projects">{ui.backToProjects}</TextLink>
           {project.year ? <Badge>{project.year}</Badge> : null}
-          <Badge>{project.role}</Badge>
+          <Badge>{projectMeta.role}</Badge>
         </div>
 
-        <h1 className="text-3xl font-semibold tracking-tight">{project.title}</h1>
-        <p className="max-w-2xl text-[var(--muted)]">{project.summary}</p>
+        <h1 className="text-3xl font-semibold tracking-tight">{projectMeta.title}</h1>
+        <p className="max-w-2xl text-[var(--muted)]">{projectMeta.summary}</p>
 
         <div className="flex flex-wrap gap-2">
           {project.stack.map((t) => (

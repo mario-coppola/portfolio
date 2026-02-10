@@ -2,6 +2,11 @@ import type { Lang } from "@/content/i18n";
 
 export type CaseStudyContent = {
   backToProjects: string;
+  projectMeta: {
+    title: string;
+    summary: string;
+    role: string;
+  };
   sectionTitles: {
     whatItIs: string;
     whyThisIsHard: string;
@@ -102,6 +107,12 @@ export type CaseStudyContent = {
 export const caseStudyContent: Record<Lang, CaseStudyContent> = {
   en: {
     backToProjects: "← Back to projects",
+    projectMeta: {
+      title: "Reliable Event Processing (B2B SaaS)",
+      summary:
+        "Backend system for business-critical external events: reliable webhooks, idempotency, controlled retries, and observable state transitions.",
+      role: "Architecture + Backend Engineering",
+    },
     sectionTitles: {
       whatItIs: "The problem",
       whyThisIsHard: "Failure modes",
@@ -201,6 +212,12 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
   },
   it: {
     backToProjects: "← Torna ai progetti",
+    projectMeta: {
+      title: "Event Processing Affidabile (B2B SaaS)",
+      summary:
+        "Sistema backend per eventi esterni business-critical: webhook affidabili, idempotenza, retry controllati e transizioni di stato osservabili.",
+      role: "Architettura + Backend Engineering",
+    },
     sectionTitles: {
       whatItIs: "Il problema",
       whyThisIsHard: "Failure modes",
