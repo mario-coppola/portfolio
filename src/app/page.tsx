@@ -82,9 +82,6 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
       <section className="space-y-4">
         <div className="space-y-2">
           <h2 className="text-lg font-semibold">{content.caseStudy.title}</h2>
-          <p className="max-w-2xl text-[var(--muted)]">
-            {content.caseStudy.body}
-          </p>
         </div>
 
         {caseStudy ? (
