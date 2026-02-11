@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getLangFromSearchParams, type SearchParams } from "@/content/i18n";
-import { getFlagshipProject, projects } from "@/content/projects";
+import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
+import { getCaseStudy, projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { TextLink } from "@/components/ui/TextLink";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
+import { caseStudyContent } from "@/content/caseStudy";
 
 const siteUrl = getSiteUrl();
 const globalOgImageUrl = absoluteUrl("/opengraph-image");
@@ -51,10 +52,11 @@ export default async function ProjectsPage({
 }) {
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const lang = getLangFromSearchParams(resolvedSearchParams);
-  const flagship = getFlagshipProject();
-  const otherProjects = projects.filter((project) => project.slug !== flagship?.slug);
+  const caseStudy = t(caseStudyContent, lang);
+  const projectMeta = caseStudy.projectMeta;
+  const project = getCaseStudy();
   const pageDescription =
-    "A selection of projects and case studies highlighting architectural decisions, trade-offs, and product-oriented thinking.";
+    "Case study focalizzati su architettura backend, garanzie di sistema e decisioni progettuali.";
   const inLanguage = lang === "it" ? "it-IT" : "en-US";
   const pageJsonLd = {
     "@context": "https://schema.org",
@@ -75,84 +77,48 @@ export default async function ProjectsPage({
       />
       <header className="space-y-2">
         <div>
-          <TextLink href="/">Back to home</TextLink>
+          <TextLink href="/">Torna alla home</TextLink>
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Progetti</h1>
         <p className="max-w-2xl text-[var(--muted)]">{pageDescription}</p>
 
       </header>
 
-      {flagship ? (
+      {caseStudy ? (
         <section className="space-y-3">
-          <h2 className="text-lg font-semibold">Flagship case study</h2>
+          <h2 className="text-lg font-semibold">Case studies</h2>
           <Card className="space-y-3">
             <div className="space-y-1">
               <h3 className="text-base font-semibold text-[var(--foreground)]">
                 <Link
-                  href={`/projects/${flagship.slug}`}
+                  href={`/projects/${project?.slug}`}
                   className="hover:underline"
                 >
-                  {flagship.title}
+                  {projectMeta.title}
                 </Link>
               </h3>
 
-              <p className="text-sm text-[var(--muted)]">{flagship.summary}</p>
+              <p className="text-sm text-[var(--muted)]">{projectMeta.summary}</p>
 
               <p className="text-xs text-[var(--muted-foreground)]">
-                {flagship.year ? `${flagship.year} • ` : ""}
-                {flagship.role}
+                {project?.year ? `${project?.year} • ` : ""}
+                {project?.role}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {flagship.stack.slice(0, 6).map((t) => (
+              {project?.stack.slice(0, 6).map((t: string) => (
                 <Badge key={t}>{t}</Badge>
               ))}
             </div>
 
             <div>
-              <TextLink href={`/projects/${flagship.slug}`}>View case study</TextLink>
+              <TextLink href={`/projects/${project?.slug}`}>Vedi case study</TextLink>
             </div>
           </Card>
         </section>
       ) : null}
 
-      <section className="space-y-3">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold">Other projects</h2>
-          <TextLink href="/projects">All projects</TextLink>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          {otherProjects.map((project) => (
-            <Card key={project.slug} className="space-y-3">
-              <div className="space-y-1">
-                <h3 className="font-semibold text-[var(--foreground)]">
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="hover:underline"
-                  >
-                    {project.title}
-                  </Link>
-                </h3>
-
-                <p className="text-sm text-[var(--muted)]">{project.summary}</p>
-
-                <p className="text-xs text-[var(--muted-foreground)]">
-                  {project.year ? `${project.year} • ` : ""}
-                  {project.role}
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {project.stack.slice(0, 6).map((t) => (
-                  <Badge key={t}>{t}</Badge>
-                ))}
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
     </Container>
   );
 }

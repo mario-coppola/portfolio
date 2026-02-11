@@ -13,38 +13,11 @@ export type Project = {
   decisions?: string[];
   tradeoffs?: string[];
   outcome?: string[];
-  flagship?: boolean;
+  caseStudy?: boolean;
 };
   
 export const projects: Project[] = [
-  {
-    slug: "portfolio",
-    title: "Portfolio (this site)",
-    summary:
-      "SEO-first and server-first portfolio: clean structure, versioned content, performance, and long-term maintainability.",
-    role: "Design + Engineering",
-    year: "2026",
-    stack: ["Next.js", "TypeScript", "Tailwind", "Vercel"],
-    links: [{ label: "Repo", href: "https://github.com/mario-coppola/portfolio" }],
-
-    context: "A lightweight portfolio to present my work with an emphasis on architecture and product thinking.",
-    problem:
-      "Most portfolios show outputs. I wanted to show how I think: trade-offs, constraints, and maintainable execution.",
-    decisions: [
-      "Next.js App Router with a server-first approach for performance and SEO.",
-      "Typed, versioned content in-repo to keep updates simple and auditable.",
-      "Minimal UI primitives and predictable structure to reduce complexity.",
-    ],
-    tradeoffs: [
-      "No CMS in v1: updates require commits, but complexity stays low.",
-      "No i18n in v1: English-first now, multilingual planned later.",
-    ],
-    outcome: [
-      "Fast baseline and clean architecture ready for new projects.",
-      "SEO foundation (metadata, sitemap, robots) from day one.",
-    ],
-    flagship: false,
-  },
+  
   {
     slug: "reliable-eventing-saas",
     title: "Reliable Event Processing (B2B SaaS)",
@@ -71,7 +44,7 @@ export const projects: Project[] = [
       "Clear operational visibility: every event is traceable and explainable.",
       "Lower risk of silent data drift and costly manual reconciliation.",
     ],
-    flagship: true,
+    caseStudy: true,
   }
 ];
 
@@ -79,6 +52,6 @@ export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
 
-export function getFlagshipProject(): Project | undefined {
-  return projects.find((p) => p.flagship);
+export function getCaseStudy(): Project | undefined {
+  return projects.find((p) => p.caseStudy);
 }
