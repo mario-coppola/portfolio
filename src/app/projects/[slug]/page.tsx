@@ -251,13 +251,13 @@ export default async function ProjectPage({
                   },
                 ]}
                 systemBehaviorImages={[
-                  
-                ]}
-                outcomeImages={[
                   {
                     src: "/case-studies/reliable-event-processing/s1-03-one-effect.png",
                     alt: "Ledger view indicating a single effect applied after deduplication.",
                   },
+                ]}
+                outcomeImages={[
+                  
                 ]}
               />
             </Card>
