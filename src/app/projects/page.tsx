@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
-import { getCaseStudy, projects } from "@/content/projects";
+import { getFeaturedCaseStudies } from "@/content/caseStudies";
+import { projectsIndexContent } from "@/content/projectsIndex";
 import { site } from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
@@ -52,17 +53,17 @@ export default async function ProjectsPage({
 }) {
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const lang = getLangFromSearchParams(resolvedSearchParams);
-  const caseStudy = t(caseStudyContent, lang);
-  const projectMeta = caseStudy.projectMeta;
-  const project = getCaseStudy();
-  const pageDescription =
-    "Case study focalizzati su architettura backend, garanzie di sistema e decisioni progettuali.";
+  const content = t(projectsIndexContent, lang);
+  const caseStudyContentLang = t(caseStudyContent, lang);
+  const projectMeta = caseStudyContentLang.projectMeta;
+  const featured = getFeaturedCaseStudies();
+  const first = featured[0];
   const inLanguage = lang === "it" ? "it-IT" : "en-US";
   const pageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Projects",
-    description: pageDescription,
+    name: content.pageTitle,
+    description: content.pageDescription,
     url: `${siteUrl}/projects`,
     isPartOf: { "@id": websiteId },
     about: { "@id": personId },
@@ -77,21 +78,21 @@ export default async function ProjectsPage({
       />
       <header className="space-y-2">
         <div>
-          <TextLink href="/">Torna alla home</TextLink>
+          <TextLink href="/">{content.backToHome}</TextLink>
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight">Progetti</h1>
-        <p className="max-w-2xl text-[var(--muted)]">{pageDescription}</p>
+        <h1 className="text-2xl font-semibold tracking-tight">{content.pageTitle}</h1>
+        <p className="max-w-2xl text-[var(--muted)]">{content.pageDescription}</p>
 
       </header>
 
-      {caseStudy ? (
+      {first ? (
         <section className="space-y-3">
-          <h2 className="text-lg font-semibold">Case studies</h2>
+          <h2 className="text-lg font-semibold">{content.caseStudiesTitle}</h2>
           <Card className="space-y-3">
             <div className="space-y-1">
               <h3 className="text-base font-semibold text-[var(--foreground)]">
                 <Link
-                  href={`/projects/${project?.slug}`}
+                  href={`/projects/${first.slug}`}
                   className="hover:underline"
                 >
                   {projectMeta.title}
@@ -101,19 +102,19 @@ export default async function ProjectsPage({
               <p className="text-sm text-[var(--muted)]">{projectMeta.summary}</p>
 
               <p className="text-xs text-[var(--muted-foreground)]">
-                {project?.year ? `${project?.year} • ` : ""}
-                {project?.role}
+                {first.year ? `${first.year} • ` : ""}
+                {projectMeta.role}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {project?.stack.slice(0, 6).map((t: string) => (
-                <Badge key={t}>{t}</Badge>
+              {first.stack.slice(0, 6).map((tech: string) => (
+                <Badge key={tech}>{tech}</Badge>
               ))}
             </div>
 
             <div>
-              <TextLink href={`/projects/${project?.slug}`}>Vedi case study</TextLink>
+              <TextLink href={`/projects/${first.slug}`}>{content.viewCaseStudy}</TextLink>
             </div>
           </Card>
         </section>

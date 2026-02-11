@@ -43,7 +43,7 @@ export const homeContent: Record<Lang, HomeContent> = {
       secondaryCta: { label: "Contattami", href: "/contact" },
     },
     caseStudy: {
-      title: "Casi di studio",
+      title: "Case study",
     },
     otherProjects: {
       title: "Altri progetti",

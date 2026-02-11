@@ -9,12 +9,10 @@ import { Badge } from "@/components/ui/Badge";
 import { TextLink } from "@/components/ui/TextLink";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 import { caseStudyContent } from "@/content/caseStudy";
-import { getCaseStudy, getProjectBySlug } from "@/content/projects";
+import { getFeaturedCaseStudies } from "@/content/caseStudies";
 
 const siteUrl = getSiteUrl();
 const globalOgImageUrl = absoluteUrl("/opengraph-image");
-const personId = `${siteUrl}/#person`;
-const websiteId = `${siteUrl}/#website`;
 
 export async function generateMetadata({
   searchParams,
@@ -28,8 +26,8 @@ export async function generateMetadata({
     alternates: {
       canonical: siteUrl,
       languages: {
-        "en-US": `${siteUrl}/?lang=en`,
-        "it-IT": `${siteUrl}/?lang=it`,
+        "en-US": `${siteUrl}?lang=en`,
+        "it-IT": `${siteUrl}?lang=it`,
       },
     },
     openGraph: {
@@ -50,9 +48,10 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const lang = getLangFromSearchParams(resolvedSearchParams);
   const content = t(homeContent, lang);
-  const caseStudy = t(caseStudyContent, lang);
-  const projectMeta = caseStudy.projectMeta;
-  const project = getCaseStudy();
+  const caseStudyContentLang = t(caseStudyContent, lang);
+  const projectMeta = caseStudyContentLang.projectMeta;
+  const featured = getFeaturedCaseStudies();
+  const first = featured[0];
 
   return (
     <Container className="space-y-12 py-10">
@@ -84,11 +83,11 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
           <h2 className="text-lg font-semibold">{content.caseStudy.title}</h2>
         </div>
 
-        {caseStudy ? (
+        {first ? (
           <Card className="space-y-3">
             <div className="space-y-1">
               <h3 className="text-base font-semibold text-[var(--foreground)]">
-                <TextLink href={`/projects/${project?.slug}`}>
+                <TextLink href={`/projects/${first.slug}`}>
                   {projectMeta.title}
                 </TextLink>
               </h3>
@@ -96,7 +95,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {project?.stack.slice(0, 5).map((stackItem: string) => (
+              {first.stack.slice(0, 5).map((stackItem: string) => (
                 <Badge key={stackItem}>{stackItem}</Badge>
               ))}
             </div>
