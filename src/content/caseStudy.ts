@@ -8,8 +8,8 @@ export type CaseStudyContent = {
     role: string;
   };
   sectionTitles: {
-    whatItIs: string;
-    whyThisIsHard: string;
+    context: string;
+    failureModes: string;
     safetyDesign: string;
     tradeOffs: string;
     whatYouGet: string;
@@ -18,8 +18,8 @@ export type CaseStudyContent = {
     failureStories: string;
   };
   sectionContent: {
-    whatItIs: string;
-    whyThisIsHard: string;
+    context: string;
+    failureModes: string;
     safetyDesign: {
       line1: string;
       line2: string;
@@ -43,12 +43,6 @@ export type CaseStudyContent = {
       effect: {
         title: string;
         content: string;
-      };
-      mentalModel: {
-        title: string;
-        line1: string;
-        line2: string;
-        line3: string;
       };
     };
     jobStates: {
@@ -110,103 +104,97 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
     projectMeta: {
       title: "Reliable Event Processing (B2B SaaS)",
       summary:
-        "Backend system for business-critical external events: reliable webhooks, idempotency, controlled retries, and observable state transitions.",
+        "Event processing for unreliable external events: immutable persistence, idempotency, explicit failures.",
       role: "Architecture + Backend Engineering",
     },
     sectionTitles: {
-      whatItIs: "The problem",
-      whyThisIsHard: "Failure modes",
-      safetyDesign: "Safety invariants",
+      context: "Context",
+      failureModes: "Failure modes",
+      safetyDesign: "Core guarantees",
       tradeOffs: "Trade-offs",
       whatYouGet: "What you get",
-      eventFlow: "How it runs",
-      jobStates: "Job state machine",
+      eventFlow: "Event flow",
+      jobStates: "Job states",
       failureStories: "Failure stories",
     },
     sectionContent: {
-      whatItIs: "External events (webhooks, payments, integrations) are untrusted input. If you process them naïvely, duplicates and retries turn into inconsistent state and real financial risk.",
-      whyThisIsHard: "Providers retry aggressively, payloads can be malformed, and delivery order is not guaranteed. The system must stay correct even when the input is noisy and adversarial.",
+      context: "External events (webhooks, payments, integrations) are unreliable input. Processing them directly turns retries and duplicates into inconsistent state and financial risk.",
+      failureModes: "Providers retry aggressively, payloads arrive malformed, delivery order is not guaranteed. The system must remain correct even with noisy input.",
       safetyDesign: {
-        line1: "Ingest acknowledges fast and performs no side effects.",
-        line2: "Every accepted event is persisted before any processing.",
-        line3: "Effects are idempotent: one event → at most one effective change.",
-        line4: "Retries are explicit and audited (operator-controlled).",
+        line1: "Ingest responds immediately and produces no side effects.",
+        line2: "Each accepted event is persisted before processing.",
+        line3: "Effects are idempotent: one event produces at most one change.",
+        line4: "Retries are explicit and audited (full operational control).",
       },
-      tradeOffs: "This is intentionally minimal: no automated retry storms, no complex scheduling, no “magic” recovery. Those features are added only when the operational need justifies the complexity—without weakening correctness or auditability.",
-      whatYouGet: "Predictable behavior under retries, duplicates, and bad input—plus the visibility to debug and operate it. When something fails, you can see why, decide what to do, and keep the system consistent.",
+      tradeOffs: "Intentionally minimal system: no aggressive automatic retries, no complex scheduling, no automatic recovery. Features are added only when necessary, without compromising correctness and auditability.",
+      whatYouGet: "Predictable behavior with retries, duplicates, and malformed input. Full visibility to operate the system. When something fails: see the reason, decide the action, maintain consistent state.",
       eventFlow: {
         ingest: {
           title: "Ingest",
-          content: "Validate and store the event; return 202 immediately."
+          content: "Validates and persists the event. Responds 202 immediately."
         },
         ledgerJob: {
           title: "Ledger + Job",
-          content: "Append to the ledger and create a job representing the work."
+          content: "Append the event to the immutable ledger and creates a job."
         },
         worker: {
           title: "Worker",
-          content: "Workers execute jobs asynchronously with idempotency guarantees."
+          content: "Processes jobs asynchronously with idempotency guarantees."
         },
         effect: {
           title: "Effect + Admin Loop",
-          content: "Apply the effect once, or mark the job failed for operator action."
+          content: "Applies the effect once or moves the job to failed for auditable manual intervention."
         },
-        mentalModel: {
-          title: "Mental model",
-          line1: "Ingest never mutates state.",
-          line2: "Workers only run tracked jobs.",
-          line3: "Humans intervene only on failure.",
-        }
       },
       jobStates: {
         queued: {
           title: "queued",
-          description: "Persisted and waiting for a worker to pick it up.",
+          description: "Persisted, waiting to be processed.",
         },
         inProgress: {
           title: "in_progress",
-          description: "Currently executing; owned by a worker.",
+          description: "Executing on a worker.",
         },
         done: {
           title: "done",
-          description: "Effect applied; will not run again.",
+          description: "Effect applied successfully. Will not be repeated.",
         },
         failed: {
           title: "failed",
-          description: "Blocked by a permanent error; needs operator decision.",
+          description: "Permanent error. Requires manual operational intervention.",
         },
       },
       failureStories: {
         scenario1: {
         title: "Duplicate Event",
-        scenario: "The provider retries the same event multiple times.",
-        systemBehavior: "Idempotency keys deduplicate the event so only one effect is applied.",
-        outcome: "State changes once; duplicates remain visible in the ledger.",
+        scenario: "The provider sends the same event multiple times.",
+        systemBehavior: "Idempotency keys prevent duplicate processing. Only the first event produces an effect.",
+        outcome: "State changes once. Duplicates remain visible in the ledger for audit.",
         },
         scenario2: {
         title: "Malformed Payload",
         scenario: "A webhook arrives with missing required fields.",
-        systemBehavior: "Processing fails deterministically and the failure reason is persisted.",
-        outcome: "No partial effects; the job is operable in failed state.",
+        systemBehavior: "Processing fails deterministically. The failure reason is persisted.",
+        outcome: "No partial effects. The job is visible in failed state and operable.",
         },
         scenario3: {
         title: "Manual Requeue",
         scenario: "An operator requeues a failed job after investigation.",
-        systemBehavior: "Requeue creates an audit record (actor + reason) and re-enters the job.",
-        outcome: "Manual intervention is traceable and the system stays explainable.",
+        systemBehavior: "The requeue creates an audit record (actor + reason + timestamp) and reinserts the job.",
+        outcome: "Manual intervention is fully traceable. The system remains explainable.",
         },
       },
     },
     labels: {
       scenario: "Scenario",
-      systemBehavior: "System behavior",
+      systemBehavior: "Behavior",
       outcome: "Outcome",
       openFullSize: "Open full size",
     },
     cta: {
-      title: "Need reliable webhook processing in production?",
+      title: "Reliable event processing in production?",
       body:
-        "If your product depends on external events and you want correctness under retries, duplicates, and out-of-order delivery, I can help you build it.",
+        "If your product depends on external events and requires operational correctness with retries, duplicates, and out-of-order delivery, I can help you design it.",
       linkLabel: "Get in touch",
     },
   },
@@ -215,103 +203,97 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
     projectMeta: {
       title: "Event Processing Affidabile (B2B SaaS)",
       summary:
-        "Sistema backend per eventi esterni business-critical: webhook affidabili, idempotenza, retry controllati e transizioni di stato osservabili.",
+        "Event processing per eventi esterni non affidabili: persistenza immutabile, idempotenza, failure esplicite.",
       role: "Architettura + Backend Engineering",
     },
     sectionTitles: {
-      whatItIs: "Il problema",
-      whyThisIsHard: "Failure modes",
-      safetyDesign: "Invarianti di sicurezza",
-      tradeOffs: "Compromessi",
-      whatYouGet: "Cosa ottieni",
-      jobStates: "State machine dei job",
-      eventFlow: "Come gira",
-      failureStories: "Casi di guasto",
+      context: "Contesto",
+      failureModes: "Failure modes",
+      safetyDesign: "Garanzie fondamentali",
+      tradeOffs: "Scelte progettuali",
+      whatYouGet: "Cosa garantisce",
+      jobStates: "Stati del job",
+      eventFlow: "Flusso operativo",
+      failureStories: "Scenari di failure",
     },
     sectionContent: {
-      whatItIs: "Gli eventi esterni (webhook, pagamenti, integrazioni) sono input non affidabili. Se li processi “alla buona”, retry e duplicati diventano stato incoerente e rischio finanziario reale.",
-      whyThisIsHard: "I provider ritentano in modo aggressivo, i payload possono essere malformati e l’ordine di consegna non è garantito. Il sistema deve restare corretto anche quando l’input è rumoroso.",
+      context: "Eventi esterni (webhook, pagamenti, integrazioni) sono input non affidabili. Processarli direttamente trasforma retry e duplicati in stato inconsistente e rischio finanziario.",
+      failureModes: "I provider ritentano in modo aggressivo, i payload arrivano malformati, l'ordine di consegna non è garantito. Il sistema deve restare corretto anche con input rumoroso.",
       safetyDesign: {
-        line1: "L’ingest risponde subito e non produce side effect.",
+        line1: "L'ingest risponde immediatamente e non produce side effect.",
         line2: "Ogni evento accettato viene persistito prima del processing.",
-        line3: "Gli effetti sono idempotenti: un evento → al massimo un solo cambiamento.",
-        line4: "I retry sono espliciti e auditati (controllo operativo).",
+        line3: "Gli effetti sono idempotenti: un evento produce al massimo un cambiamento.",
+        line4: "I retry sono espliciti e auditati (controllo operativo completo).",
       },
-      tradeOffs: "È volutamente minimale: niente “auto-retry” aggressivo, niente scheduling complesso, niente recupero magico. Le feature si aggiungono solo quando servono davvero, senza indebolire correttezza e audit.",
-      whatYouGet: "Comportamento prevedibile con retry, duplicati e input sporco—più la visibilità per operarlo. Se qualcosa fallisce, vedi perché, decidi cosa fare, e mantieni lo stato coerente.",
+      tradeOffs: "Sistema volutamente minimale: niente retry automatici aggressivi, niente scheduling complesso, niente recupero automatico. Le feature vengono aggiunte solo quando necessarie, senza compromettere correttezza e auditabilità.",
+      whatYouGet: "Comportamento prevedibile con retry, duplicati e input malformato. Visibilità completa per operare il sistema. Quando qualcosa fallisce: vedi il motivo, decidi l'azione, mantieni lo stato consistente.",
       eventFlow: {
         ingest: {
           title: "Ingest",
-          content: "Valida e persiste l’evento; ritorna 202 immediatamente."
+          content: "Valida e persiste l'evento. Risponde 202 immediatamente."
         },
         ledgerJob: {
           title: "Ledger + Job",
-          content: "Appende al ledger e crea un job che rappresenta il lavoro."
+          content: "Aggiunge l'evento al ledger immutabile e crea un job."
         },
         worker: {
           title: "Worker",
-          content: "I worker eseguono job in async con garanzie di idempotenza."
+          content: "Processa job in modo asincrono con garanzie di idempotenza."
         },
         effect: {
           title: "Effect + Admin Loop",
-          content: "Applica l’effetto una sola volta, o porta il job in failed per azione operativa."
+          content: "Applica l'effetto una sola volta oppure porta il job in failed per intervento operativo manuale auditato."
         },
-        mentalModel: {
-          title: "Modello mentale",
-          line1: "L’ingest non muta lo stato.",
-          line2: "I worker eseguono solo job tracciati.",
-          line3: "L’umano interviene solo su failure.",
-        }
       },
       jobStates: {
         queued: {
           title: "queued",
-          description: "Persistito e in attesa di un worker.",
+          description: "Persistito, in attesa di essere processato.",
         },
         inProgress: {
           title: "in_progress",
-          description: "In esecuzione; in carico a un worker.",
+          description: "In esecuzione su un worker.",
         },
         done: {
           title: "done",
-          description: "Effetto applicato; non verrà ripetuto.",
+          description: "Effetto applicato con successo. Non verrà ripetuto.",
         },
         failed: {
           title: "failed",
-          description: "Errore permanente; richiede decisione operativa.",
+          description: "Errore permanente. Richiede intervento operativo manuale.",
         },
       },
       failureStories: {
         scenario1: {
         title: "Evento duplicato",
         scenario: "Il provider invia lo stesso evento più volte.",
-        systemBehavior: "Le chiavi di idempotenza deduplicano e applicano un solo effetto.",
-        outcome: "Lo stato cambia una sola volta; i duplicati restano visibili nel ledger.",
+        systemBehavior: "Le chiavi di idempotenza prevengono l'elaborazione duplicata. Solo il primo evento produce effetto.",
+        outcome: "Lo stato cambia una sola volta. I duplicati restano visibili nel ledger per audit.",
         },
         scenario2: {
         title: "Payload malformato",
         scenario: "Arriva un webhook con campi obbligatori mancanti.",
-        systemBehavior: "Il processing fallisce in modo deterministico e salva il motivo del fallimento.",
-        outcome: "Nessun effetto parziale; il job è operabile in stato failed.",
+        systemBehavior: "Il processing fallisce in modo deterministico. Il motivo del fallimento viene persistito.",
+        outcome: "Nessun effetto parziale. Il job è visibile in stato failed e operabile.",
         },
         scenario3: {
         title: "Requeue Manuale",
         scenario: "Un operatore rimette in coda un job fallito dopo verifica.",
-        systemBehavior: "Il requeue crea un record di audit (actor + reason) e reinserisce il job.",
-        outcome: "L’intervento manuale è tracciabile e il sistema resta spiegabile.",
+        systemBehavior: "Il requeue crea un record di audit (actor + reason + timestamp) e reinserisce il job.",
+        outcome: "L'intervento manuale è completamente tracciabile. Il sistema resta spiegabile.",
         },
       },
     },
     labels: {
       scenario: "Scenario",
-      systemBehavior: "Comportamento del sistema",
+      systemBehavior: "Comportamento",
       outcome: "Risultato",
       openFullSize: "Apri a dimensione piena",
     },
     cta: {
-      title: "Webhook affidabili in produzione?",
+      title: "Event processing affidabile in produzione?",
       body:
-        "Se il tuo prodotto dipende da eventi esterni e vuoi correttezza con retry, duplicati e consegna fuori ordine, posso aiutarti a costruirla.",
+        "Se il tuo prodotto dipende da eventi esterni e serve correttezza operativa con retry, duplicati e consegna fuori ordine, posso aiutarti a progettarlo.",
       linkLabel: "Contattami",
     },
   },

@@ -112,16 +112,16 @@ export default async function ProjectPage({
       <div className="space-y-10">
         <section className="space-y-2">
           <h2 className="text-lg font-semibold text-[var(--foreground)]">
-            {ui.sectionTitles.whatItIs}
+            {ui.sectionTitles.context}
           </h2>
-          <p className="text-[var(--muted)]">{ui.sectionContent.whatItIs}</p>
+          <p className="text-[var(--muted)]">{ui.sectionContent.context}</p>
         </section>
 
         <section className="space-y-2">
           <h2 className="text-lg font-semibold text-[var(--foreground)]">
-            {ui.sectionTitles.whyThisIsHard}
+            {ui.sectionTitles.failureModes}
           </h2>
-          <p className="text-[var(--muted)]">{ui.sectionContent.whyThisIsHard}</p>
+          <p className="text-[var(--muted)]">{ui.sectionContent.failureModes}</p>
         </section>
 
         <section className="space-y-3">
@@ -178,16 +178,7 @@ export default async function ProjectPage({
                 </p>
               </div>
             </div>
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold text-[var(--foreground)]">
-                {ui.sectionContent.eventFlow.mentalModel.title}
-              </h3>
-              <ul className="list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
-                <li>{ui.sectionContent.eventFlow.mentalModel.line1}</li>
-                <li>{ui.sectionContent.eventFlow.mentalModel.line2}</li>
-                <li>{ui.sectionContent.eventFlow.mentalModel.line3}</li>
-              </ul>
-            </div>
+
           </div>
         </section>
 
@@ -254,12 +245,13 @@ export default async function ProjectPage({
                     src: "/case-studies/reliable-event-processing/s1-01-ingest-duplicate.png",
                     alt: "Terminal output showing duplicate ingest requests returning accepted responses.",
                   },
-                ]}
-                systemBehaviorImages={[
                   {
                     src: "/case-studies/reliable-event-processing/s1-02-two-jobs-same-event.png",
                     alt: "Job list showing two jobs created for the same event id.",
                   },
+                ]}
+                systemBehaviorImages={[
+                  
                 ]}
                 outcomeImages={[
                   {
@@ -315,12 +307,13 @@ export default async function ProjectPage({
                     src: "/case-studies/reliable-event-processing/s3-01-job-failed.png",
                     alt: "Failed job awaiting operator review before requeue.",
                   },
-                ]}
-                systemBehaviorImages={[
                   {
                     src: "/case-studies/reliable-event-processing/s3-02-manual-requeue.png",
                     alt: "Operator action showing manual requeue of a failed job.",
                   },
+                ]}
+                systemBehaviorImages={[
+                  
                   {
                     src: "/case-studies/reliable-event-processing/s3-03-intervention-audit.png",
                     alt: "Audit record showing intervention actor and reason.",
