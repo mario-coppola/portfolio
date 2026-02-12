@@ -285,9 +285,15 @@ export default async function ProjectPage({
                 }
                 scenarioCodeBlocks={[
                   { code: reliableEventingFailureSnippets.scenario3.scenario, language: "bash" },
+                  { code: reliableEventingFailureSnippets.scenario3.systemBehavior, language: "json" },
                 ]}
                 systemBehaviorCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario3.systemBehavior, language: "json" },
+                  ...(reliableEventingFailureSnippets.scenario3.requeueCommand
+                    ? [{ code: reliableEventingFailureSnippets.scenario3.requeueCommand, language: "bash" as const }]
+                    : []),
+                  ...(reliableEventingFailureSnippets.scenario3.requeueResponse
+                    ? [{ code: reliableEventingFailureSnippets.scenario3.requeueResponse, language: "json" as const }]
+                    : []),
                 ]}
                 outcomeCodeBlocks={[
                   { code: reliableEventingFailureSnippets.scenario3.outcome, language: "json" },

@@ -1,7 +1,13 @@
 export type FailureStorySnippets = {
   scenario1: { scenario: string; outcome: string };
   scenario2: { scenario: string; systemBehavior: string };
-  scenario3: { scenario: string; systemBehavior: string; outcome: string };
+  scenario3: {
+    scenario: string;
+    systemBehavior: string;
+    requeueCommand?: string;
+    requeueResponse?: string;
+    outcome: string;
+  };
 };
 
 export const reliableEventingFailureSnippets: FailureStorySnippets = {
@@ -70,9 +76,8 @@ curl -s -X POST http://localhost:3000/events/ingest \\
 }`,
   },
   scenario3: {
-    scenario: `curl -s http://localhost:3000/admin/jobs | jq
-# => output
-{
+    scenario: `curl -s http://localhost:3000/admin/jobs | jq`,
+    systemBehavior: `{
   "items": [
     {
       "id": "1",
@@ -83,14 +88,13 @@ curl -s -X POST http://localhost:3000/events/ingest \\
     }
   ]
 }`,
-    systemBehavior: `curl -s -X POST http://localhost:3000/admin/jobs/1/requeue \\
+    requeueCommand: `curl -s -X POST http://localhost:3000/admin/jobs/1/requeue \\
   -H "Content-Type: application/json" \\
   -d '{
     "actor": "admin@example.com",
     "reason": "manual retry to requeue job"
-  }' | jq
-# => output
-{
+  }' | jq`,
+    requeueResponse: `{
   "ok": true,
   "id": "1",
   "status": "queued",
@@ -103,9 +107,7 @@ curl -s -X POST http://localhost:3000/events/ingest \\
     "created_at": "2026-02-09T10:51:45.416Z"
   }
 }`,
-    outcome: `curl -s http://localhost:3000/admin/interventions | jq
-# => output
-{
+    outcome: `{
   "items": [
     {
       "audit": {
