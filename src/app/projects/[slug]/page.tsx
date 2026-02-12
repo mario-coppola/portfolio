@@ -12,6 +12,7 @@ import { CaseStudyScenario } from "@/components/blocks/CaseStudyScenario";
 import { getSiteUrl } from "@/lib/siteUrl";
 import { buildAlternates, buildSocialMeta } from "@/lib/seo";
 import { buildCaseStudyJsonLd } from "@/lib/jsonLd";
+import { reliableEventingFailureSnippets } from "@/content/caseStudySnippets";
 
 export async function generateMetadata({
   params,
@@ -240,24 +241,11 @@ export default async function ProjectPage({
                     outcome: "Outcome",
                   }
                 }
-                scenarioImages={[
-                  {
-                    src: "/case-studies/reliable-event-processing/s1-01-ingest-duplicate.png",
-                    alt: "Terminal output showing duplicate ingest requests returning accepted responses.",
-                  },
-                  {
-                    src: "/case-studies/reliable-event-processing/s1-02-two-jobs-same-event.png",
-                    alt: "Job list showing two jobs created for the same event id.",
-                  },
+                scenarioCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario1.scenario, language: "bash" },
                 ]}
-                systemBehaviorImages={[
-                  {
-                    src: "/case-studies/reliable-event-processing/s1-03-one-effect.png",
-                    alt: "Ledger view indicating a single effect applied after deduplication.",
-                  },
-                ]}
-                outcomeImages={[
-                  
+                outcomeCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario1.outcome, language: "bash" },
                 ]}
               />
             </Card>
@@ -274,19 +262,12 @@ export default async function ProjectPage({
                     outcome: "Outcome",
                   }
                 }
-                scenarioImages={[
-                  {
-                    src: "/case-studies/reliable-event-processing/s2-01-event-malformed-job-queued.png",
-                    alt: "Malformed event payload queued with missing required fields.",
-                  },
+                scenarioCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario2.scenario, language: "bash" },
                 ]}
-                systemBehaviorImages={[
-                  {
-                    src: "/case-studies/reliable-event-processing/s2-02-job-failed.png",
-                    alt: "Failed job entry with a recorded error reason.",
-                  },
+                systemBehaviorCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario2.systemBehavior, language: "bash" },
                 ]}
-                outcomeImages={[]}
               />
             </Card>
             <Card className="space-y-6">
@@ -302,28 +283,14 @@ export default async function ProjectPage({
                     outcome: "Outcome",
                   }
                 }
-                scenarioImages={[
-                  {
-                    src: "/case-studies/reliable-event-processing/s3-01-job-failed.png",
-                    alt: "Failed job awaiting operator review before requeue.",
-                  },
-                  {
-                    src: "/case-studies/reliable-event-processing/s3-02-manual-requeue.png",
-                    alt: "Operator action showing manual requeue of a failed job.",
-                  },
+                scenarioCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario3.scenario, language: "bash" },
                 ]}
-                systemBehaviorImages={[
-                  
-                  {
-                    src: "/case-studies/reliable-event-processing/s3-03-intervention-audit.png",
-                    alt: "Audit record showing intervention actor and reason.",
-                  },
+                systemBehaviorCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario3.systemBehavior, language: "bash" },
                 ]}
-                outcomeImages={[
-                  {
-                    src: "/case-studies/reliable-event-processing/s3-04-job-failed-again.png",
-                    alt: "Job failed again after manual requeue attempt.",
-                  },
+                outcomeCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario3.outcome, language: "bash" },
                 ]}
               />
             </Card>

@@ -77,31 +77,48 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
           </ButtonLink>
         </div>
       </section>
+<section className="space-y-4">
+  <div className="space-y-2">
+    <h2 className="text-lg font-semibold">{content.caseStudy.title}</h2>
+  </div>
 
-      <section className="space-y-4">
-        <div className="space-y-2">
-          <h2 className="text-lg font-semibold">{content.caseStudy.title}</h2>
-        </div>
+  {featured.length ? (
+    <div className="space-y-3">
+      {featured.map((cs) => {
+        // meta “hardcoded” in caseStudyContent (projectMeta) solo per questo case study.
+        // Quando ce ne saranno altri, estendere caseStudyContent con una mappa per slug.
+        const meta =
+          cs.slug === "reliable-eventing-saas"
+            ? projectMeta
+            : { title: cs.slug, summary: "", role: "" };
 
-        {first ? (
-          <Card className="space-y-3">
+        return (
+          <Card key={cs.slug} className="space-y-3">
             <div className="space-y-1">
               <h3 className="text-base font-semibold text-[var(--foreground)]">
-                <TextLink href={`/projects/${first.slug}`}>
-                  {projectMeta.title}
-                </TextLink>
+                <TextLink href={`/projects/${cs.slug}`}>{meta.title}</TextLink>
               </h3>
-              <p className="text-sm text-[var(--muted)]">{projectMeta.summary}</p>
+              {meta.summary ? (
+                <p className="text-sm text-[var(--muted)]">{meta.summary}</p>
+              ) : null}
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {first.stack.slice(0, 5).map((stackItem: string) => (
-                <Badge key={stackItem}>{stackItem}</Badge>
+              {cs.stack.slice(0, 6).map((tech) => (
+                <Badge key={tech}>{tech}</Badge>
               ))}
             </div>
           </Card>
-        ) : null}
-      </section>
+        );
+      })}
+    </div>
+  ) : null}
+
+  <p className="text-xs text-[var(--muted-foreground)]">
+    {/* idealmente: aggiungiamo questa stringa in homeContent i18n */}
+    More case studies coming soon.
+  </p>
+</section>
 
     </Container>
   );
