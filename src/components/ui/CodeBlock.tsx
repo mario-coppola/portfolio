@@ -31,7 +31,7 @@ export async function CodeBlock({
   const normalized = code.endsWith("\n") ? code.slice(0, -1) : code;
   const lineCount = normalized.length ? normalized.split("\n").length : 0;
 
-  const highlighted = await codeToHtml(code, {
+  const highlighted = await codeToHtml(normalized, {
     lang: lang === "bash" ? "bash" : lang === "json" ? "json" : "plaintext",
     themes: {
       light: "github-light",

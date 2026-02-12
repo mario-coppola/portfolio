@@ -245,7 +245,7 @@ export default async function ProjectPage({
                   { code: reliableEventingFailureSnippets.scenario1.scenario, language: "bash" },
                 ]}
                 outcomeCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario1.outcome, language: "bash" },
+                  { code: reliableEventingFailureSnippets.scenario1.outcome, language: "json" },
                 ]}
               />
             </Card>
@@ -266,7 +266,7 @@ export default async function ProjectPage({
                   { code: reliableEventingFailureSnippets.scenario2.scenario, language: "bash" },
                 ]}
                 systemBehaviorCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario2.systemBehavior, language: "bash" },
+                  { code: reliableEventingFailureSnippets.scenario2.systemBehavior, language: "json" },
                 ]}
               />
             </Card>
@@ -287,10 +287,10 @@ export default async function ProjectPage({
                   { code: reliableEventingFailureSnippets.scenario3.scenario, language: "bash" },
                 ]}
                 systemBehaviorCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario3.systemBehavior, language: "bash" },
+                  { code: reliableEventingFailureSnippets.scenario3.systemBehavior, language: "json" },
                 ]}
                 outcomeCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario3.outcome, language: "bash" },
+                  { code: reliableEventingFailureSnippets.scenario3.outcome, language: "json" },
                 ]}
               />
             </Card>
