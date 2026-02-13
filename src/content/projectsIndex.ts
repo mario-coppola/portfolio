@@ -11,7 +11,7 @@ export type ProjectsIndexContent = {
 export const projectsIndexContent: Record<Lang, ProjectsIndexContent> = {
   en: {
     backToHome: "Back to home",
-    pageTitle: "Projects",
+    pageTitle: "Case Studies",
     pageDescription:
       "Case studies on backend architecture, system guarantees, and design decisions.",
     caseStudiesTitle: "Case studies",
@@ -19,7 +19,7 @@ export const projectsIndexContent: Record<Lang, ProjectsIndexContent> = {
   },
   it: {
     backToHome: "Torna alla home",
-    pageTitle: "Progetti",
+    pageTitle: "Case Study",
     pageDescription:
       "Case study focalizzati su architettura backend, garanzie di sistema e decisioni progettuali.",
     caseStudiesTitle: "Case study",

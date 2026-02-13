@@ -10,6 +10,7 @@ export type HomeContent = {
   };
   caseStudy: {
     title: string;
+    viewCaseStudy: string;
   };
   otherProjects: {
     title: string;
@@ -28,6 +29,7 @@ export const homeContent: Record<Lang, HomeContent> = {
     },
     caseStudy: {
       title: "Case studies",
+      viewCaseStudy: "View case study",
     },
     otherProjects: {
       title: "Other projects",
@@ -44,6 +46,7 @@ export const homeContent: Record<Lang, HomeContent> = {
     },
     caseStudy: {
       title: "Case study",
+      viewCaseStudy: "Vedi case study",
     },
     otherProjects: {
       title: "Altri progetti",

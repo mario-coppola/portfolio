@@ -96,7 +96,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
           <Card key={cs.slug} className="space-y-3">
             <div className="space-y-1">
               <h3 className="text-base font-semibold text-[var(--foreground)]">
-                <TextLink href={`/projects/${cs.slug}`}>{meta.title}</TextLink>
+                {meta.title}
               </h3>
               {meta.summary ? (
                 <p className="text-sm text-[var(--muted)]">{meta.summary}</p>
@@ -107,6 +107,10 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
               {cs.stack.slice(0, 6).map((tech) => (
                 <Badge key={tech}>{tech}</Badge>
               ))}
+            </div>
+
+            <div>
+              <TextLink href={`/projects/${first.slug}`}>{content.caseStudy.viewCaseStudy}</TextLink>
             </div>
           </Card>
         );

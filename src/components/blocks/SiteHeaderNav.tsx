@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { getLangFromSearchParams, t } from "@/content/i18n";
-import { siteHeaderContent } from "@/content/siteheader";
+import { siteHeaderContent } from "@/content/siteHeader";
 
 export function SiteHeaderNav() {
   const sp = useSearchParams();

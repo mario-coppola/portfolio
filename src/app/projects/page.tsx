@@ -85,30 +85,29 @@ export default async function ProjectsPage({
 
       </header>
 
-      {first ? (
-        <section className="space-y-3">
-          <h2 className="text-lg font-semibold">{content.caseStudiesTitle}</h2>
-          <Card className="space-y-3">
+      {featured.length ? (
+    <div className="space-y-3">
+      {featured.map((cs) => {
+        // meta “hardcoded” in caseStudyContent (projectMeta) solo per questo case study.
+        // Quando ce ne saranno altri, estendere caseStudyContent con una mappa per slug.
+        const meta =
+          cs.slug === "reliable-eventing-saas"
+            ? projectMeta
+            : { title: cs.slug, summary: "", role: "" };
+
+        return (
+          <Card key={cs.slug} className="space-y-3">
             <div className="space-y-1">
               <h3 className="text-base font-semibold text-[var(--foreground)]">
-                <Link
-                  href={`/projects/${first.slug}`}
-                  className="hover:underline"
-                >
-                  {projectMeta.title}
-                </Link>
+                {meta.title}
               </h3>
-
-              <p className="text-sm text-[var(--muted)]">{projectMeta.summary}</p>
-
-              <p className="text-xs text-[var(--muted-foreground)]">
-                {first.year ? `${first.year} • ` : ""}
-                {projectMeta.role}
-              </p>
+              {meta.summary ? (
+                <p className="text-sm text-[var(--muted)]">{meta.summary}</p>
+              ) : null}
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {first.stack.slice(0, 6).map((tech: string) => (
+              {cs.stack.slice(0, 6).map((tech) => (
                 <Badge key={tech}>{tech}</Badge>
               ))}
             </div>
@@ -117,8 +116,10 @@ export default async function ProjectsPage({
               <TextLink href={`/projects/${first.slug}`}>{content.viewCaseStudy}</TextLink>
             </div>
           </Card>
-        </section>
-      ) : null}
+        );
+      })}
+    </div>
+  ) : null}
 
     </Container>
   );
