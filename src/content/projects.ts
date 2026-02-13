@@ -25,7 +25,7 @@ export const projects: Project[] = [
       "Backend system for business-critical external events: reliable webhooks, idempotency, controlled retries, and observable state transitions.",
     role: "Architecture + Backend Engineering",
     year: "2026",
-    stack: ["Node.js", "PostgreSQL", "Webhooks", "Queues", "Observability"],
+    stack: ["Node.js", "PostgreSQL", "NestJS", "Queues", "Observability"],
     context:
       "A B2B backend designed around external events that must be processed exactly once (logically), even when deliveries are duplicated, delayed, or out of order.",
     problem:

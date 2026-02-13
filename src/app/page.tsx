@@ -114,10 +114,6 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
     </div>
   ) : null}
 
-  <p className="text-xs text-[var(--muted-foreground)]">
-    {/* idealmente: aggiungiamo questa stringa in homeContent i18n */}
-    More case studies coming soon.
-  </p>
 </section>
 
     </Container>

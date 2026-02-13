@@ -8,7 +8,7 @@ export type CaseStudyListing = {
 export const caseStudies: CaseStudyListing[] = [
   {
     slug: "reliable-eventing-saas",
-    stack: ["Node.js", "PostgreSQL", "Webhooks", "Queues", "Observability"],
+    stack: ["Node.js", "PostgreSQL", "NestJS", "Queues", "Observability"],
     year: "2026",
   },
 ];

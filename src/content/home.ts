@@ -19,7 +19,7 @@ export type HomeContent = {
 export const homeContent: Record<Lang, HomeContent> = {
   en: {
     hero: {
-      eyebrow: "Backend Engineer — Event Processing & Reliability",
+      eyebrow: "Backend Engineer",
       title: "I build reliable backend systems for B2B products.",
       subtitle:
         "Backends designed to stay correct even when external providers, webhooks, and integrations fail.",
@@ -35,7 +35,7 @@ export const homeContent: Record<Lang, HomeContent> = {
   },
   it: {
     hero: {
-      eyebrow: "Backend Engineer — Event Processing & Reliability",
+      eyebrow: "Backend Engineer",
       title: "Costruisco sistemi backend affidabili per prodotti B2B.",
       subtitle:
         "Backend progettati per restare corretti anche quando provider esterni, webhook e integrazioni falliscono.",
