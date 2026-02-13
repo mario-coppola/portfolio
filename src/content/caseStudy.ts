@@ -13,13 +13,22 @@ export type CaseStudyContent = {
     safetyDesign: string;
     tradeOffs: string;
     whatYouGet: string;
+    whatIBuild: string;
     jobStates: string;
     eventFlow: string;
     failureStories: string;
+    keyGuarantees: string;
+    deepDive: string;
   };
   sectionContent: {
     context: string;
     failureModes: string;
+    whatIBuild: string;
+    keyGuarantees: {
+      g1: { title: string; body: string; how: string };
+      g2: { title: string; body: string; how: string };
+      g3: { title: string; body: string; how: string };
+    };
     safetyDesign: {
       line1: string;
       line2: string;
@@ -90,6 +99,7 @@ export type CaseStudyContent = {
     systemBehavior: string;
     outcome: string;
     openFullSize: string;
+    skipToArchitecture: string;
   };
   cta: {
     title: string;
@@ -104,7 +114,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
     projectMeta: {
       title: "Reliable Event Processing (B2B SaaS)",
       summary:
-        "Event processing for unreliable external events: immutable persistence, idempotency, explicit failures.",
+        "A reliable webhook & integration layer for SaaS: process external events safely, avoid duplicates, and keep operations observable.",
       role: "Architecture + Backend Engineering",
     },
     sectionTitles: {
@@ -113,13 +123,35 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       safetyDesign: "Core guarantees",
       tradeOffs: "Trade-offs",
       whatYouGet: "What you get",
+      whatIBuild: "What I build",
       eventFlow: "Event flow",
       jobStates: "Job states",
       failureStories: "Failure stories",
+      keyGuarantees: "Key guarantees",
+      deepDive: "Architecture details",
     },
     sectionContent: {
       context: "External events (webhooks, payments, integrations) are unreliable input. Processing them directly turns retries and duplicates into inconsistent state and financial risk.",
       failureModes: "Providers retry aggressively, payloads arrive malformed, delivery order is not guaranteed. The system must remain correct even with noisy input.",
+      whatIBuild:
+        "A small, production-ready service that receives webhooks, persists events, processes them asynchronously, and applies effects exactly once — even when providers retry, duplicate, or send bad payloads.",
+      keyGuarantees: {
+        g1: {
+          title: "No duplicate effects",
+          body: "Retries and duplicate webhooks won't double-charge or double-activate.",
+          how: "Idempotency keys + effects ledger.",
+        },
+        g2: {
+          title: "Safe failures, no partial state",
+          body: "Malformed events fail safely and the reason is recorded.",
+          how: "Deterministic validation + persisted failure reason.",
+        },
+        g3: {
+          title: "Operational control",
+          body: "Retries are deliberate and auditable — humans stay in control.",
+          how: "Manual requeue with actor/reason/timestamp.",
+        },
+      },
       safetyDesign: {
         line1: "Ingest responds immediately and produces no side effects.",
         line2: "Each accepted event is persisted before processing.",
@@ -190,6 +222,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       systemBehavior: "Behavior",
       outcome: "Outcome",
       openFullSize: "Open full size",
+      skipToArchitecture: "Skip to architecture details ↓",
     },
     cta: {
       title: "Reliable event processing in production?",
@@ -203,7 +236,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
     projectMeta: {
       title: "Event Processing Affidabile (B2B SaaS)",
       summary:
-        "Event processing per eventi esterni non affidabili: persistenza immutabile, idempotenza, failure esplicite.",
+        "Un layer affidabile per webhook e integrazioni SaaS: processa eventi esterni in sicurezza, evita duplicazioni e mantiene osservabilità operativa.",
       role: "Architettura + Backend Engineering",
     },
     sectionTitles: {
@@ -212,13 +245,35 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       safetyDesign: "Garanzie fondamentali",
       tradeOffs: "Scelte progettuali",
       whatYouGet: "Cosa garantisce",
+      whatIBuild: "Cosa costruisco",
       jobStates: "Stati del job",
       eventFlow: "Flusso operativo",
       failureStories: "Scenari di failure",
+      keyGuarantees: "Garanzie chiave",
+      deepDive: "Dettagli di architettura",
     },
     sectionContent: {
       context: "Eventi esterni (webhook, pagamenti, integrazioni) sono input non affidabili. Processarli direttamente trasforma retry e duplicati in stato inconsistente e rischio finanziario.",
       failureModes: "I provider ritentano in modo aggressivo, i payload arrivano malformati, l'ordine di consegna non è garantito. Il sistema deve restare corretto anche con input rumoroso.",
+      whatIBuild:
+        "Un servizio piccolo ma production-ready che riceve webhook, persiste gli eventi, li processa in asincrono e applica gli effetti una sola volta — anche quando il provider ritenta, duplica o invia payload errati.",
+      keyGuarantees: {
+        g1: {
+          title: "Niente duplicazioni",
+          body: "Retry e duplicati non causano doppie attivazioni o doppie operazioni.",
+          how: "Chiavi di idempotenza + ledger degli effetti.",
+        },
+        g2: {
+          title: "Fail sicuro, zero stato parziale",
+          body: "Eventi malformati falliscono in modo sicuro e il motivo resta registrato.",
+          how: "Validazione deterministica + reason persistita.",
+        },
+        g3: {
+          title: "Controllo operativo",
+          body: "I retry sono deliberati e tracciati: l'operatore resta in controllo.",
+          how: "Requeue manuale con actor/reason/timestamp.",
+        },
+      },
       safetyDesign: {
         line1: "L'ingest risponde immediatamente e non produce side effect.",
         line2: "Ogni evento accettato viene persistito prima del processing.",
@@ -289,6 +344,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       systemBehavior: "Comportamento",
       outcome: "Risultato",
       openFullSize: "Apri a dimensione piena",
+      skipToArchitecture: "Vai ai dettagli architetturali ↓",
     },
     cta: {
       title: "Event processing affidabile in produzione?",
