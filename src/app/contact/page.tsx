@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { getLangFromSearchParams, type SearchParams } from "@/content/i18n";
+import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
+import { contactContent } from "@/content/contact";
 import { site } from "@/content/site";
 import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
+import { ButtonLink } from "@/components/ui/Button";
 import { TextLink } from "@/components/ui/TextLink";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
@@ -9,6 +12,10 @@ const siteUrl = getSiteUrl();
 const globalOgImageUrl = absoluteUrl("/opengraph-image");
 const personId = `${siteUrl}/#person`;
 const websiteId = `${siteUrl}/#website`;
+
+const EMAIL = "mariocoppo91@gmail.com";
+const GITHUB_URL = "https://github.com/mario-coppola";
+const LINKEDIN_URL = "https://www.linkedin.com/in/mariocoppola91";
 
 export async function generateMetadata({
   searchParams,
@@ -18,17 +25,28 @@ export async function generateMetadata({
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const lang = getLangFromSearchParams(resolvedSearchParams);
 
+  const canonical = `${siteUrl}/contact`;
+  const title = lang === "it" ? "Contatti" : "Get in touch";
+  const description =
+    lang === "it"
+      ? "Scrivimi via email: raccontami due righe di contesto e ti rispondo con i prossimi step."
+      : "Email is the fastest way. Share a bit of context and I’ll reply with the next steps.";
+
   return {
+    title,
+    description,
     alternates: {
-      canonical: `${siteUrl}/contact`,
+      canonical,
       languages: {
-        "en-US": `${siteUrl}/contact?lang=en`,
-        "it-IT": `${siteUrl}/contact?lang=it`,
+        "en-US": `${canonical}?lang=en`,
+        "it-IT": `${canonical}?lang=it`,
       },
     },
     openGraph: {
       url: absoluteUrl("/contact"),
       locale: lang === "it" ? "it_IT" : "en_US",
+      title,
+      description,
       images: [globalOgImageUrl],
     },
     twitter: {
@@ -47,14 +65,14 @@ export default async function ContactPage({
 }) {
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const lang = getLangFromSearchParams(resolvedSearchParams);
+  const content = t(contactContent, lang);
+
   const inLanguage = lang === "it" ? "it-IT" : "en-US";
-  const pageDescription =
-    "If you want to discuss a project, collaboration, or just exchange ideas, feel free to reach out.";
   const pageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Contact",
-    description: pageDescription,
+    name: content.pageTitle,
+    description: content.pageDescription,
     url: `${siteUrl}/contact`,
     isPartOf: { "@id": websiteId },
     about: { "@id": personId },
@@ -62,29 +80,62 @@ export default async function ContactPage({
   };
 
   return (
-    <Container className="space-y-6 py-10">
+    <Container className="space-y-8 py-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
       />
+
       <header className="space-y-2">
         <div>
-          <TextLink href="/">Back to home</TextLink>
+          <TextLink href="/">{content.backToHome}</TextLink>
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight">Contact</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">
+          {content.pageTitle}
+        </h1>
+        <p className="max-w-2xl text-[var(--muted)]">
+          {content.pageDescription}
+        </p>
       </header>
 
-      <div className="space-y-4">
-        <p className="max-w-2xl text-[var(--muted)]">
-          If you want to discuss a project, collaboration, or just exchange ideas,
-          feel free to reach out.
-        </p>
+      <Card className="space-y-5">
+        <div className="space-y-1">
+          <p className="text-sm font-semibold text-[var(--foreground)]">
+            {content.emailLabel}
+          </p>
+          <p className="font-mono text-sm text-[var(--muted)]">{EMAIL}</p>
+        </div>
 
-        <p className="max-w-2xl text-[var(--muted)]">
-          Contact details and links will be added here once the public identity
-          is fully defined.
-        </p>
-      </div>
+        <div className="flex flex-wrap gap-3">
+          <ButtonLink href={`mailto:${EMAIL}`} variant="primary">
+            {content.primaryCta.label}
+          </ButtonLink>
+          <ButtonLink href={GITHUB_URL} external variant="secondary">
+            {content.links.github}
+          </ButtonLink>
+          <ButtonLink href={LINKEDIN_URL} external variant="secondary">
+            {content.links.linkedin}
+          </ButtonLink>
+        </div>
+      </Card>
+
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold text-[var(--foreground)]">
+          {content.whatToInclude.title}
+        </h2>
+        <ul className="list-disc space-y-1 pl-5 text-[var(--muted)]">
+          {content.whatToInclude.bullets.map((b) => (
+            <li key={b}>{b}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold text-[var(--foreground)]">
+          {content.availability.title}
+        </h2>
+        <p className="text-[var(--muted)]">{content.availability.line}</p>
+      </section>
     </Container>
   );
 }
