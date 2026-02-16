@@ -57,7 +57,6 @@ export default async function ProjectsPage({
   const caseStudyContentLang = t(caseStudyContent, lang);
   const projectMeta = caseStudyContentLang.projectMeta;
   const featured = getFeaturedCaseStudies();
-  const first = featured[0];
   const inLanguage = lang === "it" ? "it-IT" : "en-US";
   const pageJsonLd = {
     "@context": "https://schema.org",
@@ -113,7 +112,7 @@ export default async function ProjectsPage({
             </div>
 
             <div>
-              <TextLink href={`/projects/${first.slug}`}>{content.viewCaseStudy}</TextLink>
+              <TextLink href={`/projects/${cs.slug}`}>{content.viewCaseStudy}</TextLink>
             </div>
           </Card>
         );

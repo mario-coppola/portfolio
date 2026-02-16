@@ -51,7 +51,6 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
   const caseStudyContentLang = t(caseStudyContent, lang);
   const projectMeta = caseStudyContentLang.projectMeta;
   const featured = getFeaturedCaseStudies();
-  const first = featured[0];
 
   return (
     <Container className="space-y-12 py-10">
@@ -110,7 +109,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
             </div>
 
             <div>
-              <TextLink href={`/projects/${first.slug}`}>{content.caseStudy.viewCaseStudy}</TextLink>
+              <TextLink href={`/projects/${cs.slug}`}>{content.caseStudy.viewCaseStudy}</TextLink>
             </div>
           </Card>
         );
