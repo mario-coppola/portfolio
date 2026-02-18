@@ -28,7 +28,7 @@ export const homeContent: Record<Lang, HomeContent> = {
       secondaryCta: { label: "Get in touch", href: "/contact" },
     },
     caseStudy: {
-      title: "Case studies",
+      title: "Projects",
       viewCaseStudy: "View case study",
     },
     otherProjects: {
@@ -45,7 +45,7 @@ export const homeContent: Record<Lang, HomeContent> = {
       secondaryCta: { label: "Contattami", href: "/contact" },
     },
     caseStudy: {
-      title: "Case study",
+      title: "Progetti",
       viewCaseStudy: "Vedi case study",
     },
     otherProjects: {

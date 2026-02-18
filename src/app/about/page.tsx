@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
-import { aboutContent } from "../../content/about";
+import { aboutContent } from "@/content/about";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 import { site } from "@/content/site";
 import { TextLink } from "@/components/ui/TextLink";
@@ -22,7 +22,7 @@ export async function generateMetadata({
   const canonicalUrl = `${siteUrl}/about`;
 
   return {
-    title: content.title + " - " + content.title,
+    title: content.title + " - " + site.title,
     description: content.intro.p1,
     alternates: {
       canonical: canonicalUrl,
@@ -57,16 +57,16 @@ export default async function AboutPage({
   const content = t(aboutContent, lang);
 
   return (
-    <Container className="space-y-12 py-10">
-      <header className="space-y-4">
+    <Container className="space-y-8 py-6">
+      <section className="space-y-4">
       <div>
           <TextLink href="/">{content.backToHome}</TextLink>
       </div>
-      <h1 className="text-2xl font-semibold tracking-tight">{content.title}</h1>
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-8">{content.title}</h1>
       
-      </header>
+      </section>
 
-      <section className="space-y-4 text-[var(--muted)] max-w-2xl">
+      <section className="space-y-5 text-[var(--muted)] max-w-2xl">
         <p>{content.intro.p1}</p>
         <p>{content.intro.p2}</p>
         <p>{content.intro.p3}</p>
@@ -83,10 +83,10 @@ export default async function AboutPage({
       </section>
 
       <section className="space-y-4 max-w-2xl">
-        <h2 className="text-lg font-semibold text-[var(--foreground)]">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
           {content.howIWork.title}
         </h2>
-        <div className="space-y-3 text-[var(--muted)]">
+        <div className="space-y-4 text-[var(--muted)]">
           <p>{content.howIWork.p1}</p>
           <p>{content.howIWork.p2}</p>
           <p>{content.howIWork.p3}</p>
@@ -94,7 +94,7 @@ export default async function AboutPage({
       </section>
 
       <section className="space-y-4 max-w-2xl">
-        <h2 className="text-lg font-semibold text-[var(--foreground)]">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
           {content.whenToReachOut.title}
         </h2>
 

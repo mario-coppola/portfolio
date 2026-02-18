@@ -2,7 +2,7 @@ import Link from "next/link";
 import { cn } from "@/lib/cn";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
-type ButtonSize = "sm" | "md";
+type ButtonSize = "sm" | "md" | "lg";
 
 const base =
   "inline-flex items-center justify-center rounded-2xl font-medium " +
@@ -11,16 +11,17 @@ const base =
   "disabled:pointer-events-none disabled:opacity-50";
 
   const variants: Record<ButtonVariant, string> = {
-    primary: "bg-neutral-900 text-white hover:bg-neutral-800",
+    primary: "bg-[var(--button)] text-[var(--button-text)] hover:shadow-lg motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:scale-[1.02]",
     secondary:
-      "border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:bg-[color-mix(in_srgb,var(--card),var(--foreground)_6%)]",
+      "border border-[var(--border)] bg-[var(--button)] text-[var(--button-text)] hover:bg-[color-mix(in_srgb,var(--card),var(--foreground)_6%)]",
     ghost:
       "text-[var(--foreground)] hover:bg-[color-mix(in_srgb,var(--card),var(--foreground)_6%)]",
   };
 
 const sizes: Record<ButtonSize, string> = {
   sm: "h-9 px-3 text-sm",
-  md: "h-10 px-4 text-sm",
+  md: "h-10 px-4 text-sm font-semibold",
+  lg: "h-12 px-5 text-md font-semibold",
 };
 
 type ButtonProps = {

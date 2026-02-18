@@ -70,55 +70,55 @@ export default async function ProjectsPage({
   };
 
   return (
-    <Container className="space-y-6 py-10">
+    <Container className="space-y-8 py-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
       />
-      <header className="space-y-2">
+      <section className="space-y-4">
         <div>
           <TextLink href="/">{content.backToHome}</TextLink>
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight">{content.pageTitle}</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-8">{content.pageTitle}</h1>
         <p className="max-w-2xl text-[var(--muted)]">{content.pageDescription}</p>
 
-      </header>
+      </section>
+<section className="space-y-8">
+  {featured.length ? (
+      <div className="space-y-2">
+        {featured.map((cs) => {
+          // meta “hardcoded” in caseStudyContent (projectMeta) solo per questo case study.
+          // Quando ce ne saranno altri, estendere caseStudyContent con una mappa per slug.
+          const meta =
+            cs.slug === "reliable-eventing-saas"
+              ? projectMeta
+              : { title: cs.slug, summary: "", role: "" };
 
-      {featured.length ? (
-    <div className="space-y-3">
-      {featured.map((cs) => {
-        // meta “hardcoded” in caseStudyContent (projectMeta) solo per questo case study.
-        // Quando ce ne saranno altri, estendere caseStudyContent con una mappa per slug.
-        const meta =
-          cs.slug === "reliable-eventing-saas"
-            ? projectMeta
-            : { title: cs.slug, summary: "", role: "" };
+          return (
+            <Link key={cs.slug} href={`/projects/${cs.slug}`} className="block">
+              <Card interactive className="space-y-3">
+                <div className="space-y-1">
+                  <h3 className="text-base font-semibold text-[var(--foreground)]">
+                    {meta.title}
+                  </h3>
+                  {meta.summary ? (
+                    <p className="text-sm text-[var(--muted)]">{meta.summary}</p>
+                  ) : null}
+                </div>
 
-        return (
-          <Card key={cs.slug} className="space-y-3">
-            <div className="space-y-1">
-              <h3 className="text-base font-semibold text-[var(--foreground)]">
-                {meta.title}
-              </h3>
-              {meta.summary ? (
-                <p className="text-sm text-[var(--muted)]">{meta.summary}</p>
-              ) : null}
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {cs.stack.slice(0, 6).map((tech) => (
-                <Badge key={tech}>{tech}</Badge>
-              ))}
-            </div>
-
-            <div>
-              <TextLink href={`/projects/${cs.slug}`}>{content.viewCaseStudy}</TextLink>
-            </div>
-          </Card>
-        );
-      })}
-    </div>
-  ) : null}
+                <div className="flex flex-wrap gap-2">
+                  {cs.stack.slice(0, 6).map((tech) => (
+                    <Badge key={tech}>{tech}</Badge>
+                  ))}
+                </div>
+              </Card>
+            </Link>
+          );
+        })}
+      </div>
+    ) : null}
+</section>
+      
 
     </Container>
   );

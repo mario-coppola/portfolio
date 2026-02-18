@@ -78,19 +78,19 @@ export default async function ProjectPage({
   });
 
   return (
-    <Container className="space-y-8 py-10">
+    <Container className="space-y-8 py-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
       />
-      <header className="space-y-3">
+      <section className="space-y-4 mb-20">
         <div className="flex flex-wrap items-center gap-3">
           <TextLink href="/projects">{ui.backToProjects}</TextLink>
           {project.year ? <Badge>{project.year}</Badge> : null}
           <Badge>{projectMeta.role}</Badge>
         </div>
 
-        <h1 className="text-3xl font-semibold tracking-tight">{projectMeta.title}</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight">{projectMeta.title}</h1>
         <p className="max-w-2xl text-[var(--muted)]">{projectMeta.summary}</p>
 
         <div className="flex flex-wrap gap-2">
@@ -108,39 +108,39 @@ export default async function ProjectPage({
             ))}
           </div>
         ) : null}
-      </header>
+      </section>
 
       <div className="space-y-10">
         <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.whatIBuild}
           </h2>
           <p className="text-[var(--muted)]">{ui.sectionContent.whatIBuild}</p>
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.context}
           </h2>
           <p className="text-[var(--muted)]">{ui.sectionContent.context}</p>
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.failureModes}
           </h2>
           <p className="text-[var(--muted)]">{ui.sectionContent.failureModes}</p>
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.whatYouGet}
           </h2>
           <p className="text-[var(--muted)]">{ui.sectionContent.whatYouGet}</p>
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.keyGuarantees}
           </h2>
           <div className="grid gap-4 md:grid-cols-3">
@@ -179,17 +179,17 @@ export default async function ProjectPage({
             </Card>
           </div>
           <div className="pt-1">
-            <a
+            <TextLink
               href="#architecture"
               className="inline-flex w-fit text-sm text-[var(--muted)] hover:text-[var(--foreground)]"
             >
               {ui.labels.skipToArchitecture}
-            </a>
+            </TextLink>
           </div>
         </section>
 
         <section className="space-y-6">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.failureStories}
           </h2>
           <div className="space-y-6">
@@ -269,7 +269,7 @@ export default async function ProjectPage({
         </section>
 
         <section id="architecture" className="scroll-mt-6 space-y-10">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.deepDive}
           </h2>
 
@@ -365,19 +365,18 @@ export default async function ProjectPage({
         </section>
       </div>
 
-      <Card>
-        <section className="space-y-2">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">
+      
+        <section className="space-y-2 text-center bg-gradient-to-b from-gray-900 to-transparent p-10 rounded-md border-2 border-[var(--border)]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.cta.title}
           </h2>
-          <p className="text-[var(--muted)]">
+          <p className="text-[var(--muted)] mb-8">
             {ui.cta.body}
           </p>
           <ButtonLink href={"/contact"} variant="primary">
             {ui.cta.linkLabel}
           </ButtonLink>
         </section>
-      </Card>
     </Container>
   );
 }

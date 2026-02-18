@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { homeContent } from "@/content/home";
 import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
 import { site } from "@/content/site";
@@ -53,13 +54,13 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
   const featured = getFeaturedCaseStudies();
 
   return (
-    <Container className="space-y-12 py-10">
-      <section className="space-y-4">
-        <p className="text-sm text-[var(--muted-foreground)]">
+    <Container className="space-y-8 py-6">
+      <section className="space-y-4 mb-20">
+        <p className="text-md text-[var(--muted-foreground)]">
           {content.hero.eyebrow}
         </p>
 
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight mb-8">
           {content.hero.title}
         </h1>
 
@@ -67,18 +68,15 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
           {content.hero.subtitle}
         </p>
 
-        <div className="flex flex-wrap gap-3 pt-2">
-          <ButtonLink href={content.hero.primaryCta.href} variant="secondary">
-            {content.hero.primaryCta.label}
-          </ButtonLink>
+        <div className="flex justify-wrap gap-3 pt-2">
           <ButtonLink href={content.hero.secondaryCta.href} variant="primary">
             {content.hero.secondaryCta.label}
           </ButtonLink>
         </div>
       </section>
-<section className="space-y-4">
+<section className="space-y-8">
   <div className="space-y-2">
-    <h2 className="text-lg font-semibold">{content.caseStudy.title}</h2>
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold">{content.caseStudy.title}</h2>
   </div>
 
   {featured.length ? (
@@ -92,26 +90,24 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
             : { title: cs.slug, summary: "", role: "" };
 
         return (
-          <Card key={cs.slug} className="space-y-3">
-            <div className="space-y-1">
-              <h3 className="text-base font-semibold text-[var(--foreground)]">
-                {meta.title}
-              </h3>
-              {meta.summary ? (
-                <p className="text-sm text-[var(--muted)]">{meta.summary}</p>
-              ) : null}
-            </div>
+          <Link key={cs.slug} href={`/projects/${cs.slug}`} className="block">
+            <Card interactive className="space-y-3">
+              <div className="space-y-1">
+                <h3 className="text-base font-semibold text-[var(--foreground)]">
+                  {meta.title}
+                </h3>
+                {meta.summary ? (
+                  <p className="text-sm text-[var(--muted)]">{meta.summary}</p>
+                ) : null}
+              </div>
 
-            <div className="flex flex-wrap gap-2">
-              {cs.stack.slice(0, 6).map((tech) => (
-                <Badge key={tech}>{tech}</Badge>
-              ))}
-            </div>
-
-            <div>
-              <TextLink href={`/projects/${cs.slug}`}>{content.caseStudy.viewCaseStudy}</TextLink>
-            </div>
-          </Card>
+              <div className="flex flex-wrap gap-2">
+                {cs.stack.slice(0, 6).map((tech) => (
+                  <Badge key={tech}>{tech}</Badge>
+                ))}
+              </div>
+            </Card>
+          </Link>
         );
       })}
     </div>

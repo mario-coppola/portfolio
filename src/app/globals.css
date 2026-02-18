@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
@@ -9,6 +13,9 @@
 
   --border: #e5e5e5;           /* approx neutral-200 */
   --card: #ffffff;
+
+  --button: #0a0a0a;
+  --button-text: #ffffff;
 
   --ring: #0a0a0a;
 }
@@ -28,8 +35,11 @@
     --muted: #a3a3a3;
     --muted-foreground: #bdbdbd;
 
-    --border: #262626;
+    --border: #424242;
     --card: #0f0f0f;
+
+    --button: #ededed;
+    --button-text: #0a0a0a;
 
     --ring: #ededed;
   }
