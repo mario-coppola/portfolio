@@ -85,7 +85,7 @@ export default async function ProjectPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
       />
-      <section className="space-y-4 mb-20">
+      <section className="space-y-4">
         <div className="flex flex-wrap items-center gap-3">
           <TextLink href="/projects">
             <div className="flex items-center gap-1">
@@ -93,11 +93,13 @@ export default async function ProjectPage({
             <div>{ui.backToProjects}</div>
             </div>
           </TextLink>
+        </div>
+
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-8">{projectMeta.title}</h1>
+        <div className="flex flex-wrap gap-2">
           {project.year ? <Badge>{project.year}</Badge> : null}
           <Badge>{projectMeta.role}</Badge>
         </div>
-
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight">{projectMeta.title}</h1>
         <p className="max-w-2xl text-[var(--muted)]">{projectMeta.summary}</p>
 
         <div className="flex flex-wrap gap-2">
@@ -117,7 +119,7 @@ export default async function ProjectPage({
         ) : null}
       </section>
 
-      <div className="space-y-10">
+      <div className="space-y-10 pt-10">
         <section className="space-y-2">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.whatIBuild}

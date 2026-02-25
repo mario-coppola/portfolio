@@ -2,6 +2,7 @@ import type { Lang } from "@/content/i18n";
 
 export type ContactContent = {
   title: string;
+  backToHome: string;
   intro: string;
   availability: string;
   scope: string[];
@@ -12,6 +13,7 @@ export type ContactContent = {
 export const contactContent: Record<Lang, ContactContent> = {
   en: {
     title: "Contact",
+    backToHome: "Back to home",
     intro:
       "The easiest way to reach me is email. Tell me about your context, what you're building, and where reliability matters.",
     availability: "Available for:",
@@ -27,6 +29,7 @@ export const contactContent: Record<Lang, ContactContent> = {
   },
   it: {
     title: "Contatti",
+    backToHome: "Torna alla home",
     intro:
       "Il modo più semplice per contattarmi è via email. Raccontami il contesto, cosa stai costruendo e dove serve affidabilità.",
     availability: "Disponibile per:",

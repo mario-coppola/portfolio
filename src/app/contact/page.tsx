@@ -4,7 +4,8 @@ import { getLangFromSearchParams, t, type SearchParams } from "@/content/i18n";
 import { contactContent } from "@/content/contact";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 import { site } from "@/content/site";
-import { Mail, Github, Linkedin } from "lucide-react";
+import { Mail, Github, Linkedin, ArrowLeft } from "lucide-react";
+import { TextLink } from "@/components/ui/TextLink";
 
 const siteUrl = getSiteUrl();
 const globalOgImageUrl = absoluteUrl("/opengraph-image");
@@ -56,13 +57,21 @@ export default async function ContactPage({
   const content = t(contactContent, lang);
 
   return (
-    <Container className="space-y-12 py-10">
-      <header className="space-y-4 max-w-2xl">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+    <Container className="space-y-8 py-6">
+      <section className="space-y-4">
+      <div>
+          <TextLink href="/">
+              <div className="flex items-center gap-1">
+              <ArrowLeft size={16} />
+              <div>{content.backToHome}</div>
+              </div>
+          </TextLink>
+        </div>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-8">
           {content.title}
         </h1>
         <p className="text-[var(--muted)]">{content.intro}</p>
-      </header>
+      </section>
 
       {/* EMAIL */}
       <section className="space-y-3 max-w-2xl">
