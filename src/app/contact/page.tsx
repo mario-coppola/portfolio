@@ -58,7 +58,7 @@ export default async function ContactPage({
   return (
     <Container className="space-y-12 py-10">
       <header className="space-y-4 max-w-2xl">
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
           {content.title}
         </h1>
         <p className="text-[var(--muted)]">{content.intro}</p>
