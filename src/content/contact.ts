@@ -1,97 +1,43 @@
 import type { Lang } from "@/content/i18n";
 
 export type ContactContent = {
-  backToHome: string;
-  pageTitle: string;
-  pageDescription: string;
-
+  title: string;
+  intro: string;
+  availability: string;
+  scope: string[];
   emailLabel: string;
-  emailValue: string;
-  primaryCta: {
-    label: string;
-  };
-
-  whatToInclude: {
-    title: string;
-    bullets: [string, string, string];
-  };
-
-  availability: {
-    title: string;
-    line: string;
-  };
-
-  links: {
-    title: string;
-    github: string;
-    linkedin: string;
-  };
+  closing: string;
 };
 
 export const contactContent: Record<Lang, ContactContent> = {
   en: {
-    backToHome: "Back to home",
-    pageTitle: "Get in touch",
-    pageDescription:
-      "Email is the fastest way. Share a bit of context and I’ll reply with the next steps.",
-
+    title: "Contact",
+    intro:
+      "The easiest way to reach me is email. Tell me about your context, what you're building, and where reliability matters.",
+    availability: "Available for:",
+    scope: [
+      "architecture design",
+      "system audits",
+      "reliability hardening",
+      "backend implementation",
+    ],
     emailLabel: "Email",
-    emailValue: "mariocoppo91@gmail.com",
-    primaryCta: {
-      label: "Email me",
-    },
-
-    whatToInclude: {
-      title: "What to include",
-      bullets: [
-        "What you’re building (product / company)",
-        "Which external events you handle (payments, webhooks, provider X)",
-        "What’s going wrong today (retries, duplicates, inconsistent state, observability)",
-      ],
-    },
-
-    availability: {
-      title: "Availability / scope",
-      line: "Available for: architecture, audit, hardening, implementation.",
-    },
-
-    links: {
-      title: "Links",
-      github: "GitHub",
-      linkedin: "LinkedIn",
-    },
+    closing:
+      "You can also find me on GitHub and LinkedIn.",
   },
-
   it: {
-    backToHome: "Torna alla home",
-    pageTitle: "Contatti",
-    pageDescription:
-      "La mail è il modo più veloce. Raccontami due righe di contesto e ti rispondo con i prossimi step.",
-
+    title: "Contatti",
+    intro:
+      "Il modo più semplice per contattarmi è via email. Raccontami il contesto, cosa stai costruendo e dove serve affidabilità.",
+    availability: "Disponibile per:",
+    scope: [
+      "architettura",
+      "audit",
+      "hardening",
+      "implementazione backend",
+    ],
     emailLabel: "Email",
-    emailValue: "mariocoppo91@gmail.com",
-    primaryCta: {
-      label: "Scrivimi",
-    },
-
-    whatToInclude: {
-      title: "Cosa includere",
-      bullets: [
-        "Cosa stai costruendo (prodotto / azienda)",
-        "Quali eventi esterni gestisci (pagamenti, webhooks, provider X)",
-        "Cosa sta andando storto oggi (retry, duplicati, stato incoerente, osservabilità)",
-      ],
-    },
-
-    availability: {
-      title: "Disponibilità / ambito",
-      line: "Disponibile per: architettura, audit, hardening, implementazione.",
-    },
-
-    links: {
-      title: "Link",
-      github: "GitHub",
-      linkedin: "LinkedIn",
-    },
+    closing:
+      "Puoi trovarmi anche su GitHub e LinkedIn.",
   },
 };
