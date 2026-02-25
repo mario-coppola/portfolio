@@ -99,7 +99,7 @@ export type CaseStudyContent = {
     systemBehavior: string;
     outcome: string;
     openFullSize: string;
-    skipToArchitecture: string;
+    skipArchitecture: string;
   };
   cta: {
     title: string;
@@ -110,7 +110,7 @@ export type CaseStudyContent = {
 
 export const caseStudyContent: Record<Lang, CaseStudyContent> = {
   en: {
-    backToProjects: "← Back to projects",
+    backToProjects: "Back to projects",
     projectMeta: {
       title: "Reliable Event Processing (B2B SaaS)",
       summary:
@@ -222,7 +222,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       systemBehavior: "Behavior",
       outcome: "Outcome",
       openFullSize: "Open full size",
-      skipToArchitecture: "Skip to architecture details ↓",
+      skipArchitecture: "Skip architecture details",
     },
     cta: {
       title: "Reliable event processing in production?",
@@ -232,7 +232,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
     },
   },
   it: {
-    backToProjects: "← Torna ai progetti",
+    backToProjects: "Torna ai progetti",
     projectMeta: {
       title: "Event Processing Affidabile (B2B SaaS)",
       summary:
@@ -250,7 +250,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       eventFlow: "Flusso operativo",
       failureStories: "Scenari di failure",
       keyGuarantees: "Garanzie chiave",
-      deepDive: "Dettagli di architettura",
+      deepDive: "Dettagli architetturali",
     },
     sectionContent: {
       context: "Eventi esterni (webhook, pagamenti, integrazioni) sono input non affidabili. Processarli direttamente trasforma retry e duplicati in stato inconsistente e rischio finanziario.",
@@ -344,7 +344,7 @@ export const caseStudyContent: Record<Lang, CaseStudyContent> = {
       systemBehavior: "Comportamento",
       outcome: "Risultato",
       openFullSize: "Apri a dimensione piena",
-      skipToArchitecture: "Vai ai dettagli architetturali ↓",
+      skipArchitecture: "Salta i dettagli architetturali",
     },
     cta: {
       title: "Event processing affidabile in produzione?",

@@ -13,6 +13,8 @@ import { getSiteUrl } from "@/lib/siteUrl";
 import { buildAlternates, buildSocialMeta } from "@/lib/seo";
 import { buildCaseStudyJsonLd } from "@/lib/jsonLd";
 import { reliableEventingFailureSnippets } from "@/content/caseStudySnippets";
+import { ArrowLeft, ArrowDown, MailIcon } from "lucide-react";
+
 
 export async function generateMetadata({
   params,
@@ -85,7 +87,12 @@ export default async function ProjectPage({
       />
       <section className="space-y-4 mb-20">
         <div className="flex flex-wrap items-center gap-3">
-          <TextLink href="/projects">{ui.backToProjects}</TextLink>
+          <TextLink href="/projects">
+            <div className="flex items-center gap-1">
+            <ArrowLeft size={16} />
+            <div>{ui.backToProjects}</div>
+            </div>
+          </TextLink>
           {project.year ? <Badge>{project.year}</Badge> : null}
           <Badge>{projectMeta.role}</Badge>
         </div>
@@ -180,95 +187,18 @@ export default async function ProjectPage({
           </div>
           <div className="pt-1">
             <TextLink
-              href="#architecture"
-              className="inline-flex w-fit text-sm text-[var(--muted)] hover:text-[var(--foreground)]"
+              href="#get-in-touch"
+              className="inline-flex underline w-fit text-[var(--muted)] hover:text-[var(--foreground)] motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:scale-[1.02]"
             >
-              {ui.labels.skipToArchitecture}
+              <div className="flex items-center align-middle gap-1">
+                <div className="text-lg">{ui.labels.skipArchitecture}</div>
+                <div><ArrowDown size={16} /></div>
+              </div>
             </TextLink>
           </div>
         </section>
 
-        <section className="space-y-6">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
-            {ui.sectionTitles.failureStories}
-          </h2>
-          <div className="space-y-6">
-            <Card className="space-y-6">
-              <CaseStudyScenario
-                title={ui.sectionContent.failureStories.scenario1.title}
-                scenario={ui.sectionContent.failureStories.scenario1.scenario}
-                systemBehavior={ui.sectionContent.failureStories.scenario1.systemBehavior}
-                outcome={ui.sectionContent.failureStories.scenario1.outcome}
-                labels={
-                  ui.labels ?? {
-                    scenario: "Scenario",
-                    systemBehavior: "System behavior",
-                    outcome: "Outcome",
-                  }
-                }
-                scenarioCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario1.scenario, language: "bash" },
-                ]}
-                outcomeCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario1.outcome, language: "json" },
-                ]}
-              />
-            </Card>
-            <Card className="space-y-6">
-              <CaseStudyScenario
-                title={ui.sectionContent.failureStories.scenario2.title}
-                scenario={ui.sectionContent.failureStories.scenario2.scenario}
-                systemBehavior={ui.sectionContent.failureStories.scenario2.systemBehavior}
-                outcome={ui.sectionContent.failureStories.scenario2.outcome}
-                labels={
-                  ui.labels ?? {
-                    scenario: "Scenario",
-                    systemBehavior: "System behavior",
-                    outcome: "Outcome",
-                  }
-                }
-                scenarioCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario2.scenario, language: "bash" },
-                ]}
-                systemBehaviorCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario2.systemBehavior, language: "json" },
-                ]}
-              />
-            </Card>
-            <Card className="space-y-6">
-              <CaseStudyScenario
-                title={ui.sectionContent.failureStories.scenario3.title}
-                scenario={ui.sectionContent.failureStories.scenario3.scenario}
-                systemBehavior={ui.sectionContent.failureStories.scenario3.systemBehavior}
-                outcome={ui.sectionContent.failureStories.scenario3.outcome}
-                labels={
-                  ui.labels ?? {
-                    scenario: "Scenario",
-                    systemBehavior: "System behavior",
-                    outcome: "Outcome",
-                  }
-                }
-                scenarioCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario3.scenario, language: "bash" },
-                ]}
-                systemBehaviorCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario3.systemBehavior, language: "json" },
-                  ...(reliableEventingFailureSnippets.scenario3.requeueCommand
-                    ? [{ code: reliableEventingFailureSnippets.scenario3.requeueCommand, language: "bash" as const }]
-                    : []),
-                  ...(reliableEventingFailureSnippets.scenario3.requeueResponse
-                    ? [{ code: reliableEventingFailureSnippets.scenario3.requeueResponse, language: "json" as const }]
-                    : []),
-                ]}
-                outcomeCodeBlocks={[
-                  { code: reliableEventingFailureSnippets.scenario3.outcome, language: "json" },
-                ]}
-              />
-            </Card>
-          </div>
-        </section>
-
-        <section id="architecture" className="scroll-mt-6 space-y-10">
+        <section className="scroll-mt-6 space-y-10">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
             {ui.sectionTitles.deepDive}
           </h2>
@@ -363,19 +293,105 @@ export default async function ProjectPage({
             <p className="text-[var(--muted)]">{ui.sectionContent.tradeOffs}</p>
           </div>
         </section>
-      </div>
 
-      
-        <section className="space-y-2 text-center bg-gradient-to-b from-gray-900 to-transparent p-10 rounded-md border-2 border-[var(--border)]">
+        <section className="space-y-6">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
-            {ui.cta.title}
+            {ui.sectionTitles.failureStories}
           </h2>
-          <p className="text-[var(--muted)] mb-8">
+          <div className="space-y-6">
+            <Card className="space-y-6">
+              <CaseStudyScenario
+                title={ui.sectionContent.failureStories.scenario1.title}
+                scenario={ui.sectionContent.failureStories.scenario1.scenario}
+                systemBehavior={ui.sectionContent.failureStories.scenario1.systemBehavior}
+                outcome={ui.sectionContent.failureStories.scenario1.outcome}
+                labels={
+                  ui.labels ?? {
+                    scenario: "Scenario",
+                    systemBehavior: "System behavior",
+                    outcome: "Outcome",
+                  }
+                }
+                scenarioCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario1.scenario, language: "bash" },
+                ]}
+                outcomeCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario1.outcome, language: "json" },
+                ]}
+              />
+            </Card>
+            <Card className="space-y-6">
+              <CaseStudyScenario
+                title={ui.sectionContent.failureStories.scenario2.title}
+                scenario={ui.sectionContent.failureStories.scenario2.scenario}
+                systemBehavior={ui.sectionContent.failureStories.scenario2.systemBehavior}
+                outcome={ui.sectionContent.failureStories.scenario2.outcome}
+                labels={
+                  ui.labels ?? {
+                    scenario: "Scenario",
+                    systemBehavior: "System behavior",
+                    outcome: "Outcome",
+                  }
+                }
+                scenarioCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario2.scenario, language: "bash" },
+                ]}
+                systemBehaviorCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario2.systemBehavior, language: "json" },
+                ]}
+              />
+            </Card>
+            <Card className="space-y-6">
+              <CaseStudyScenario
+                title={ui.sectionContent.failureStories.scenario3.title}
+                scenario={ui.sectionContent.failureStories.scenario3.scenario}
+                systemBehavior={ui.sectionContent.failureStories.scenario3.systemBehavior}
+                outcome={ui.sectionContent.failureStories.scenario3.outcome}
+                labels={
+                  ui.labels ?? {
+                    scenario: "Scenario",
+                    systemBehavior: "System behavior",
+                    outcome: "Outcome",
+                  }
+                }
+                scenarioCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario3.scenario, language: "bash" },
+                ]}
+                systemBehaviorCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario3.systemBehavior, language: "json" },
+                  ...(reliableEventingFailureSnippets.scenario3.requeueCommand
+                    ? [{ code: reliableEventingFailureSnippets.scenario3.requeueCommand, language: "bash" as const }]
+                    : []),
+                  ...(reliableEventingFailureSnippets.scenario3.requeueResponse
+                    ? [{ code: reliableEventingFailureSnippets.scenario3.requeueResponse, language: "json" as const }]
+                    : []),
+                ]}
+                outcomeCodeBlocks={[
+                  { code: reliableEventingFailureSnippets.scenario3.outcome, language: "json" },
+                ]}
+              />
+            </Card>
+          </div>
+        </section>
+
+        
+      </div>
+        <section id="get-in-touch" className="space-y-2 p-10 rounded-md border-2 border-[var(--border)]">
+          <div className="flex items-center justify-between gap-2">
+            <div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[var(--foreground)]">
+            {ui.cta.linkLabel}
+          </h2>
+          <p className="text-[var(--muted)] w-2/3 mt-4 mb-8">
             {ui.cta.body}
           </p>
           <ButtonLink href={"/contact"} variant="primary">
             {ui.cta.linkLabel}
           </ButtonLink>
+            </div>
+            <MailIcon size={200} />
+          
+          </div>
         </section>
     </Container>
   );

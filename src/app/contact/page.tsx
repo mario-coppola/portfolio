@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
 import { TextLink } from "@/components/ui/TextLink";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
+import { ArrowLeft } from "lucide-react";
 
 const siteUrl = getSiteUrl();
 const globalOgImageUrl = absoluteUrl("/opengraph-image");
@@ -88,7 +89,12 @@ export default async function ContactPage({
 
       <header className="space-y-2">
         <div>
-          <TextLink href="/">{content.backToHome}</TextLink>
+          <TextLink href="/">
+            <div className="flex items-center gap-1">
+              <ArrowLeft size={16} />
+              <div>{content.backToHome}</div>
+            </div>
+          </TextLink>
         </div>
         <h1 className="text-2xl font-semibold tracking-tight">
           {content.pageTitle}

@@ -30,7 +30,7 @@ export type ContactContent = {
 
 export const contactContent: Record<Lang, ContactContent> = {
   en: {
-    backToHome: "← Back to home",
+    backToHome: "Back to home",
     pageTitle: "Get in touch",
     pageDescription:
       "Email is the fastest way. Share a bit of context and I’ll reply with the next steps.",
@@ -63,7 +63,7 @@ export const contactContent: Record<Lang, ContactContent> = {
   },
 
   it: {
-    backToHome: "← Torna alla home",
+    backToHome: "Torna alla home",
     pageTitle: "Contatti",
     pageDescription:
       "La mail è il modo più veloce. Raccontami due righe di contesto e ti rispondo con i prossimi step.",

@@ -27,9 +27,9 @@ export type AboutContent = {
 export const aboutContent: Record<Lang, AboutContent> = {
   it: {
     title: "Chi sono",
-    backToHome: "← Torna alla home",
+    backToHome: "Torna alla home",
     intro: {
-      p1: "Sono un backend engineer focalizzato su sistemi affidabili.",
+      p1: "Sono un backend engineer focalizzato su sistemi di integrazione affidabili.",
       p2: "Lavoro su software che deve reagire correttamente a eventi esterni: pagamenti, billing, integrazioni, automazioni. In questi contesti gli errori non sono teorici. Generano costi reali, stati incoerenti e perdita di fiducia.",
       p3: "Il mio lavoro è ridurre quel rischio. Non mi occupo solo di \"far funzionare\" una feature.",
       systemGuaranteeIntro: "Mi occupo di garantire che il sistema:",
@@ -60,9 +60,9 @@ export const aboutContent: Record<Lang, AboutContent> = {
   },
   en: {
     title: "About",
-    backToHome: "← Back to home",
+    backToHome: "Back to home",
     intro: {
-      p1: "I'm a backend engineer focused on building reliable systems.",
+      p1: "I'm a backend engineer focused on building reliable integration systems.",
       p2: "I work on software that must react correctly to external events: payments, billing systems, third-party integrations, automation triggers. In these contexts, failures are not theoretical—they cause real financial and operational risk.",
       p3: "My job is to reduce that risk. I don't just make features work.",
       systemGuaranteeIntro: "I make sure the system:",

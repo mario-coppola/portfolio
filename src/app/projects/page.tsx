@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { TextLink } from "@/components/ui/TextLink";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 import { caseStudyContent } from "@/content/caseStudy";
+import { ArrowLeft } from "lucide-react";
 
 const siteUrl = getSiteUrl();
 const globalOgImageUrl = absoluteUrl("/opengraph-image");
@@ -77,7 +78,12 @@ export default async function ProjectsPage({
       />
       <section className="space-y-4">
         <div>
-          <TextLink href="/">{content.backToHome}</TextLink>
+          <TextLink href="/">
+              <div className="flex items-center gap-1">
+              <ArrowLeft size={16} />
+              <div>{content.backToHome}</div>
+              </div>
+          </TextLink>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-8">{content.pageTitle}</h1>
         <p className="max-w-2xl text-[var(--muted)]">{content.pageDescription}</p>
