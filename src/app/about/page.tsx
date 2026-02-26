@@ -6,10 +6,11 @@ import { aboutContent } from "@/content/about";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 import { site } from "@/content/site";
 import { TextLink } from "@/components/ui/TextLink";
+import { Figure } from "@/components/ui/Figure";
 import { ArrowLeft } from "lucide-react";
 
 const siteUrl = getSiteUrl();
-const globalOgImageUrl = absoluteUrl("/opengraph-image");
+const globalOgImageUrl = absoluteUrl("/og/me.png");
 
 export async function generateMetadata({
   searchParams,
@@ -60,16 +61,24 @@ export default async function AboutPage({
   return (
     <Container className="space-y-8 py-6">
       <section className="space-y-4">
-      <div>
-        <TextLink href="/">
+        <div>
+          <TextLink href="/">
             <div className="flex items-center gap-1">
-            <ArrowLeft size={16} />
-            <div>{content.backToHome}</div>
+              <ArrowLeft size={16} />
+              <div>{content.backToHome}</div>
             </div>
-        </TextLink>
-      </div>
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-8">{content.title}</h1>
-      
+          </TextLink>
+        </div>
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight flex-1 min-w-0">
+            {content.title}
+          </h1>
+          <Figure
+            src="/og/about.png"
+            alt="Portrait"
+            constrainedClassName="h-28 aspect-square flex-shrink-0"
+          />
+        </div>
       </section>
 
       <section className="space-y-5 text-[var(--muted)] max-w-2xl">

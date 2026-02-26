@@ -42,7 +42,7 @@ export async function generateMetadata({
       title,
       description,
       canonicalPath: `/projects/${slug}`,
-      ogImagePath: `/projects/${slug}/opengraph-image`,
+      ogImagePath: `/og/me.png`,
       lang,
     }),
   };
