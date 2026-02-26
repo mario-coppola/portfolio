@@ -1,22 +1,27 @@
 import { site } from "@/content/site";
 
 export function getSiteUrl(): string {
-  const rawSiteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL?.trim() || site.url || "http://localhost:3000";
+  // Server-only canonical URL
+  const siteUrl = process.env.SITE_URL;
+  if (siteUrl) return stripTrailingSlash(siteUrl);
 
-  const normalized = rawSiteUrl.startsWith("http://") || rawSiteUrl.startsWith("https://")
-    ? rawSiteUrl
-    : `https://${rawSiteUrl}`;
+  // Fallback in client-side contexts
+  const publicUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (publicUrl) return stripTrailingSlash(publicUrl);
 
-  return normalized.replace(/\/$/, "");
+  // Vercel fallback 
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) return `https://${vercelUrl}`;
+
+  return "http://localhost:3000";
 }
 
 export function absoluteUrl(pathWithQuery: string): string {
-  if (pathWithQuery.startsWith("http://") || pathWithQuery.startsWith("https://")) {
-    return pathWithQuery;
-  }
-
   const baseUrl = getSiteUrl();
-  const normalizedPath = pathWithQuery.startsWith("/") ? pathWithQuery : `/${pathWithQuery}`;
-  return `${baseUrl}${normalizedPath}`;
+  if (!pathWithQuery.startsWith("/")) pathWithQuery = `/${pathWithQuery}`;
+  return `${baseUrl}${pathWithQuery}`;
+}
+
+function stripTrailingSlash(url: string): string {
+  return url.endsWith("/") ? url.slice(0, -1) : url;
 }
