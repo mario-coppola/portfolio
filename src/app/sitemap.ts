@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/content/projects";
-
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000";
+import { getSiteUrl } from "@/lib/siteUrl";
 
 const staticRoutes = ["", "/projects", "/about", "/contact"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
+
+  const siteUrl = getSiteUrl();
   const staticEntries = staticRoutes.map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: new Date(),
