@@ -74,6 +74,7 @@ export default async function PrivacyPage({
         <p className="text-[var(--muted)]">{content.intro}</p>
       </section>
 
+{/* test */}
       <section className="space-y-8 max-w-2xl text-[var(--muted)]">
         {Object.values(content.sections).map((section) => (
           <div key={section.title} className="space-y-2">
