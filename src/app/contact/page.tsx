@@ -8,7 +8,7 @@ import { Mail, Github, Linkedin, ArrowLeft } from "lucide-react";
 import { TextLink } from "@/components/ui/TextLink";
 
 const siteUrl = getSiteUrl();
-const globalOgImageUrl = absoluteUrl("/opengraph-image");
+const globalOgImageUrl = absoluteUrl("/og-me.png");
 
 export async function generateMetadata({
   searchParams,

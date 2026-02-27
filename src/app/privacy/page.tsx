@@ -8,7 +8,7 @@ import { site } from "@/content/site";
 import { ArrowLeft } from "lucide-react";
 
 const siteUrl = getSiteUrl();
-const globalOgImageUrl = absoluteUrl("/opengraph-image");
+const globalOgImageUrl = absoluteUrl("/og/me.png");
 
 export async function generateMetadata({
   searchParams,

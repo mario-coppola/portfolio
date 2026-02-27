@@ -13,7 +13,7 @@ import { caseStudyContent } from "@/content/caseStudy";
 import { ArrowLeft } from "lucide-react";
 
 const siteUrl = getSiteUrl();
-const globalOgImageUrl = absoluteUrl("/opengraph-image");
+const globalOgImageUrl = absoluteUrl("/og/me.png");
 const personId = `${siteUrl}/#person`;
 const websiteId = `${siteUrl}/#website`;
 
